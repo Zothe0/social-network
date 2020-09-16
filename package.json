@@ -1,0 +1,26 @@
+{
+  "name": "social-network",
+  "version": "1.0.0",
+  "description": "",
+  "main": "core.js",
+  "scripts": {
+    "dev-serv": "nodemon core.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run dev-serv\" \"npm run client\"",
+    "client-b": "npm run build --prefix client",
+    "start": "node core.js"
+  },
+  "author": "zothe",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.13.0",
+    "koa-compose": "^4.1.0",
+    "koa-router": "^9.4.0",
+    "koa-static": "^5.0.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
