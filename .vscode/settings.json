@@ -4,7 +4,7 @@
         {
             "format":"expanded",
             "extensionName": ".css",
-            "savePath": "/client/src/css",
+            "savePath": "/view/src/css",
         }
     ],
     "liveSassCompile.settings.autoprefix": [

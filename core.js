@@ -1,30 +1,44 @@
-const serve = require('koa-static')
-const compose = require('koa-compose')
-const Router = require('koa-router')
-const koa = require('koa')
+const express = require('express')
 const path = require('path')
-const app = new koa()
+const mongoose = require('mongoose')
 
-const router = Router({
-    prefix: '/api'
+const server = express()
+
+server.use(express.json({extended: true}))
+
+let DATA = {}
+
+server.use('/api/auth', require('./routes/auth.routes'))
+
+server.post('/api/data', async(req, res)=>{
+    DATA = req.body
+    res.status(200).end()
+    console.log(DATA)
+})
+server.get('/api/data', (req, res)=>{
+    res.status(200).json(DATA)
 })
 
-const DATA = [{id: 0, text:'world'}]
 
-router.get('/hello', async(ctx, next)=>{
-    console.log(ctx.path)
-    ctx.response.body = 
-    await next()
-})
-router.get('/', async(ctx, next)=>{
-    console.log(ctx.path)
-    await next()
-})
+server.use(express.static(path.join(__dirname, 'view', 'build')))
+async function start(){
+    const PORT = 5000
+    const dataBaseURL = "mongodb+srv://dev-server:toor@test-db.wl4uh.mongodb.net/server?retryWrites=true&w=majority"
 
-async function custom(ctx, next){
-    console.log('hello')
-    await next()
+
+    // server.listen(PORT, ()=>{console.log(`Server listen on port ${PORT}...`)})
+
+
+    try {
+        await mongoose.connect(dataBaseURL,{
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true
+        })
+        server.listen(PORT, ()=>{console.log(`Server listen on port ${PORT}...`)})
+    } catch (error) {
+        console.log('Server error:', error.message)
+        process.exit(1)
+    }
 }
-
-app.use(compose([router.routes(), custom, serve(path.resolve(__dirname, 'client', 'build'))]))
-app.listen(5000)
+start()
