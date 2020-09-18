@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useState } from 'react'
 import './css/App.css'
 import { useRequest } from './hooks/useRequest'
@@ -15,7 +15,7 @@ export default function App() {
         email: false,
         password: false
     })
-
+    const [message, setMessage] = useState(null)
     const [btn, setBtn] = useState('disabled')
 
     const checkSubmit = ()=>{
@@ -48,33 +48,34 @@ export default function App() {
         }else{
             if(response.fault){
                 response.fault.forEach(item=>{
-                    console.log(item.param)
-                    switch (item.param) {
-                        case 'nickName':
-                            setWarnings({...warnings, nickName: true})
-                            break
-                        case 'email':
-                            setWarnings({...warnings, email: true})
-                            break
-                        case 'password':
-                            setWarnings({...warnings, password: true})
-                            break
-                        default:
-                            break
+                    if(item.param ==='nickName'){
+                        warnings.nickName = true
+                    }else if(item.param ==='email'){
+                        warnings.email = true
+                    }else if(item.param ==='password'){
+                        warnings.password = true
                     }
                 })
+            }else{
+                setMessage(response.message)
             }
-            setTimeout(()=>setWarnings({nickName: false, emal: false, password: false}), 3000)
+            setWarnings({...warnings})
         }
     }
 
     useEffect(()=>{
         if(checkSubmit()){setBtn(null)}else{setBtn('disabled')}
-    }, [form, checkSubmit])
+    }, [form, checkSubmit,])
 
+    useEffect(()=>{
+        console.log('render')
+        setTimeout(()=>setWarnings(state=>({nickName: false, email: false, password: false})), 3000)
+    },[warnings.nickName, warnings.email, warnings.password])
+    
     return (<>
         <div className='container'>
             <form className='column'>
+                {message}
                 {warnings.nickName? <label htmlFor='nick' className='warn'>Заполните поле с псевдонимом</label>: null}
                 <label htmlFor='nick'>Введите ник</label>
                 <input
@@ -102,7 +103,7 @@ export default function App() {
                     onChange={inputHandler}
                     autoComplete='off'
                 ></input>
-                <button 
+                <button
                     type='submit'
                     onClick={sendForm}
                     disabled={btn}
