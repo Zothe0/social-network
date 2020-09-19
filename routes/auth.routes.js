@@ -26,7 +26,7 @@ router.post('/registration',[
     }else{
         user = new User({nickName, email, password})
         await user.save()
-        res.status(201).json({ok: true})
+        res.status(201).json({ok: true, message: 'Успешная регистрация, теперь вы можете войти в свой аккаунт'})
     }
 })
 router.get('/login', async(req, res)=>{
