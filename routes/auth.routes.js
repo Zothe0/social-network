@@ -22,7 +22,7 @@ router.post('/registration',[
     const checkEmail= await User.findOne({email})
     if(checkNick || checkEmail){
         const paste = checkNick ? 'таким ником' : 'такой почтой'
-        res.status(400).json({ok: false, message: `Пользователь с ${paste} уже создан`})
+        res.status(400).json({ok: false, message: `Пользователь с ${paste} уже зарегистрирован`})
     }else{
         user = new User({nickName, email, password})
         await user.save()

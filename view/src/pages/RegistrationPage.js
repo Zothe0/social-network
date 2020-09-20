@@ -2,89 +2,45 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useRequest } from '../hooks/useRequest'
+import { clearInputs, changeInput, clearMessage, sendForm } from '../redux/actionCreators'
 
 
 export default function RegistrationPage(){
 
     const dispatch = useDispatch()
     const app = useSelector(state => state.appReducer)
-
-    const [form, setForm] = useState({
-        nickName: '',
-        email: '',
-        password: ''
-    })
-    const [warnings, setWarnings] = useState({
-        nickName: false,
-        email: false,
-        password: false
-    })
-    const [message, setMessage] = useState(null)
+    
     const [btn, setBtn] = useState('disabled')
 
     const checkSubmit = ()=>{
-        if(form.nickName===''){
+        if(app.formInputs.nickName===''){
             return false
-        }else if(form.email===''){
+        }else if(app.formInputs.email===''){
             return false
-        }else if(form.password===''){
+        }else if(app.formInputs.password===''){
             return false
         }
         return true
     }
 
-    const [loading, error, request] = useRequest()
-
     const inputHandler = async(e)=>{
-        dispatch()
-        setForm({...form, [e.target.name]: e.target.value})
+        dispatch(changeInput(e.target.name, e.target.value))
     }
 
-    const sendForm = async(e)=>{
+    const submitForm = async(e)=>{
         e.preventDefault()
-        const response = await request('/api/auth/registration', 'POST', form)
-        if(response.ok){
-            setForm({
-                nickName: '',
-                email: '',
-                password: ''
-            })
-            setMessage(response.message)
-        }else{
-            if(response.fault){
-                response.fault.forEach(item=>{
-                    if(item.param ==='nickName'){
-                        warnings.nickName = true
-                    }else if(item.param ==='email'){
-                        warnings.email = true
-                    }else if(item.param ==='password'){
-                        warnings.password = true
-                    }
-                })
-            }else{
-                setMessage(response.message)
-            }
-            setWarnings({...warnings})
-        }
+        dispatch(sendForm(app.formInputs))
     }
 
     useEffect(()=>{
         if(checkSubmit()){setBtn(null)}else{setBtn('disabled')}
-    }, [form, checkSubmit,])
-
-    useEffect(()=>{
-        setTimeout(()=>setWarnings(state=>({nickName: false, email: false, password: false})), 3000)
-    },[warnings.nickName, warnings.email, warnings.password])
-
-    useEffect(()=>{
-        setTimeout(()=>setMessage(''), 3000)
-    }, [message, setMessage])
+    }, [checkSubmit])
     
     return (<>
         <div className='container'>
             <form className='column'>
-                {message? <div className='warn'>{message}</div>: null}
-                {warnings.nickName? <label htmlFor='nick' className='warn'>Минимальная длина ника 5 символов</label>: null}
+                {app.responseMessage? <div className='warn'>{app.responseMessage}</div>: null}
+                {app.warnings.nickName? <label htmlFor='nick' className='warn'>Минимальная длина ника 5 символов</label>: null}
                 <label htmlFor='nick'>Введите ник</label>
                 <input
                     id='nick'
@@ -92,9 +48,9 @@ export default function RegistrationPage(){
                     name='nickName'
                     onChange={inputHandler}
                     autoComplete='off'
-                    value={form.nickName}
+                    value={app.formInputs.nickName}
                 ></input>
-                {warnings.email? <label htmlFor='nick' className='warn'>Введите корректную почту</label>: null}
+                {app.warnings.email? <label htmlFor='nick' className='warn'>Введите корректную почту</label>: null}
                  <label htmlFor='email'>Введите почту</label>
                 <input
                     id='email'
@@ -102,9 +58,9 @@ export default function RegistrationPage(){
                     name='email'
                     onChange={inputHandler}
                     autoComplete='off'
-                    value={form.email}
+                    value={app.formInputs.email}
                 ></input>
-                {warnings.password? <label htmlFor='nick' className='warn'>Минимальная длина пароля 6 символов</label>: null}
+                {app.warnings.password? <label htmlFor='nick' className='warn'>Минимальная длина пароля 6 символов</label>: null}
                 <label htmlFor='pass'>Введите пароль</label>
                 <input
                     id='pass'
@@ -112,12 +68,12 @@ export default function RegistrationPage(){
                     name='password'
                     onChange={inputHandler}
                     autoComplete='off'
-                    value={form.password}
+                    value={app.formInputs.password}
                 ></input>
                 <div className='buttons'>
                     <button
                         type='submit'
-                        onClick={sendForm}
+                        onClick={submitForm}
                         disabled={btn}
                     >Регистрация</button>
                     <Link to='/auth' className='login'>Вход</Link>

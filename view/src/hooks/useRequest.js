@@ -8,7 +8,7 @@ export const useRequest = ()=>{
         setLoading(true)
         if(method ==='GET'){
             try {
-                const response = await fetch(url, [method, body, headers])
+                const response = await fetch(url)
                 const data = await response.json()
                 setLoading(false)
                 return data
@@ -30,5 +30,5 @@ export const useRequest = ()=>{
             }
         }
     },[])
-    return([loading, error, request])
+    return([request, loading, error])
 }

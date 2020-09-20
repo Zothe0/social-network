@@ -1,2 +1,10 @@
-export const SET_WARNING = 'SET_WARNING'
-export const SET_INPUT = 'SET_INPUT'
+
+export const CHANGE_INPUT = 'CHANGE_INPUT'
+export const CLEAR_INPUTS = 'CLEAR_INPUTS'
+export const SET_ON_WARNING = 'SET_ON_WARNING'
+export const SET_OFF_WARNING = 'SET_OFF_WARNING'
+export const SET_SUBMIT_ACTIVE = 'SET_SUBMIT_ACTIVE'
+export const SET_SUBMIT_DISABLED = 'SET_SUBMIT_DISABLED'
+export const SET_MESSAGE = 'SET_MESSAGE'
+export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'
+export const SEND_FORM = 'SEND_FORM'
