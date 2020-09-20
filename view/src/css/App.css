@@ -45,6 +45,10 @@ body {
           justify-content: space-between;
 }
 
+.header {
+  font-size: 32px;
+}
+
 .warn {
   font-size: 22px;
   color: #f00;

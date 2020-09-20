@@ -1,4 +1,4 @@
-
+// for registrationReducer
 export const CHANGE_INPUT = 'CHANGE_INPUT'
 export const CLEAR_INPUTS = 'CLEAR_INPUTS'
 export const SET_ON_WARNING = 'SET_ON_WARNING'

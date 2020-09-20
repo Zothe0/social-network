@@ -20,10 +20,15 @@ const registration = async(req, res)=>{
         const paste = checkNick ? 'таким ником' : 'такой почтой'
         res.status(400).json({ok: false, message: `Пользователь с ${paste} уже зарегистрирован`})
     }else{
-        const hashedPassword = await bcrypt.hash(password, saltRounds, (err, hash)=>{})
-        user = new User({nickName, email, hashedPassword})
-        await user.save()
-        res.status(201).json({ok: true, message: 'Успешная регистрация, теперь вы можете войти в свой аккаунт'})
+        try {
+            await bcrypt.hash(password, saltRounds, async(err, hash)=>{
+            user = new User({nickName, email, password: hash })
+            await user.save()
+            res.status(201).json({ok: true, message: 'Успешная регистрация, теперь вы можете войти в свой аккаунт'})
+            })
+        } catch (error) {
+            throw error
+        }
     }
 }
 

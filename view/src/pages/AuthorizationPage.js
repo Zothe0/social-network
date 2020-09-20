@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled } from '../redux/registrationLogic/regActionCreators'
 
 
-export default function RegistrationPage(){
+export default function AuthorizationPage(){
 
     // Получаем dispatch из react-redux
     const dispatch = useDispatch()
@@ -47,9 +47,9 @@ export default function RegistrationPage(){
     return (<>
         <div className='container'>
             <form className='column'>
-                <div className='header'>Регистрация</div>
+                <div className='header'>Авторизация</div>
                 {app.responseMessage? <div className='warn'>{app.responseMessage}</div>: null}
-                {app.warnings.nickName? <label htmlFor='nick' className='warn'>Минимальная длина ника 4 символа</label>: null}
+                {app.warnings.nickName? <label htmlFor='nick' className='warn'>Минимальная длина ника 5 символов</label>: null}
                 <label htmlFor='nick'>Введите ник</label>
                 <input
                     id='nick'
@@ -84,8 +84,8 @@ export default function RegistrationPage(){
                         type='submit'
                         onClick={submitForm}
                         disabled={app.submitButton}
-                    >Регистрация</button>
-                    <Link to='/auth' className='login'>Вход</Link>
+                    >Войти</button>
+                    <Link to='/registration' className='login'>Регистрация</Link>
                 </div>
             </form>
         </div>

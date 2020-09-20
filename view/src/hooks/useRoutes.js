@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import AuthenticationPage from '../pages/AuthenticationPage'
+import AuthorizationPage from '../pages/AuthorizationPage'
 import RegistrationPage from '../pages/RegistrationPage'
 
 
@@ -9,7 +9,7 @@ export const useRoutes = (isAthenticated=false)=>{
         return(
             <Switch>
                 <Route path='/auth'>
-                    <AuthenticationPage/>
+                    <AuthorizationPage/>
                 </Route>
                 <Route path='/registration'>
                     <RegistrationPage/>

@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import * as types from './types'
+import * as types from './registrationLogic/regTypes'
 import {request} from './Api'
-import { clearInputs, setMessage, setOnWarning } from './actionCreators'
+import { clearInputs, setMessage, setOnWarning } from './registrationLogic/regActionCreators'
 
 
 export default function* Saga() {

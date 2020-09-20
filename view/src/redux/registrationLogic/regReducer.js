@@ -1,4 +1,4 @@
-import * as types from './types'
+import * as types from './regTypes'
 const initialState = {
     formInputs:{
         nickName: '',
@@ -14,7 +14,7 @@ const initialState = {
     responseMessage: null
 }
 
-export const appReducer = (state = initialState, action)=>{
+export const registrationReducer = (state = initialState, action)=>{
     switch(action.type){
         case types.CHANGE_INPUT:
             return {...state, formInputs: {...state.formInputs, [action.name]: action.value}}

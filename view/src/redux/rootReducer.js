@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import { appReducer } from './appReducer'
+import { registrationReducer } from './registrationLogic/regReducer'
 
 
 export const rootReducer = combineReducers({
-    appReducer 
+    registrationReducer 
 })

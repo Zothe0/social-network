@@ -6,8 +6,6 @@ const server = express()
 
 server.use(express.json({extended: true}))
 
-let DATA = {}
-
 server.use('/api/auth', require('./routes/auth.routes'))
 
 server.use(express.static(path.join(__dirname, 'view', 'build')))
