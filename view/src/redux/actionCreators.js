@@ -59,3 +59,9 @@ export const setOnWarning = (name)=>{
 export const setOffWarning = (name)=>{
     return({ type: types.SET_OFF_WARNING, name })
 }
+export const setSubmitEnabled = ()=>{
+    return({ type: types.SET_SUBMIT_ENABLED })
+}
+export const setSubmitDisabled = ()=>{
+    return({ type: types.SET_SUBMIT_DISABLED })
+}

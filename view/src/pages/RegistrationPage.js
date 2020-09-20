@@ -1,18 +1,30 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { useRequest } from '../hooks/useRequest'
-import { clearInputs, changeInput, clearMessage, sendForm } from '../redux/actionCreators'
+import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled } from '../redux/actionCreators'
 
 
 export default function RegistrationPage(){
 
+    // Получаем dispatch из react-redux
     const dispatch = useDispatch()
+    // Получаем state из appReducer
     const app = useSelector(state => state.appReducer)
     
-    const [btn, setBtn] = useState('disabled')
+    
+    // Отправляет форму на сервер
+    const submitForm = async(e)=>{
+        e.preventDefault()
+        dispatch(sendForm(app.formInputs))
+    }
 
-    const checkSubmit = ()=>{
+    // Записывает значение инпута в соответсвующее поле в нашем store
+    const inputHandler = async(e)=>{
+        dispatch(changeInput(e.target.name, e.target.value))
+    }
+
+    // Функция для проверки полей инпутов
+    const checkInputs = ()=>{
         if(app.formInputs.nickName===''){
             return false
         }else if(app.formInputs.email===''){
@@ -23,18 +35,14 @@ export default function RegistrationPage(){
         return true
     }
 
-    const inputHandler = async(e)=>{
-        dispatch(changeInput(e.target.name, e.target.value))
-    }
-
-    const submitForm = async(e)=>{
-        e.preventDefault()
-        dispatch(sendForm(app.formInputs))
-    }
-
+    // Следим за изменением инпутов, и при их изменении, проверяем пустые ли они, если все поля заполнены, кнопка становится активной
     useEffect(()=>{
-        if(checkSubmit()){setBtn(null)}else{setBtn('disabled')}
-    }, [checkSubmit])
+        if(checkInputs()){
+            dispatch(setSubmitEnabled())
+        }else{
+            dispatch(setSubmitDisabled())
+        }
+    }, [app.formInputs])
     
     return (<>
         <div className='container'>
@@ -74,7 +82,7 @@ export default function RegistrationPage(){
                     <button
                         type='submit'
                         onClick={submitForm}
-                        disabled={btn}
+                        disabled={app.submitButton}
                     >Регистрация</button>
                     <Link to='/auth' className='login'>Вход</Link>
                 </div>
