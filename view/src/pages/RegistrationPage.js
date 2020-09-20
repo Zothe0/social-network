@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled } from '../redux/actionCreators'
@@ -24,7 +24,7 @@ export default function RegistrationPage(){
     }
 
     // Функция для проверки полей инпутов
-    const checkInputs = ()=>{
+    const checkInputs = useCallback(()=>{
         if(app.formInputs.nickName===''){
             return false
         }else if(app.formInputs.email===''){
@@ -33,7 +33,7 @@ export default function RegistrationPage(){
             return false
         }
         return true
-    }
+    }, [app.formInputs.nickName, app.formInputs.email, app.formInputs.password])
 
     // Следим за изменением инпутов, и при их изменении, проверяем пустые ли они, если все поля заполнены, кнопка становится активной
     useEffect(()=>{
@@ -42,7 +42,7 @@ export default function RegistrationPage(){
         }else{
             dispatch(setSubmitDisabled())
         }
-    }, [app.formInputs])
+    }, [app.formInputs, checkInputs, dispatch])
     
     return (<>
         <div className='container'>

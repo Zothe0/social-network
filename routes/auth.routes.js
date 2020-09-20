@@ -1,16 +1,18 @@
 const {Router} = require('express')
 const { body, validationResult } = require('express-validator')
 const User = require('../model/User')
+const bcrypt = require('bcrypt')
+const auth = require('../controller/authController')
 const router = Router()
 
 router.post('/registration',[
     body('nickName').trim().isLength({ min: 5 }),
-    body('email').isEmail().normalizeEmail(),
+    body('email').trim().isEmail().normalizeEmail(),
     body('password').trim().isLength({ min: 6 })
   ], async(req, res)=>{
     
     const errors = validationResult(req)
-
+    const saltRounds = 10
     const fault = errors.errors
 
     if (!errors.isEmpty()) {
@@ -24,11 +26,19 @@ router.post('/registration',[
         const paste = checkNick ? 'таким ником' : 'такой почтой'
         res.status(400).json({ok: false, message: `Пользователь с ${paste} уже зарегистрирован`})
     }else{
-        user = new User({nickName, email, password})
-        await user.save()
-        res.status(201).json({ok: true, message: 'Успешная регистрация, теперь вы можете войти в свой аккаунт'})
+        try {
+            await bcrypt.hash(password, saltRounds, async(err, hash)=>{
+            console.log(hash)
+            user = new User({nickName, email, password: hash })
+            await user.save()
+            res.status(201).json({ok: true, message: 'Успешная регистрация, теперь вы можете войти в свой аккаунт'})
+            })
+        } catch (error) {
+            throw error
+        }
     }
 })
+
 router.get('/login', async(req, res)=>{
     
 })
