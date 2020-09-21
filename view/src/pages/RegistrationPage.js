@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled } from '../redux/registrationLogic/regActionCreators'
+import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled, clearInputs } from '../redux/authenticationLogic/authActionCreators'
 
 
 export default function RegistrationPage(){
@@ -44,6 +44,10 @@ export default function RegistrationPage(){
         }
     }, [app.formInputs, checkInputs, dispatch])
     
+    const clearForm= async()=>{
+        dispatch(clearInputs())
+    }
+
     return (<>
         <div className='container'>
             <form className='column'>
@@ -85,7 +89,7 @@ export default function RegistrationPage(){
                         onClick={submitForm}
                         disabled={app.submitButton}
                     >Регистрация</button>
-                    <Link to='/auth' className='login'>Вход</Link>
+                    <Link to='/auth' className='login' onClick={clearForm}>Вход</Link>
                 </div>
             </form>
         </div>

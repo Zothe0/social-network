@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled } from '../redux/registrationLogic/regActionCreators'
+import {  changeInput, clearInputs, setSubmitEnabled, setSubmitDisabled } from '../redux/authenticationLogic/authActionCreators'
+import { LOGIN } from '../redux/authenticationLogic/authTypes'
 
 
 export default function AuthorizationPage(){
@@ -15,7 +16,11 @@ export default function AuthorizationPage(){
     // Отправляет форму на сервер
     const submitForm = async(e)=>{
         e.preventDefault()
-        dispatch(sendForm(app.formInputs))
+        const body={
+            mix: app.formInputs.nickName,
+            password: app.formInputs.password
+        }
+        dispatch({ type: LOGIN, body })
     }
 
     // Записывает значение инпута в соответсвующее поле в нашем store
@@ -27,13 +32,11 @@ export default function AuthorizationPage(){
     const checkInputs = useCallback(()=>{
         if(app.formInputs.nickName===''){
             return false
-        }else if(app.formInputs.email===''){
-            return false
         }else if(app.formInputs.password===''){
             return false
         }
         return true
-    }, [app.formInputs.nickName, app.formInputs.email, app.formInputs.password])
+    }, [app.formInputs.nickName, app.formInputs.password])
 
     // Следим за изменением инпутов, и при их изменении, проверяем пустые ли они, если все поля заполнены, кнопка становится активной
     useEffect(()=>{
@@ -44,13 +47,16 @@ export default function AuthorizationPage(){
         }
     }, [app.formInputs, checkInputs, dispatch])
     
+    const clearForm= async()=>{
+        dispatch(clearInputs())
+    }
+
     return (<>
         <div className='container'>
             <form className='column'>
                 <div className='header'>Авторизация</div>
                 {app.responseMessage? <div className='warn'>{app.responseMessage}</div>: null}
-                {app.warnings.nickName? <label htmlFor='nick' className='warn'>Минимальная длина ника 5 символов</label>: null}
-                <label htmlFor='nick'>Введите ник</label>
+                <label htmlFor='nick'>Введите ник или почту</label>
                 <input
                     id='nick'
                     type='text'
@@ -59,17 +65,6 @@ export default function AuthorizationPage(){
                     autoComplete='off'
                     value={app.formInputs.nickName}
                 ></input>
-                {app.warnings.email? <label htmlFor='nick' className='warn'>Введите корректную почту</label>: null}
-                 <label htmlFor='email'>Введите почту</label>
-                <input
-                    id='email'
-                    type='email'
-                    name='email'
-                    onChange={inputHandler}
-                    autoComplete='off'
-                    value={app.formInputs.email}
-                ></input>
-                {app.warnings.password? <label htmlFor='nick' className='warn'>Минимальная длина пароля 6 символов</label>: null}
                 <label htmlFor='pass'>Введите пароль</label>
                 <input
                     id='pass'
@@ -85,7 +80,7 @@ export default function AuthorizationPage(){
                         onClick={submitForm}
                         disabled={app.submitButton}
                     >Войти</button>
-                    <Link to='/registration' className='login'>Регистрация</Link>
+                    <Link to='/registration' className='login' onClick={clearForm}>Регистрация</Link>
                 </div>
             </form>
         </div>

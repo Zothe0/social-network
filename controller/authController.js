@@ -32,6 +32,16 @@ const registration = async(req, res)=>{
     }
 }
 
+const login = async(req, res)=>{
+    const {mix, password} = req.body
+    const checkNick = await User.findOne({nickName: mix})
+    const checkEmail= await User.findOne({email: mix})
+    if(checkNick || checkEmail){
+    }else{
+        res.status(401).json({ message: `Пользователя с ${(mix.includes('@')? 'такой почтой' : 'таким ником')} не существует` })
+    }
+}
+
 module.exports = {
-    registration,
+    registration, login
 }

@@ -1,4 +1,4 @@
-import * as types from './regTypes'
+import * as types from './authTypes'
 const initialState = {
     formInputs:{
         nickName: '',
@@ -11,7 +11,9 @@ const initialState = {
         password: false
     },
     submitButton: 'disabled',
-    responseMessage: null
+    responseMessage: null,
+    authorized: false,
+    token: ''
 }
 
 export const registrationReducer = (state = initialState, action)=>{
@@ -40,6 +42,9 @@ export const registrationReducer = (state = initialState, action)=>{
 
         case types.CLEAR_MESSAGE:
             return {...state, responseMessage: null}
+
+        case types.LOGIN:
+            return {...state, }
 
         default:
             return state

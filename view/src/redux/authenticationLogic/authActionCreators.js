@@ -1,4 +1,4 @@
-import * as types from './regTypes'
+import * as types from './authTypes'
 
 export const changeInput = (name, value)=>{
     return({ type: types.CHANGE_INPUT, name, value })
