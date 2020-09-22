@@ -23,10 +23,6 @@ export default function AuthorizationPage(){
         dispatch({ type: LOGIN, body })
     }
 
-    const logoutApp = async()=>{
-        dispatch(logout())
-    }
-
     // Записывает значение инпута в соответсвующее поле в нашем store
     const inputHandler = async(e)=>{
         dispatch(changeInput(e.target.name, e.target.value))
@@ -61,7 +57,6 @@ export default function AuthorizationPage(){
     const clearForm= async()=>{
         dispatch(clearInputs())
     }
-    const logoutBtn = app.authorized? null: 'disabled'
     return (<>
         <div className='container'>
             <form className='column'>
@@ -91,11 +86,6 @@ export default function AuthorizationPage(){
                         onClick={submitForm}
                         disabled={app.submitButton}
                     >Войти</button>
-                    <button
-                        type='button'
-                        onClick={logoutApp}
-                        disabled={logoutBtn}
-                    >Выйти</button>
                     <Link to='/registration' className='login' onClick={clearForm}>Регистрация</Link>
                 </div>
             </form>

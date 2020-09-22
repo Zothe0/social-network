@@ -58,7 +58,6 @@ const login = async(req, res)=>{
         res.status(500).json({message: 'Пизда серваку...'})
         throw error
     }
-    
 }
 
 module.exports = {

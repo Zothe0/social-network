@@ -1,11 +1,26 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import AuthorizationPage from '../pages/AuthorizationPage'
+import PostsPage from '../pages/PostsPage'
 import RegistrationPage from '../pages/RegistrationPage'
 
 
-export const useRoutes = (isAthenticated=false)=>{
+export const useRoutes = (isAthenticated)=>{
     if(isAthenticated){
+        return(
+            <Switch>
+                <Route path='/posts'>
+                    <PostsPage/>
+                </Route>
+                <Route>
+                    
+                </Route>
+                <Route path='/'>
+                    <Redirect to='/posts'/>
+                </Route>
+            </Switch>
+        )
+    }else{
         return(
             <Switch>
                 <Route path='/auth'>
@@ -15,11 +30,9 @@ export const useRoutes = (isAthenticated=false)=>{
                     <RegistrationPage/>
                 </Route>
                 <Route path='/'>
-                    <Redirect to='registration'/>
+                    <Redirect to='/registration'/>
                 </Route>
             </Switch>
        )
-    }else{
-        return null
     }
 }

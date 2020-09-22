@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled, clearInputs } from '../redux/authenticationLogic/authActionCreators'
+import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled, clearInputs, authentication } from '../redux/authenticationLogic/authActionCreators'
 
 
 export default function RegistrationPage(){
@@ -45,6 +45,13 @@ export default function RegistrationPage(){
         }
     }, [app.formInputs, checkInputs, dispatch])
     
+    useEffect(()=>{
+        const data = JSON.parse(localStorage.getItem('userData'))
+        if(data && data.token){
+            dispatch(authentication(data.token))
+        }
+    }, [dispatch])
+
     const clearForm= async()=>{
         dispatch(clearInputs())
     }
