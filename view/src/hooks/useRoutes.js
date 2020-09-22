@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import AuthorizationPage from '../pages/AuthorizationPage'
 import PostsPage from '../pages/PostsPage'
 import RegistrationPage from '../pages/RegistrationPage'
+import ProfilePage from '../pages/ProfilePage'
 
 
 export const useRoutes = (isAthenticated)=>{
@@ -12,8 +13,8 @@ export const useRoutes = (isAthenticated)=>{
                 <Route path='/posts'>
                     <PostsPage/>
                 </Route>
-                <Route>
-                    
+                <Route path='/profile/:id'>
+                    <ProfilePage></ProfilePage>
                 </Route>
                 <Route path='/'>
                     <Redirect to='/posts'/>
