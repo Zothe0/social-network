@@ -13,7 +13,7 @@ const initialState = {
     submitButton: 'disabled',
     responseMessage: null,
     authorized: false,
-    token: ''
+    token: null
 }
 
 export const registrationReducer = (state = initialState, action)=>{
@@ -24,6 +24,9 @@ export const registrationReducer = (state = initialState, action)=>{
         case types.CLEAR_INPUTS:
             return {...state, formInputs: {...state.formInputs, nickName: '', email: '', password: ''}}
 
+        case types.CLEAR_PASSWORD_INPUT:
+            return {...state, formInputs: {...state.formInputs, password: ''}}
+    
         case types.SET_ON_WARNING:
             console.log(action.name)
             return {...state, warnings: {...state.warnings, [action.name]: true}}
@@ -43,8 +46,17 @@ export const registrationReducer = (state = initialState, action)=>{
         case types.CLEAR_MESSAGE:
             return {...state, responseMessage: null}
 
-        case types.LOGIN:
-            return {...state, }
+        case types.ADD_TOKEN:
+            return {...state, token: action.token}
+
+        case types.REMOVE_TOKEN:
+            return {...state, token: null}
+
+        case types.IS_AUTH_TRUE:
+            return {...state, authorized: true}
+
+        case types.IS_AUTH_FALSE:
+            return {...state, authorized: false}
 
         default:
             return state

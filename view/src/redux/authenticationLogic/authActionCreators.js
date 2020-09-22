@@ -6,6 +6,9 @@ export const changeInput = (name, value)=>{
 export const clearInputs = ()=>{
     return({ type: types.CLEAR_INPUTS })
 }
+export const clearPasswordInput = ()=>{
+    return({ type: types.CLEAR_PASSWORD_INPUT })
+}
 export const sendForm = (body)=>{
     return({ type: types.SEND_FORM, body })
 }
@@ -32,4 +35,24 @@ export const setSubmitEnabled = ()=>{
 }
 export const setSubmitDisabled = ()=>{
     return({ type: types.SET_SUBMIT_DISABLED })
+}
+export const authentication = (token, userId)=>{
+    return async(dispatch, getState)=>{
+        localStorage.setItem('userData', JSON.stringify({token}))
+        await dispatch({ type: types.ADD_TOKEN, token})
+        const state = getState()
+        if(!!state.registrationReducer.token){
+            dispatch({ type: types.IS_AUTH_TRUE })
+        }
+    }
+}
+export const logout = ()=>{
+    return async(dispatch, getState)=>{
+        localStorage.removeItem('userData')
+        await dispatch({ type: types.REMOVE_TOKEN })
+        const state = getState()
+        if(!state.registrationReducer.token){
+            dispatch({ type: types.IS_AUTH_FALSE })
+        }
+    }
 }

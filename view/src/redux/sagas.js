@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import * as types from './authenticationLogic/authTypes'
 import {request} from './Api'
-import { clearInputs, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
+import { authentication, clearInputs, clearPasswordInput, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
 
 
 export default function* Saga() {
@@ -37,10 +37,11 @@ function* fetchForm(action) {
         const response = yield call(request, '/api/auth/login', 'POST', action.body)
 
         if(response.ok){
-
+            yield put(authentication(response.token, response.userId))
+            yield put(clearInputs())
         }else{
+            yield put(clearPasswordInput())
         }
-        yield put(clearInputs())
         yield put(setMessage(response.message))
      } catch (e) {
        throw e

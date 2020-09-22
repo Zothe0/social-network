@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {  changeInput, clearInputs, setSubmitEnabled, setSubmitDisabled } from '../redux/authenticationLogic/authActionCreators'
+import { changeInput, clearInputs, setSubmitEnabled, setSubmitDisabled, authentication, logout } from '../redux/authenticationLogic/authActionCreators'
 import { LOGIN } from '../redux/authenticationLogic/authTypes'
 
 
@@ -21,6 +21,10 @@ export default function AuthorizationPage(){
             password: app.formInputs.password
         }
         dispatch({ type: LOGIN, body })
+    }
+
+    const logoutApp = async()=>{
+        dispatch(logout())
     }
 
     // Записывает значение инпута в соответсвующее поле в нашем store
@@ -47,10 +51,17 @@ export default function AuthorizationPage(){
         }
     }, [app.formInputs, checkInputs, dispatch])
     
+    useEffect(()=>{
+        const data = JSON.parse(localStorage.getItem('userData'))
+        if(data && data.token){
+            dispatch(authentication(data.token))
+        }
+    }, [dispatch])
+
     const clearForm= async()=>{
         dispatch(clearInputs())
     }
-
+    const logoutBtn = app.authorized? null: 'disabled'
     return (<>
         <div className='container'>
             <form className='column'>
@@ -80,6 +91,11 @@ export default function AuthorizationPage(){
                         onClick={submitForm}
                         disabled={app.submitButton}
                     >Войти</button>
+                    <button
+                        type='button'
+                        onClick={logoutApp}
+                        disabled={logoutBtn}
+                    >Выйти</button>
                     <Link to='/registration' className='login' onClick={clearForm}>Регистрация</Link>
                 </div>
             </form>

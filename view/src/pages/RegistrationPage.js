@@ -14,6 +14,7 @@ export default function RegistrationPage(){
     
     // Отправляет форму на сервер
     const submitForm = async(e)=>{
+        // TODO: запретить использовать в нике особые символы типа $%^&@!()
         e.preventDefault()
         dispatch(sendForm(app.formInputs))
     }
