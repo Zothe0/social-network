@@ -1,7 +1,12 @@
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const path = require('path')
+const fs = require('fs')
 const User = require('../model/User')
+const { resolve } = require('path')
+let lastId = null
+filePath = path.resolve(__dirname, '..', 'model', 'lastId.txt')
 
 const registration = async(req, res)=>{
     
@@ -22,9 +27,25 @@ const registration = async(req, res)=>{
     }else{
         try {
             await bcrypt.hash(password, saltRounds, async(err, hash)=>{
-            user = new User({nickName, email, password: hash })
-            await user.save()
-            res.status(201).json({ok: true, message: 'Успешная регистрация, теперь вы можете войти в свой аккаунт'})
+                if(!lastId){
+                    lastId= await new Promise((resolve, reject)=>{
+                        fs.readFile(filePath, 'utf-8', (err, content) =>{
+                            if(err) throw err
+                            content = Number(content)
+                            resolve(content)
+                        })
+                    })
+                }
+                user = new User({ id: lastId, nickName, email, password: hash})
+                await user.save()
+                await new Promise((res)=>{
+                    lastId++
+                    fs.writeFile(filePath, lastId, err =>{
+                        if(err) throw err
+                        res()
+                    })
+                })
+                res.status(201).json({ok: true, message: 'Успешная регистрация, теперь вы можете войти в свой аккаунт'})
             })
         } catch (error) {
             throw error
