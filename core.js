@@ -13,8 +13,6 @@ async function start(){
     const PORT = 5000
     const dataBaseURL = "mongodb+srv://dev-server:toor@test-db.wl4uh.mongodb.net/server?retryWrites=true&w=majority"
 
-    // server.listen(PORT, ()=>{console.log(`Server listen on port ${PORT}...`)})
-
     try {
         await mongoose.connect(dataBaseURL,{
             useNewUrlParser: true,
