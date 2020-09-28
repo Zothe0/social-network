@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { verify } from 'jsonwebtoken'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { logout } from '../redux/authenticationLogic/authActionCreators'
+import { logout, setMessage } from '../redux/authenticationLogic/authActionCreators'
 import { changePostField, clearPostField } from '../redux/postsLogic/postsActionCreators'
 import * as types from '../redux/postsLogic/postsTypes'
+import { JWTSecret } from '../constants'
 
 
 export default function PostsPage(){
@@ -13,6 +15,15 @@ export default function PostsPage(){
     const posts = useSelector(state => state.postsReducer)
     const linkToProfile = `/profile/${auth.userId}`
     
+    const checkTokenExpire = ()=>{
+        try {
+            const decode = verify(auth.token, JWTSecret)
+            return false
+        } catch (error) {
+            return true
+        }
+    }
+
     window.onscroll = (action)=>{
         console.log(Math.ceil(window.pageYOffset))
     }
@@ -27,13 +38,26 @@ export default function PostsPage(){
 
     const publish = (e)=>{
         e.preventDefault()
-        dispatch({ type: types.PUBLISH_POST })
-        dispatch(clearPostField())
+        if(checkTokenExpire()){
+            logoutApp()
+            dispatch(setMessage('Время сессии закончилось'))
+        }else{
+            dispatch({ type: types.PUBLISH_POST })
+            dispatch(clearPostField())
+        }
     }
 
     const uploadPosts = ()=>{
         dispatch({ type: types.UPLOAD_POSTS})
     }
+
+    // Проверка действительности токена при каждом ререндере страницы
+    useEffect(()=>{
+        if(checkTokenExpire()){
+            logoutApp()
+            dispatch(setMessage('Время сессии закончилось'))
+        }else{}
+    }, [checkTokenExpire, logoutApp])
 
     return(<>
         <div className="wrapper">

@@ -6,7 +6,7 @@ const fs = require('fs')
 const User = require('../model/User')
 let lastId = null
 filePath = path.resolve(__dirname, '..', 'model', 'lastId.txt')
-const constants = require('../constanst')
+const constants = require('../constants')
 
 
 const registration = async(req, res)=>{
@@ -70,7 +70,7 @@ const login = async(req, res)=>{
             if(!isMatch){
                 return res.status(400).json({message:'Неверный пароль, введите заново'})
             }else{
-                const token = jwt.sign({ userId: user.id }, constants.JWTSecret, { expiresIn: '1h' })
+                const token = jwt.sign({ userId: user.id }, constants.JWTSecret, { expiresIn: '10s' })
                 res.status(201).json({ok: true, token, userNick: user.nickName})
             }
         }else{
