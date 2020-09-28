@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken')
 const Post = require('../model/Post')
-const constants = require('../constants')
 
 
 const createPost = async(req, res)=>{

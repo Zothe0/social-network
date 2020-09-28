@@ -70,7 +70,7 @@ const login = async(req, res)=>{
             if(!isMatch){
                 return res.status(400).json({message:'Неверный пароль, введите заново'})
             }else{
-                const token = jwt.sign({ userId: user.id }, constants.JWTSecret, { expiresIn: '10s' })
+                const token = jwt.sign({ userId: user.id }, constants.JWTSecret, { expiresIn: '1h' })
                 res.status(201).json({ok: true, token, userNick: user.nickName})
             }
         }else{
