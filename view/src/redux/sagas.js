@@ -3,13 +3,13 @@ import * as authTypes from './authenticationLogic/authTypes'
 import * as postsTypes from './postsLogic/postsTypes'
 import {request} from './Api'
 import { authentication, clearInputs, clearPasswordInput, logout, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
-import { clearPostField } from './postsLogic/postsActionCreators'
 
 
 export default function* Saga() {
-  yield takeEvery(authTypes.SEND_FORM, fetchForm)
-  yield takeEvery(authTypes.LOGIN, login)
-  yield takeEvery(postsTypes.PUBLISH_POST, publishPost)
+    yield takeEvery(authTypes.SEND_FORM, fetchForm)
+    yield takeEvery(authTypes.LOGIN, login)
+    yield takeEvery(postsTypes.PUBLISH_POST, publishPost)
+    yield takeEvery(postsTypes.UPLOAD_POSTS, fetchPosts)
 }
 
 // worker Saga: будет запускаться на экшены типа `USER_FETCH_REQUESTED`
@@ -57,7 +57,7 @@ function* fetchForm(action) {
      }
  }
 
- function* publishPost(action){
+ function* publishPost(){
      try {
         const posts = yield select(state => state.postsReducer)
         const app = yield select(state => state.authReducer)
@@ -81,4 +81,15 @@ function* fetchForm(action) {
      } catch (e) {
          throw e
      }
+ }
+
+ function* fetchPosts(){
+    try {
+        // const response = yield call(request, 'api/posts/upload')
+        const response = yield call(request, 'api/posts/upload')
+        console.log(response)
+    } catch (error) {
+        console.log(error.name)
+        throw error
+    }
  }

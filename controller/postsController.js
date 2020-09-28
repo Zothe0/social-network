@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const Post = require('../model/Post')
 const constants = require('../constanst')
-const { body } = require('express-validator')
 
 
 const createPost = async(req, res)=>{
@@ -28,6 +27,16 @@ const createPost = async(req, res)=>{
     }
 }
 
+const fetchPosts = async(req, res)=>{
+    try {
+        const data = await Post.find({}).limit(3)
+        res.status(201).json(data)
+    } catch (error) {
+        console.log(error.name)
+        throw error
+    }
+}
+
 module.exports = {
-    createPost
+    createPost, fetchPosts
 }

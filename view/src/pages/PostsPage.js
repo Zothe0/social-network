@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout } from '../redux/authenticationLogic/authActionCreators'
 import { changePostField, clearPostField } from '../redux/postsLogic/postsActionCreators'
-import { PUBLISH_POST } from '../redux/postsLogic/postsTypes'
+import * as types from '../redux/postsLogic/postsTypes'
 
 
 export default function PostsPage(){
@@ -13,6 +13,10 @@ export default function PostsPage(){
     const posts = useSelector(state => state.postsReducer)
     const linkToProfile = `/profile/${auth.userId}`
     
+    window.onscroll = (action)=>{
+        console.log(Math.ceil(window.pageYOffset))
+    }
+
     const logoutApp = async()=>{
         dispatch(logout())
     }
@@ -23,8 +27,12 @@ export default function PostsPage(){
 
     const publish = (e)=>{
         e.preventDefault()
-        dispatch({ type: PUBLISH_POST })
+        dispatch({ type: types.PUBLISH_POST })
         dispatch(clearPostField())
+    }
+
+    const uploadPosts = ()=>{
+        dispatch({ type: types.UPLOAD_POSTS})
     }
 
     return(<>
@@ -33,6 +41,11 @@ export default function PostsPage(){
                 <div className="header__container container">
                     <div className="header__logo">LOGO</div>
                     <div className="header__form">
+                        <button
+                            className="header__btn"
+                            type="button"
+                            onClick={uploadPosts}
+                        >Загрузить посты</button>
                         <label className="header__label" htmlFor="search">Поиск по постам:</label>
                         <input
                             className="header__search"
