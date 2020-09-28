@@ -7,7 +7,7 @@ import { useRoutes } from './hooks/useRoutes'
 
 export default function App() {
 
-    const isAuthorized = useSelector(state => state.registrationReducer.authorized)
+    const isAuthorized = useSelector(state => state.authReducer.authorized)
 
     const Routes = useRoutes(isAuthorized)
 

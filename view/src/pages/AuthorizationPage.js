@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { changeInput, clearInputs, setSubmitEnabled, setSubmitDisabled, authentication, logout } from '../redux/authenticationLogic/authActionCreators'
+import { changeInput, clearInputs, setSubmitEnabled, setSubmitDisabled, authentication, clearMessage } from '../redux/authenticationLogic/authActionCreators'
 import { LOGIN } from '../redux/authenticationLogic/authTypes'
 
 
@@ -10,7 +10,7 @@ export default function AuthorizationPage(){
     // Получаем dispatch из react-redux
     const dispatch = useDispatch()
     // Получаем state из appReducer
-    const app = useSelector(state => state.registrationReducer)
+    const app = useSelector(state => state.authReducer)
     
     
     // Отправляет форму на сервер
@@ -49,19 +49,20 @@ export default function AuthorizationPage(){
     
     useEffect(()=>{
         const data = JSON.parse(localStorage.getItem('userData'))
-        if(data && data.token){
-            dispatch(authentication(data.token))
+        if(data && data.token && data.userNick){
+            dispatch(authentication(data.token, data.userNick))
         }
     }, [dispatch])
 
     const clearForm= async()=>{
         dispatch(clearInputs())
+        dispatch(clearMessage())
     }
     return (<>
-        <div className='container'>
-            <form className='column'>
-                <div className='header'>Авторизация</div>
-                {app.responseMessage? <div className='warn'>{app.responseMessage}</div>: null}
+        <div className='auth-container'>
+            <form className='auth-column'>
+                <div className='auth-header'>Авторизация</div>
+                {app.responseMessage? <div className='auth-warn'>{app.responseMessage}</div>: null}
                 <label htmlFor='nick'>Введите ник или почту</label>
                 <input
                     id='nick'
@@ -80,13 +81,13 @@ export default function AuthorizationPage(){
                     autoComplete='off'
                     value={app.formInputs.password}
                 ></input>
-                <div className='buttons'>
+                <div className='auth-buttons'>
                     <button
                         type='submit'
                         onClick={submitForm}
                         disabled={app.submitButton}
                     >Войти</button>
-                    <Link to='/registration' className='login' onClick={clearForm}>Регистрация</Link>
+                    <Link to='/registration' className='auth-link' onClick={clearForm}>Регистрация</Link>
                 </div>
             </form>
         </div>

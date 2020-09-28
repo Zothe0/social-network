@@ -1,4 +1,4 @@
-// for registrationReducer
+// For registrationReducer
 export const CHANGE_INPUT = 'CHANGE_INPUT'
 export const CLEAR_INPUTS = 'CLEAR_INPUTS'
 export const CLEAR_PASSWORD_INPUT = 'CLEAR_PASSWORD_INPUT'
@@ -10,7 +10,7 @@ export const SET_MESSAGE = 'SET_MESSAGE'
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'
 export const SEND_FORM = 'SEND_FORM'
 export const LOGIN = 'LOGIN'
-export const ADD_TOKEN = 'ADD_TOKEN'
-export const REMOVE_TOKEN = 'REMOVE_TOKEN'
+export const LOGIN_USER = 'LOGIN_USER'
+export const LOGOUT_USER = 'LOGOUT_USER'
 export const IS_AUTH_TRUE = 'IS_AUTH_TRUE'
 export const IS_AUTH_FALSE = 'IS_AUTH_FALSE'

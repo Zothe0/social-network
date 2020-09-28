@@ -1,0 +1,3 @@
+export const CHANGE_POST_FIELD = 'CHANGE_NEW_POST'
+export const CLEAR_POST_FIELD = 'CLEAR_POST_FIELD'
+export const PUBLISH_POST = 'PUBLISH_POST'

@@ -4,9 +4,10 @@ const jwt = require('jsonwebtoken')
 const path = require('path')
 const fs = require('fs')
 const User = require('../model/User')
-const { resolve } = require('path')
 let lastId = null
 filePath = path.resolve(__dirname, '..', 'model', 'lastId.txt')
+const constants = require('../constanst')
+
 
 const registration = async(req, res)=>{
     
@@ -45,7 +46,7 @@ const registration = async(req, res)=>{
                         res()
                     })
                 })
-                res.status(201).json({ok: true, message: 'Успешная регистрация, теперь вы можете войти в свой аккаунт'})
+                res.status(201).json({ok: true, message: 'Успешная регистрация'})
             })
         } catch (error) {
             throw error
@@ -69,8 +70,8 @@ const login = async(req, res)=>{
             if(!isMatch){
                 return res.status(400).json({message:'Неверный пароль, введите заново'})
             }else{
-                const token = jwt.sign({ userId: user.id, exp: 3600 }, 'toor')
-                res.status(201).json({ok: true, token, userId: user.id})
+                const token = jwt.sign({ userId: user.id }, constants.JWTSecret, { expiresIn: '1h' })
+                res.status(201).json({ok: true, token, userNick: user.nickName})
             }
         }else{
             res.status(401).json({ ok: false, message: `Пользователя с ${(mix.includes('@')? 'такой почтой' : 'таким ником')} не существует` })

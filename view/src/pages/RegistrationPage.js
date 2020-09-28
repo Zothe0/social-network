@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled, clearInputs, authentication } from '../redux/authenticationLogic/authActionCreators'
+import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled, clearInputs, authentication, clearMessage } from '../redux/authenticationLogic/authActionCreators'
 
 
 export default function RegistrationPage(){
@@ -9,7 +9,7 @@ export default function RegistrationPage(){
     // Получаем dispatch из react-redux
     const dispatch = useDispatch()
     // Получаем state из appReducer
-    const app = useSelector(state => state.registrationReducer)
+    const app = useSelector(state => state.authReducer)
     
     
     // Отправляет форму на сервер
@@ -47,21 +47,22 @@ export default function RegistrationPage(){
     
     useEffect(()=>{
         const data = JSON.parse(localStorage.getItem('userData'))
-        if(data && data.token){
-            dispatch(authentication(data.token))
+        if(data && data.token && data.userNick){
+            dispatch(authentication(data.token, data.userNick))
         }
     }, [dispatch])
 
     const clearForm= async()=>{
         dispatch(clearInputs())
+        dispatch(clearMessage())
     }
 
     return (<>
-        <div className='container'>
-            <form className='column'>
-                <div className='header'>Регистрация</div>
-                {app.responseMessage? <div className='warn'>{app.responseMessage}</div>: null}
-                {app.warnings.nickName? <label htmlFor='nick' className='warn'>Минимальная длина ника 4 символа</label>: null}
+        <div className='auth-container'>
+            <form className='auth-column'>
+                <div className='auth-header'>Регистрация</div>
+                {app.responseMessage? <div className='auth-warn'>{app.responseMessage}</div>: null}
+                {app.warnings.nickName? <label htmlFor='nick' className='auth-warn'>Минимальная длина ника 4 символа</label>: null}
                 <label htmlFor='nick'>Введите ник</label>
                 <input
                     id='nick'
@@ -71,7 +72,7 @@ export default function RegistrationPage(){
                     autoComplete='off'
                     value={app.formInputs.nickName}
                 ></input>
-                {app.warnings.email? <label htmlFor='nick' className='warn'>Введите корректную почту</label>: null}
+                {app.warnings.email? <label htmlFor='nick' className='auth-warn'>Введите корректную почту</label>: null}
                  <label htmlFor='email'>Введите почту</label>
                 <input
                     id='email'
@@ -81,7 +82,7 @@ export default function RegistrationPage(){
                     autoComplete='off'
                     value={app.formInputs.email}
                 ></input>
-                {app.warnings.password? <label htmlFor='nick' className='warn'>Минимальная длина пароля 6 символов</label>: null}
+                {app.warnings.password? <label htmlFor='nick' className='auth-warn'>Минимальная длина пароля 6 символов</label>: null}
                 <label htmlFor='pass'>Введите пароль</label>
                 <input
                     id='pass'
@@ -91,13 +92,13 @@ export default function RegistrationPage(){
                     autoComplete='off'
                     value={app.formInputs.password}
                 ></input>
-                <div className='buttons'>
+                <div className='auth-buttons'>
                     <button
                         type='submit'
                         onClick={submitForm}
                         disabled={app.submitButton}
                     >Регистрация</button>
-                    <Link to='/auth' className='login' onClick={clearForm}>Вход</Link>
+                    <Link to='/auth' className='auth-link' onClick={clearForm}>Вход</Link>
                 </div>
             </form>
         </div>

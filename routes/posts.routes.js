@@ -1,0 +1,8 @@
+const {Router} = require('express')
+const posts = require('../controller/postsController')
+const router = Router()
+
+// /api/posts
+router.post('/create', posts.createPost)
+
+module.exports = router

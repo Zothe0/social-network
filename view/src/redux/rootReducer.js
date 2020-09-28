@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
-import { registrationReducer } from './authenticationLogic/authReducer'
+import authReducer from './authenticationLogic/authReducer'
+import postsReducer from './postsLogic/postsReducer'
 
 
 export const rootReducer = combineReducers({
-    registrationReducer 
+    authReducer, postsReducer
 })

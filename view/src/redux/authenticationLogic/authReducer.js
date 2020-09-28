@@ -13,10 +13,11 @@ const initialState = {
     submitButton: 'disabled',
     responseMessage: null,
     authorized: false,
-    token: null
+    token: null,
+    userNick: null
 }
 
-export const registrationReducer = (state = initialState, action)=>{
+export default function authReducer(state = initialState, action){
     switch(action.type){
         case types.CHANGE_INPUT:
             return {...state, formInputs: {...state.formInputs, [action.name]: action.value}}
@@ -46,11 +47,11 @@ export const registrationReducer = (state = initialState, action)=>{
         case types.CLEAR_MESSAGE:
             return {...state, responseMessage: null}
 
-        case types.ADD_TOKEN:
-            return {...state, token: action.token}
+        case types.LOGIN_USER:
+            return {...state, token: action.token, userNick: action.userNick}
 
-        case types.REMOVE_TOKEN:
-            return {...state, token: null}
+        case types.LOGOUT_USER:
+            return {...state, token: null, userId: null}
 
         case types.IS_AUTH_TRUE:
             return {...state, authorized: true}
