@@ -1,15 +1,16 @@
-import { call, put, select, takeEvery } from 'redux-saga/effects'
+import { call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects'
 import * as authTypes from './authenticationLogic/authTypes'
 import * as postsTypes from './postsLogic/postsTypes'
 import {request} from './Api'
 import { authentication, clearInputs, clearPasswordInput, logout, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
+import { setLoadingFalse, setLoadingTrue, updatePostList } from './postsLogic/postsActionCreators'
 
 
 export default function* Saga() {
     yield takeEvery(authTypes.SEND_FORM, fetchForm)
     yield takeEvery(authTypes.LOGIN, login)
     yield takeEvery(postsTypes.PUBLISH_POST, publishPost)
-    yield takeEvery(postsTypes.UPLOAD_POSTS, fetchPosts)
+    yield takeLeading(postsTypes.UPLOAD_POSTS, fetchPosts)
 }
 
 // worker Saga: будет запускаться на экшены типа `USER_FETCH_REQUESTED`
@@ -77,7 +78,6 @@ function* fetchForm(action) {
                 yield put(setMessage('Время сессии закончилось'))
             }
         }
-        // yield put(clearPostField())
      } catch (e) {
          throw e
      }
@@ -85,11 +85,17 @@ function* fetchForm(action) {
 
  function* fetchPosts(){
     try {
-        // const response = yield call(request, 'api/posts/upload')
-        const response = yield call(request, 'api/posts/upload')
-        console.log(response)
+        yield put(setLoadingTrue())
+        const posts = yield select(state => state.postsReducer)
+        const body = {
+            loadedPostsQuantity: posts.uploadedPosts.length 
+        }
+        const response = yield call(request, 'api/posts/upload', 'POST', body)
+        yield put(updatePostList(response))
+        yield put(setLoadingFalse())
     } catch (error) {
         console.log(error.name)
+        yield put(setLoadingFalse())
         throw error
     }
  }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useCallback, useRef } from 'react'
 import { verify } from 'jsonwebtoken'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -6,6 +6,7 @@ import { logout, setMessage } from '../redux/authenticationLogic/authActionCreat
 import { changePostField, clearPostField } from '../redux/postsLogic/postsActionCreators'
 import * as types from '../redux/postsLogic/postsTypes'
 import { JWTSecret } from '../constants'
+import PostList from '../components/PostList'
 
 
 export default function PostsPage(){
@@ -13,19 +14,24 @@ export default function PostsPage(){
     const dispatch = useDispatch()
     const auth = useSelector(state => state.authReducer)
     const posts = useSelector(state => state.postsReducer)
-    const linkToProfile = `/profile/${auth.userId}`
+    const linkToProfile = `/profile/${auth.userNick}`
+    const bottomBreackPoint = useRef(null)
+    
     
     const checkTokenExpire = ()=>{
         try {
-            const decode = verify(auth.token, JWTSecret)
+            verify(auth.token, JWTSecret)
             return false
         } catch (error) {
             return true
         }
     }
 
-    window.onscroll = (action)=>{
-        console.log(Math.ceil(window.pageYOffset))
+    window.onmousewheel = (action)=>{
+        console.log(action.deltaY)
+        if(bottomBreackPoint && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1400)) && (action.deltaY>0)){
+                uploadPosts()
+            }
     }
 
     const logoutApp = async()=>{
@@ -47,17 +53,23 @@ export default function PostsPage(){
         }
     }
 
-    const uploadPosts = ()=>{
-        dispatch({ type: types.UPLOAD_POSTS})
-    }
-
+    const uploadPosts = useCallback(()=>{
+        dispatch({ type: types.UPLOAD_POSTS })
+    }, [dispatch])
     // Проверка действительности токена при каждом ререндере страницы
+    // А также загрузка первой партии постов
     useEffect(()=>{
         if(checkTokenExpire()){
             logoutApp()
             dispatch(setMessage('Время сессии закончилось'))
-        }else{}
-    }, [checkTokenExpire, logoutApp])
+        }else{
+            uploadPosts()
+        }
+    }, [])
+
+    useEffect(()=>{
+        console.log(bottomBreackPoint.current.offsetTop)
+    }, [posts.uploadedPosts])
 
     return(<>
         <div className="wrapper">
@@ -65,11 +77,6 @@ export default function PostsPage(){
                 <div className="header__container container">
                     <div className="header__logo">LOGO</div>
                     <div className="header__form">
-                        <button
-                            className="header__btn"
-                            type="button"
-                            onClick={uploadPosts}
-                        >Загрузить посты</button>
                         <label className="header__label" htmlFor="search">Поиск по постам:</label>
                         <input
                             className="header__search"
@@ -117,118 +124,9 @@ export default function PostsPage(){
                         className='content__btn'
                     >Опубликовать</button>
                 </form>
-                <div className="content__item">
-                    <div className="content__header">
-                        <div className="content__info">
-                            <div className="content__avatar">Аватар</div>
-                            <div className="content__nick">Ник</div>
-                        </div>
-                        <div className="content__date">Дата</div>
-                    </div>
-                    <div className="content__body">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat laboriosam eos, eaque libero animi, eligendi, deleniti iusto nemo at dolorem alias magni expedita quas et incidunt ipsa aliquid voluptatibus sunt?
-                    </div>
-                    <div className="content__footer">
-                        <div className="content__statistic">Лайки 340</div>
-                        <div className="content__statistic">Просмотры 3400</div>
-                    </div>
-                </div>
-                <div className="content__item">
-                    <div className="content__header">
-                        <div className="content__info">
-                            <div className="content__avatar">Аватар</div>
-                            <div className="content__nick">Ник</div>
-                        </div>
-                        <div className="content__date">Дата</div>
-                    </div>
-                    <div className="content__body">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                    </div>
-                    <div className="content__footer">
-                        <div className="content__statistic">Лайки 340</div>
-                        <div className="content__statistic">Просмотры 3400</div>
-                    </div>
-                </div>
-                <div className="content__item">
-                    <div className="content__header">
-                        <div className="content__info">
-                            <div className="content__avatar">Аватар</div>
-                            <div className="content__nick">Ник</div>
-                        </div>
-                        <div className="content__date">Дата</div>
-                    </div>
-                    <div className="content__body">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat laboriosam eos, eaque libero animi, eligendi
-                    </div>
-                    <div className="content__footer">
-                        <div className="content__statistic">Лайки 340</div>
-                        <div className="content__statistic">Просмотры 3400</div>
-                    </div>
-                </div>
-                <div className="content__item">
-                    <div className="content__header">
-                        <div className="content__info">
-                            <div className="content__avatar">Аватар</div>
-                            <div className="content__nick">Ник</div>
-                        </div>
-                        <div className="content__date">Дата</div>
-                    </div>
-                    <div className="content__body">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat laboriosam eos, eaque libero animi, eligendi, deleniti iusto nemo at dolorem alias magni expedita quas et incidunt ipsa aliquid voluptatibus sunt?
-                    </div>
-                    <div className="content__footer">
-                        <div className="content__statistic">Лайки 340</div>
-                        <div className="content__statistic">Просмотры 3400</div>
-                    </div>
-                </div>
-                <div className="content__item">
-                    <div className="content__header">
-                        <div className="content__info">
-                            <div className="content__avatar">Аватар</div>
-                            <div className="content__nick">Ник</div>
-                        </div>
-                        <div className="content__date">Дата</div>
-                    </div>
-                    <div className="content__body">
-                        Lorem ipsum
-                    </div>
-                    <div className="content__footer">
-                        <div className="content__statistic">Лайки 340</div>
-                        <div className="content__statistic">Просмотры 3400</div>
-                    </div>
-                </div>
-                <div className="content__item">
-                    <div className="content__header">
-                        <div className="content__info">
-                            <div className="content__avatar">Аватар</div>
-                            <div className="content__nick">Ник</div>
-                        </div>
-                        <div className="content__date">Дата</div>
-                    </div>
-                    <div className="content__body">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat laboriosam eos, eaque libero animi, eligendi, deleniti iusto
-                    </div>
-                    <div className="content__footer">
-                        <div className="content__statistic">Лайки 340</div>
-                        <div className="content__statistic">Просмотры 3400</div>
-                    </div>
-                </div>
-                <div className="content__item">
-                    <div className="content__header">
-                        <div className="content__info">
-                            <div className="content__avatar">Аватар</div>
-                            <div className="content__nick">Ник</div>
-                        </div>
-                        <div className="content__date">Дата</div>
-                    </div>
-                    <div className="content__body">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat laboriosam eos, eaque libero animi, eligendi, deleniti iusto nemo at dolorem alias magni expedita quas et incidunt ipsa aliquid voluptatibus sunt?
-                    </div>
-                    <div className="content__footer">
-                        <div className="content__statistic">Лайки 340</div>
-                        <div className="content__statistic">Просмотры 3400</div>
-                    </div>
-                </div>
+                {posts.loading ? <div className='content__loading'>Загрузка...</div> : null}
+                <PostList uploadedPosts={posts.uploadedPosts}/>
+                <div ref={bottomBreackPoint} className='content__breakpoint'>Посты закончились</div>
             </div>
         </div>
     </>)

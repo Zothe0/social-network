@@ -545,6 +545,11 @@ button {
   border-radius: 3px;
 }
 
+.content__breakpoint {
+  color: #f00;
+  font-size: 18px;
+}
+
 .content__item {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -571,7 +576,7 @@ button {
       -ms-flex-pack: justify;
           justify-content: space-between;
   font-size: 12px;
-  margin-bottom: 9px;
+  margin-bottom: 12px;
 }
 
 .content__info {
@@ -580,15 +585,15 @@ button {
   display: flex;
 }
 
-.content__avatar {
-  margin-right: 5px;
+.content__nick {
+  font-weight: bold;
 }
 
 .content__body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-bottom: 7px;
+  margin-bottom: 12px;
   font-size: 14px;
   line-height: 17px;
 }
