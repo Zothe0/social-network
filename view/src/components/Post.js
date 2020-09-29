@@ -6,7 +6,7 @@ export default function Post({ post }){
         <div className="content__item">
             <div className="content__header">
                 <div className="content__info">
-                    <div className="content__avatar">Аватар</div>
+                    <div className="content__avatar"></div>
                     <div className="content__nick">{post.author}</div>
                 </div>
                 <div className="content__date">{post.date}</div>

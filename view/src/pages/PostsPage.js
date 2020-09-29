@@ -76,18 +76,6 @@ export default function PostsPage(){
             <div className="header">
                 <div className="header__container container">
                     <div className="header__logo">LOGO</div>
-                    <div className="header__form">
-                        <label className="header__label" htmlFor="search">Поиск по постам:</label>
-                        <input
-                            className="header__search"
-                            type="search"
-                            name="search"
-                            id="search"
-                            autoComplete="off"
-                            tabIndex='1'
-                        />
-                        <button className="header__btn" type="submit">Поиск</button>
-                    </div>
                     <div className="header__menu">
                         <div className="header__link">
                             <Link to={linkToProfile}>Профиль</Link>
