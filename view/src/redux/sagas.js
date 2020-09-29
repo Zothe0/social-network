@@ -71,7 +71,6 @@ function* fetchForm(action) {
         }
         const response = yield call(request, '/api/posts/create', 'POST', body)
         if(response.ok){
-            console.log(response.post)
             const body = {
                 loadedPostsQuantity: 0
             }

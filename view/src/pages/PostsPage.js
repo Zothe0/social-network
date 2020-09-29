@@ -16,7 +16,7 @@ export default function PostsPage(){
     const posts = useSelector(state => state.postsReducer)
     const linkToProfile = `/profile/${auth.userNick}`
     const bottomBreackPoint = useRef(null)
-    
+    let previousYOffset = window.pageYOffset 
     
     const checkTokenExpire = ()=>{
         try {
@@ -27,10 +27,12 @@ export default function PostsPage(){
         }
     }
 
-    window.onmousewheel = (action)=>{
-        if(bottomBreackPoint && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1400)) && (action.deltaY>0)){
-                uploadPosts()
-            }
+    window.onscroll = ()=>{
+        if(bottomBreackPoint && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1000)) && (window.pageYOffset > previousYOffset)){
+            console.log(1)
+            uploadPosts()
+            previousYOffset = window.pageYOffset 
+        }
     }
 
     const logoutApp = async()=>{
@@ -62,7 +64,7 @@ export default function PostsPage(){
             logoutApp()
             dispatch(setMessage('Время сессии закончилось'))
         }else{
-            uploadPosts()
+            if(posts.uploadedPosts.length===0)uploadPosts()
         }
     }, [])
 
@@ -74,6 +76,9 @@ export default function PostsPage(){
                     <div className="header__menu">
                         <div className="header__link">
                             <Link to={linkToProfile}>Профиль</Link>
+                        </div>
+                        <div className="header__link">
+                            <Link to='/time'>Время</Link>
                         </div>
                         <button
                             type='button'

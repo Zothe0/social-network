@@ -11,7 +11,7 @@ const createPost = async(req, res)=>{
             likes: 0,
             views: 1})
         await post.save()
-        res.status(200).json({ ok: true, message: 'Пост опубликован', post })
+        res.status(200).json({ ok: true, message: 'Пост опубликован' })
     } catch (error) {
         console.log(error.name)
         throw error
