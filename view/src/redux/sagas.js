@@ -1,8 +1,8 @@
-import { call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects'
+import { call, put, select, takeEvery, takeLeading } from 'redux-saga/effects'
 import * as authTypes from './authenticationLogic/authTypes'
 import * as postsTypes from './postsLogic/postsTypes'
 import {request} from './Api'
-import { authentication, clearInputs, clearPasswordInput, logout, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
+import { authentication, clearInputs, clearPasswordInput, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
 import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from './postsLogic/postsActionCreators'
 
 

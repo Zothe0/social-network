@@ -7,6 +7,7 @@ import { changePostField, clearPostField } from '../redux/postsLogic/postsAction
 import * as types from '../redux/postsLogic/postsTypes'
 import { JWTSecret } from '../constants'
 import PostList from '../components/PostList'
+import useCheckToken from '../hooks/useCheckToken'
 
 
 export default function PostsPage(){
@@ -14,29 +15,17 @@ export default function PostsPage(){
     const dispatch = useDispatch()
     const auth = useSelector(state => state.authReducer)
     const posts = useSelector(state => state.postsReducer)
+    const [checkTokenExpire, logoutApp] = useCheckToken()
     const linkToProfile = `/profile/${auth.userNick}`
     const bottomBreackPoint = useRef(null)
     let previousYOffset = window.pageYOffset 
-    
-    const checkTokenExpire = ()=>{
-        try {
-            verify(auth.token, JWTSecret)
-            return false
-        } catch (error) {
-            return true
-        }
-    }
 
     window.onscroll = ()=>{
-        if(bottomBreackPoint && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1000)) && (window.pageYOffset > previousYOffset)){
-            console.log(1)
+        if(bottomBreackPoint.current && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1000)) && (window.pageYOffset > previousYOffset)){
+            checkTokenExpire()
             uploadPosts()
             previousYOffset = window.pageYOffset 
         }
-    }
-
-    const logoutApp = async()=>{
-        dispatch(logout())
     }
 
     const inputHandler = async(e)=>{
@@ -45,28 +34,21 @@ export default function PostsPage(){
 
     const publish = (e)=>{
         e.preventDefault()
-        if(checkTokenExpire()){
-            logoutApp()
-            dispatch(setMessage('Время сессии закончилось'))
-        }else{
+        if(!checkTokenExpire()){
             dispatch({ type: types.PUBLISH_POST })
             dispatch(clearPostField())
         }
     }
 
     const uploadPosts = useCallback(()=>{
-        dispatch({ type: types.UPLOAD_POSTS })
-    }, [dispatch])
+        if(!checkTokenExpire())dispatch({ type: types.UPLOAD_POSTS })
+    }, [checkTokenExpire, dispatch])
+
     // Проверка действительности токена при каждом ререндере страницы
     // А также загрузка первой партии постов
     useEffect(()=>{
-        if(checkTokenExpire()){
-            logoutApp()
-            dispatch(setMessage('Время сессии закончилось'))
-        }else{
-            if(posts.uploadedPosts.length===0)uploadPosts()
-        }
-    }, [])
+        if(!checkTokenExpire() && posts.uploadedPosts.length===0)uploadPosts()
+    }, [checkTokenExpire, posts.uploadedPosts, uploadPosts])
 
     return(<>
         <div className="wrapper">
