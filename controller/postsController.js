@@ -20,7 +20,7 @@ const createPost = async(req, res)=>{
 
 const fetchPosts = async(req, res)=>{
     try {
-        console.log(req.body.loadedPostsQuantity)
+        // console.log(req.body.loadedPostsQuantity)
         const data = await Post.find({}).sort('-_id').skip(req.body.loadedPostsQuantity).limit(15)
         res.status(201).json(data)
     } catch (error) {

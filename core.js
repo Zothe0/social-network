@@ -12,6 +12,7 @@ server.use('/api/auth', require('./routes/auth.routes'))
 server.use('/api/posts', require('./routes/posts.routes'))
 
 server.use(express.static(path.join(__dirname, 'view', 'build')))
+server.get('*', (req, res)=> res.sendFile(path.join(__dirname, 'view', 'build', 'index.html')))
 async function start(){
     const dataBaseURL = "mongodb+srv://dev-server:toor@test-db.wl4uh.mongodb.net/server?retryWrites=true&w=majority"
 

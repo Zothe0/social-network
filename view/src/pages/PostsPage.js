@@ -28,7 +28,6 @@ export default function PostsPage(){
     }
 
     window.onmousewheel = (action)=>{
-        console.log(action.deltaY)
         if(bottomBreackPoint && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1400)) && (action.deltaY>0)){
                 uploadPosts()
             }
@@ -66,10 +65,6 @@ export default function PostsPage(){
             uploadPosts()
         }
     }, [])
-
-    useEffect(()=>{
-        console.log(bottomBreackPoint.current.offsetTop)
-    }, [posts.uploadedPosts])
 
     return(<>
         <div className="wrapper">

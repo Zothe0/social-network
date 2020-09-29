@@ -19,6 +19,9 @@ export default function postsReducer(state = initialState, action){
         case types.UPDATE_POST_LIST:
             return({ ...state, uploadedPosts: [...state.uploadedPosts, ...action.payload] })
 
+        case types.CLEAR_POST_LIST:
+            return({ ...state, uploadedPosts: []})
+
         case types.SET_LOADING_TRUE:
             return({ ...state, loading: true})
 

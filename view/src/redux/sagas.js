@@ -3,7 +3,7 @@ import * as authTypes from './authenticationLogic/authTypes'
 import * as postsTypes from './postsLogic/postsTypes'
 import {request} from './Api'
 import { authentication, clearInputs, clearPasswordInput, logout, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
-import { setLoadingFalse, setLoadingTrue, updatePostList } from './postsLogic/postsActionCreators'
+import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from './postsLogic/postsActionCreators'
 
 
 export default function* Saga() {
@@ -71,13 +71,14 @@ function* fetchForm(action) {
         }
         const response = yield call(request, '/api/posts/create', 'POST', body)
         if(response.ok){
-
-        }else{
-            if(response.tokenDied){
-                yield put(logout())
-                yield put(setMessage('Время сессии закончилось'))
+            console.log(response.post)
+            const body = {
+                loadedPostsQuantity: 0
             }
-        }
+            const update = yield call(request, 'api/posts/upload', 'POST', body)
+            yield put(clearPostList())
+            yield put(updatePostList(update))
+        }else{}
      } catch (e) {
          throw e
      }
@@ -88,7 +89,7 @@ function* fetchForm(action) {
         yield put(setLoadingTrue())
         const posts = yield select(state => state.postsReducer)
         const body = {
-            loadedPostsQuantity: posts.uploadedPosts.length 
+            loadedPostsQuantity: posts.uploadedPosts.length
         }
         const response = yield call(request, 'api/posts/upload', 'POST', body)
         yield put(updatePostList(response))
