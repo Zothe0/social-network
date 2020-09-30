@@ -2,7 +2,6 @@ import React, {useEffect, useCallback} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import useCheckToken from '../hooks/useCheckToken'
-import { logout } from '../redux/authenticationLogic/authActionCreators'
 
 
 export default function ProfilePage(){
