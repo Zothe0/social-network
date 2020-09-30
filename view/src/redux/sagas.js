@@ -62,11 +62,11 @@ function* fetchForm(action) {
      try {
         const posts = yield select(state => state.postsReducer)
         const app = yield select(state => state.authReducer)
-        const date = new Date()
+        const date = Date.now()
         const body = {
             token: app.token,
             text: posts.postField,
-            date: date.toLocaleDateString(),
+            date: date,
             author: app.userNick
         }
         const response = yield call(request, '/api/posts/create', 'POST', body)

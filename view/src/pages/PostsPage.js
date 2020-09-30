@@ -28,8 +28,14 @@ export default function PostsPage(){
         }
     }
 
-    const inputHandler = async(e)=>{
+    const inputHandler = (e)=>{
         dispatch(changePostField(e.target.value))
+    }
+
+    const enterHandler = (e)=>{
+        if(e.keyCode === 13){
+            publish(e)
+        }
     }
 
     const publish = (e)=>{
@@ -87,6 +93,7 @@ export default function PostsPage(){
                         tabIndex='2'
                         rows='3'
                         onChange={inputHandler}
+                        onKeyDown={enterHandler}
                         value={posts.postField}
                     ></textarea>
                     <button

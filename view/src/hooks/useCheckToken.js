@@ -2,13 +2,13 @@ import { useCallback, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { verify } from 'jsonwebtoken'
 import { logout, setMessage } from '../redux/authenticationLogic/authActionCreators'
+import {JWTSecret} from '../constants'
 
 
 export default function useCheckToken(){
 
     const dispatch = useDispatch()
     const token = useSelector(state => state.authReducer.token)
-    const [JWTSecret, SetJWTSecret] = useState('b4KFHX6b3')
 
     const logoutApp = useCallback(()=>{
         dispatch(logout())
