@@ -32,6 +32,11 @@ export default function PostsPage(){
         dispatch(changePostField(e.target.value))
     }
 
+    const checkInput = ()=>{
+        if(posts.postField==='') return false
+        else return true
+    }
+
     const enterHandler = (e)=>{
         if(e.keyCode === 13){
             publish(e)
@@ -40,10 +45,10 @@ export default function PostsPage(){
 
     const publish = (e)=>{
         e.preventDefault()
-        if(!checkTokenExpire()){
+        if(!checkTokenExpire() && checkInput()){
             dispatch({ type: types.PUBLISH_POST })
             dispatch(clearPostField())
-        }
+        }else dispatch(setMessage('Пост не может быть пустым'))
     }
 
     const uploadPosts = useCallback(()=>{
@@ -81,6 +86,7 @@ export default function PostsPage(){
                     className='content__form'
                     onSubmit={publish}
                 >
+                    <div className='auth-warn'>{auth.responseMessage}</div>
                     <label
                         className='content__label'
                         htmlFor='textarea'

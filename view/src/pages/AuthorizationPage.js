@@ -30,12 +30,9 @@ export default function AuthorizationPage(){
 
     // Функция для проверки полей инпутов
     const checkInputs = useCallback(()=>{
-        if(app.formInputs.nickName===''){
-            return false
-        }else if(app.formInputs.password===''){
-            return false
-        }
-        return true
+        if(app.formInputs.nickName==='') return false
+        else if(app.formInputs.password==='') return false
+        else return true
     }, [app.formInputs.nickName, app.formInputs.password])
 
     // Следим за изменением инпутов, и при их изменении, проверяем пустые ли они, если все поля заполнены, кнопка становится активной
