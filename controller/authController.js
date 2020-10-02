@@ -49,6 +49,7 @@ const registration = async(req, res)=>{
                 res.status(201).json({ok: true, message: 'Успешная регистрация'})
             })
         } catch (error) {
+            res.status(501).json({ok: false, message: 'Ошибка на сервере'})
             throw error
         }
     }
@@ -77,7 +78,7 @@ const login = async(req, res)=>{
             res.status(401).json({ ok: false, message: `Пользователя с ${(mix.includes('@')? 'такой почтой' : 'таким ником')} не существует` })
         }
     } catch (error) {
-        res.status(500).json({message: 'Пизда серваку...'})
+        res.status(500).json({message: 'Ошибка на сервере'})
         throw error
     }
 }
