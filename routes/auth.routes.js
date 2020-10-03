@@ -3,7 +3,8 @@ const { body } = require('express-validator')
 const auth = require('../controller/authController')
 const router = Router()
 
-// /api/auth
+// /api/auth роутинг
+// Вторым параметром передаём мидлвару валидации
 router.post('/registration',[
     body('nickName').trim().isLength({ min: 4 }),
     body('email').trim().isEmail().normalizeEmail(),

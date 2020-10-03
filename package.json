@@ -5,8 +5,8 @@
   "main": "core.js",
   "scripts": {
     "dev-serv": "nodemon core.js",
-    "client": "npm run start --prefix view",
-    "dev": "concurrently \"npm run dev-serv\" \"npm run client\"",
+    "dev-client": "npm run start --prefix view",
+    "dev": "concurrently \"npm run dev-serv\" \"npm run dev-client\"",
     "build": "npm run build --prefix view",
     "start": "node core.js"
   },

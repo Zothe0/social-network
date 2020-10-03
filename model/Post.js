@@ -1,5 +1,6 @@
 const {Schema, model} = require('mongoose')
 
+// Схема пользователя, обозначает какие поля есть у поста их тип и свойства
 const schema = Schema({
     text:{ type: String, required: true },
     author:{ type: String, index: true, required: true } ,

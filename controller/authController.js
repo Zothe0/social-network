@@ -4,48 +4,38 @@ const jwt = require('jsonwebtoken')
 const path = require('path')
 const fs = require('fs')
 const User = require('../model/User')
-let lastId = null
-filePath = path.resolve(__dirname, '..', 'model', 'lastId.txt')
 const constants = require('../constants')
 
-
+// Контроллер регистрации
 const registration = async(req, res)=>{
     
+    // Достаём результат валидации произведённой в мидлваре
     const errors = validationResult(req)
-    const saltRounds = 10
     const fault = errors.errors
 
+    const saltRounds = 10
+    // Если есть ошибки валидации отправляет их на фронт
     if (!errors.isEmpty()) {
         return res.status(400).json({ ok: false, message: 'ошибка регистрации' , fault})
     }
 
+    // Проверяет на уникальность ник и почту
     const {nickName, email, password} = req.body
     const checkNick = await User.findOne({nickName})
     const checkEmail= await User.findOne({email})
+    // Если не уникально
     if(checkNick || checkEmail){
         const paste = checkNick ? 'таким ником' : 'такой почтой'
         res.status(400).json({ok: false, message: `Пользователь с ${paste} уже зарегистрирован`})
+    // Иначе продолжает записывать
     }else{
         try {
+            // Хешируем пароль
             await bcrypt.hash(password, saltRounds, async(err, hash)=>{
-                if(!lastId){
-                    lastId= await new Promise((resolve, reject)=>{
-                        fs.readFile(filePath, 'utf-8', (err, content) =>{
-                            if(err) throw err
-                            content = Number(content)
-                            resolve(content)
-                        })
-                    })
-                }
-                user = new User({ id: lastId, nickName, email, password: hash})
+                // Сохраняет юзера в бд
+                user = new User({ nickName, email, password: hash})
                 await user.save()
-                await new Promise((res)=>{
-                    lastId++
-                    fs.writeFile(filePath, lastId, err =>{
-                        if(err) throw err
-                        res()
-                    })
-                })
+                
                 res.status(201).json({ok: true, message: 'Успешная регистрация'})
             })
         } catch (error) {
@@ -55,25 +45,32 @@ const registration = async(req, res)=>{
     }
 }
 
+// Контроллер логина
 const login = async(req, res)=>{
     try {
+        // Достаёт ник/почту и пароль из запроса
         const {mix, password} = req.body
-
+        // Проверяет существует ли юзер с такой почтой/ником
         const checkNick = await User.findOne({nickName: mix})
         const checkEmail= await User.findOne({email: mix})
 
+        // Если найден юзер с такой почтой/ником
         if(checkNick || checkEmail){
             let user = null
-
+            // Если нам передали почту то user это почта, иначе это ник
             if(checkNick){user = checkNick}else{user = checkEmail}
-            const isMatch = await bcrypt.compare(password, user.password)
 
+            // Провееряет пароли
+            const isMatch = await bcrypt.compare(password, user.password)
             if(!isMatch){
                 return res.status(400).json({message:'Неверный пароль, введите заново'})
             }else{
+                // Создаёт jwt токен который истекает через час
                 const token = jwt.sign({ userId: user.id }, constants.JWTSecret, { expiresIn: '1h' })
+                // Отправляет на фронт ник и токен
                 res.status(201).json({ok: true, token, userNick: user.nickName})
             }
+        // Если юзер не найден
         }else{
             res.status(401).json({ ok: false, message: `Пользователя с ${(mix.includes('@')? 'такой почтой' : 'таким ником')} не существует` })
         }

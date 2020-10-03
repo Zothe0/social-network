@@ -2,7 +2,7 @@ const {Router} = require('express')
 const posts = require('../controller/postsController')
 const router = Router()
 
-// /api/posts
+// /api/posts роутинг
 router.post('/create', posts.createPost)
 
 router.post('/upload', posts.fetchPosts)
