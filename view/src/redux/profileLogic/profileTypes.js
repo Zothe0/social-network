@@ -1,0 +1,1 @@
+export const SEND_AVATAR_IMAGE = 'SEND_AVATAR_IMAGE'
