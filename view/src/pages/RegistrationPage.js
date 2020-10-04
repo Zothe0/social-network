@@ -54,6 +54,7 @@ export default function RegistrationPage(){
     }
 
     return (<>
+        <title>Регистрация</title>
         <div className='auth-container'>
             <form className='auth-column'>
                 <div className='auth-header'>Регистрация</div>

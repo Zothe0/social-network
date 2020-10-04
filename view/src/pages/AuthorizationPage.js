@@ -56,6 +56,7 @@ export default function AuthorizationPage(){
         dispatch(clearMessage())
     }
     return (<>
+        <title>Вход</title>
         <div className='auth-container'>
             <form className='auth-column'>
                 <div className='auth-header'>Авторизация</div>

@@ -1,6 +1,7 @@
 import React, {useEffect, useCallback} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
+import Header from '../components/Header'
 import useCheckToken from '../hooks/useCheckToken'
 
 
@@ -16,12 +17,7 @@ export default function ProfilePage(){
     }, [checkTokenExpire])
 
     return(<>
-        Профиль
-        <div>Айди профиля {id}</div>
-        <button
-            type='button'
-            onClick={logoutApp}
-        >Выйти</button>
-        <Link to='/posts'>Назад к постам</Link>
+        <title>Профиль</title>
+        <Header/>
     </>)
 }

@@ -36,34 +36,41 @@ export default function Post({ post, currentTime }){
         else if(Math.floor(timeDiffSec/60)<119) return 'час назад'
         else if(Math.floor(timeDiffSec/60)<179) return 'два часа назад'
         else if(Math.floor(timeDiffSec/60)<239) return 'три часа назад'
-        else if((currentDay === postDay) && (currentMonth === postMonth) && (currentYear === postYear)) return `сегодня в ${postHour}:${postMin}`
-        else if((currentDay === (postDay+1)) && (currentMonth === postMonth) && (currentYear === postYear)) return `вчера в ${postHour}:${postMin}`
+        else if((currentDay === postDay) && (currentMonth === postMonth) && (currentYear === postYear)){
+            const formatedMin = postMin<10? `0${postMin}`: postMin
+            return `сегодня в ${postHour}:${formatedMin}`
+        }
+        else if((Math.floor(timeDiffSec/3600)<48)) {
+            const formatedMin = postMin<10? `0${postMin}`: postMin
+            return `вчера в ${postHour}:${formatedMin}`
+        }
         else if(currentYear === postYear){
+            const formatedMin = postMin<10? `0${postMin}`: postMin
             switch(postMonth){
                 case 0:
-                    return `${postDay} янв в ${postHour}:${postMin}`
+                    return `${postDay} янв в ${postHour}:${formatedMin}`
                 case 1:
-                    return `${postDay} фев в ${postHour}:${postMin}`
+                    return `${postDay} фев в ${postHour}:${formatedMin}`
                 case 2:
-                    return `${postDay} мар в ${postHour}:${postMin}`
+                    return `${postDay} мар в ${postHour}:${formatedMin}`
                 case 3:
-                    return `${postDay} апр в ${postHour}:${postMin}`
+                    return `${postDay} апр в ${postHour}:${formatedMin}`
                 case 4:
-                    return `${postDay} мая в ${postHour}:${postMin}`
+                    return `${postDay} мая в ${postHour}:${formatedMin}`
                 case 5:
-                    return `${postDay} июн в ${postHour}:${postMin}`
+                    return `${postDay} июн в ${postHour}:${formatedMin}`
                 case 6:
-                    return `${postDay} июл в ${postHour}:${postMin}`
+                    return `${postDay} июл в ${postHour}:${formatedMin}`
                 case 7:
-                    return `${postDay} авг в ${postHour}:${postMin}`
+                    return `${postDay} авг в ${postHour}:${formatedMin}`
                 case 8:
-                    return `${postDay} сен в ${postHour}:${postMin}`
+                    return `${postDay} сен в ${postHour}:${formatedMin}`
                 case 9:
-                    return `${postDay} окт в ${postHour}:${postMin}`
+                    return `${postDay} окт в ${postHour}:${formatedMin}`
                 case 10:
-                    return `${postDay} ноя в ${postHour}:${postMin}`
+                    return `${postDay} ноя в ${postHour}:${formatedMin}`
                 case 11:
-                    return `${postDay} дек в ${postHour}:${postMin}`
+                    return `${postDay} дек в ${postHour}:${formatedMin}`
                 default:
                     return 'некорректный месяц'
             }

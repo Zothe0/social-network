@@ -4,7 +4,6 @@ import AuthorizationPage from './pages/AuthorizationPage'
 import PostsPage from './pages/PostsPage'
 import RegistrationPage from './pages/RegistrationPage'
 import ProfilePage from './pages/ProfilePage'
-import TimePage from './pages/TimePage'
 import { useSelector } from 'react-redux'
 
 
@@ -18,9 +17,6 @@ export default function Routes(){
                 </Route>
                 <Route path='/profile/:id'>
                     <ProfilePage/>
-                </Route>
-                <Route path='/time'>
-                    <TimePage/>
                 </Route>
                 <Route path='/'>
                     <Redirect to='/posts'/>
