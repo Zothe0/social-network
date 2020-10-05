@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { verify } from 'jsonwebtoken'
 import { logout, setMessage } from '../redux/authenticationLogic/authActionCreators'
-import {JWTSecret} from '../constants'
+import {JWT_SECRET} from '../constants'
 
 
 export default function useCheckToken(){
@@ -17,7 +17,7 @@ export default function useCheckToken(){
 
     const checkTokenExpire = useCallback(()=>{
         try {
-            verify(token, JWTSecret)
+            verify(token, JWT_SECRET)
             return false
         } catch (error) {
             logoutApp()

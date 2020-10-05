@@ -1,7 +1,9 @@
-const { request } = require("../view/src/redux/Api")
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 const loadAvatar = (req, res)=>{
-    console.log(req)
+    console.log('Recive request')
+    console.log(req.file)
     res.status(200).json({ ok: true })
 }
 

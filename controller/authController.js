@@ -66,7 +66,7 @@ const login = async(req, res)=>{
                 return res.status(400).json({message:'Неверный пароль, введите заново'})
             }else{
                 // Создаёт jwt токен который истекает через час
-                const token = jwt.sign({ userId: user.id }, constants.JWTSecret, { expiresIn: '1h' })
+                const token = jwt.sign({ userId: user.id }, constants.JWT_SECRET, { expiresIn: '1h' })
                 // Отправляет на фронт ник и токен
                 res.status(201).json({ok: true, token, userNick: user.nickName})
             }

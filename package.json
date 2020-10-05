@@ -4,9 +4,9 @@
   "description": "",
   "main": "core.js",
   "scripts": {
-    "dev-serv": "nodemon core.js",
+    "dev-server": "nodemon core.js",
     "dev-client": "npm run start --prefix view",
-    "dev": "concurrently \"npm run dev-serv\" \"npm run dev-client\"",
+    "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
     "build": "npm run build --prefix view",
     "start": "node core.js"
   },
@@ -18,7 +18,9 @@
     "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.5",
-    "shortid": "^2.2.15"
+    "multer": "^1.4.2",
+    "shortid": "^2.2.15",
+    "webp-converter": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

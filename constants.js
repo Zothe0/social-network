@@ -1,6 +1,6 @@
-const JWTSecret = 'b4KFHX6b3'
+const JWT_SECRET = 'b4KFHX6b3'
 const PORT = 5000
 
 module.exports = {
-    JWTSecret, PORT
+    JWT_SECRET, PORT
 }
