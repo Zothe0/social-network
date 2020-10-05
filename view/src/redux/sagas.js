@@ -47,7 +47,7 @@ function* fetchForm(action) {
         const response = yield call(request, '/api/auth/login', 'POST', action.body)
 
         if(response.ok){
-            yield put(authentication(response.token, response.userNick))
+            yield put(authentication(response.token, response.userNick, response.avatarUrl))
             yield put(clearInputs())
         }else{
             yield put(clearPasswordInput())

@@ -30,8 +30,19 @@ export default function ProfilePage(){
         }
     }
 
+    const ibg = ()=>{
+        let ibg=document.querySelectorAll(".ibg");
+        for (var i = 0; i < ibg.length; i++) {
+            if(ibg[i].querySelector('img')){
+                ibg[i].style.backgroundImage = 'url('+ibg[i].querySelector('img').getAttribute('src')+')';
+                }
+            }
+        }
+
     useEffect(()=>{
-        checkTokenExpire()
+        if(!checkTokenExpire()){
+            ibg()
+        }
     }, [checkTokenExpire])
 
     return(<>
@@ -40,8 +51,8 @@ export default function ProfilePage(){
         <div className='wrapper'>
             <div className='profile'>
                 <div className='profile__container'>
-                    <div className='profile__avatar'>
-                        <img src='/model/static/images/avatars/default.webp'></img>
+                    <div className='profile__avatar ibg'>
+                        <img src={`${auth.avatarUrl}`}></img>
                     </div>
                     <div className='auth-warn'>{auth.responseMessage}</div>
                     <div className='profile__header'>Загрузить фотографию</div>

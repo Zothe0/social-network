@@ -400,6 +400,17 @@ button {
   border-radius: 3px;
 }
 
+.ibg {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.ibg img {
+  display: none;
+}
+
 .auth-container {
   display: -webkit-box;
   display: -ms-flexbox;

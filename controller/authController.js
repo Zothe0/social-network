@@ -5,6 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const User = require('../model/User')
 const constants = require('../constants')
+const { PUBLIC_URL } = require('../constants')
 
 // Контроллер регистрации
 const registration = async(req, res)=>{
@@ -32,8 +33,9 @@ const registration = async(req, res)=>{
         try {
             // Хешируем пароль
             await bcrypt.hash(password, saltRounds, async(err, hash)=>{
+                const defaultAvatarPath = `${PUBLIC_URL}/images/avatars/default.webp`
                 // Сохраняет юзера в бд
-                user = new User({ nickName, email, password: hash})
+                user = new User({ nickName, email, password: hash, avatarUrl: defaultAvatarPath})
                 await user.save()
                 
                 res.status(201).json({ok: true, message: 'Успешная регистрация'})
@@ -68,7 +70,7 @@ const login = async(req, res)=>{
                 // Создаёт jwt токен который истекает через час
                 const token = jwt.sign({ userId: user.id }, constants.JWT_SECRET, { expiresIn: '1h' })
                 // Отправляет на фронт ник и токен
-                res.status(201).json({ok: true, token, userNick: user.nickName})
+                res.status(201).json({ok: true, token, userNick: user.nickName, avatarUrl: user.avatarUrl})
             }
         // Если юзер не найден
         }else{
