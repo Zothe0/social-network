@@ -1,11 +1,8 @@
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
-const webp=require('webp-converter')
 const constants = require('./constants')
 const server = express()
-const upload = require('./middlewares/fileUploading')
-const fs = require('fs')
 
 // Позволяет использовать json в epxress
 server.use(express.json({extended: true}))
@@ -13,18 +10,7 @@ server.use(express.json({extended: true}))
 // Роутинг
 server.use('/api/auth', require('./routes/auth.routes'))
 server.use('/api/posts', require('./routes/posts.routes'))
-// server.use('/api/profile', require('./routes/profile.routes'))
-server.post('/api/profile/load-avatar', upload.single('avatar'), async(req, res)=>{
-    const file = req.file
-    if(file){
-        const outputFile = `${file.destination}${file.filename.split('.')[0]}.webp`
-        await webp.cwebp(file.path, outputFile, '-q 65')
-        res.status(201).json({ ok: true })
-        fs.unlink(file.path, err=> {if(err) throw err})
-    }else{
-        res.status(401).json({ ok: false, message: 'Неверный тип файла' })
-    }
-})
+server.use('/api/profile', require('./routes/profile.routes'))
 
 
 // При подключении к серверу отдаётся страничка с реактом

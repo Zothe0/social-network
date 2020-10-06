@@ -1,11 +1,10 @@
-import { request } from '../redux/Api'
 import React, {useEffect, useCallback, useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import Header from '../components/Header'
 import useCheckToken from '../hooks/useCheckToken'
-import { setMessage } from '../redux/authenticationLogic/authActionCreators'
-import { PUBLIC_URL } from '../constants'
+import { setFileInput } from '../redux/profileLogic/profileActionCreators'
+import { SEND_AVATAR_IMAGE } from '../redux/profileLogic/profileTypes'
 
 
 export default function ProfilePage(){
@@ -16,18 +15,14 @@ export default function ProfilePage(){
     const [checkTokenExpire, logoutApp] = useCheckToken()
     const file= useRef(null)
 
+
+
     const formHandler = async(e)=>{
         e.preventDefault()
-        if(!checkTokenExpire()){
-            const response = await request('/api/profile/load-avatar', 'POST', new FormData(e.target), {})
-            if(response.ok){
-                file.current.value=null
-            }
-            else{
-                dispatch(setMessage(response.message))
-                file.current.value=null
-            }
-        }
+    console.log(1)
+        const form = new FormData(e.target)
+        form.append('userNick', `${auth.userNick}`)
+        if(!checkTokenExpire()) dispatch({ type: SEND_AVATAR_IMAGE, form })
     }
 
     const ibg = ()=>{
@@ -42,6 +37,7 @@ export default function ProfilePage(){
     useEffect(()=>{
         if(!checkTokenExpire()){
             ibg()
+            dispatch(setFileInput(file.current))
         }
     }, [checkTokenExpire])
 

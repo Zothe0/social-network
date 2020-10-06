@@ -40,13 +40,6 @@ export default function RegistrationPage(){
             dispatch(setSubmitDisabled())
         }
     }, [app.formInputs, checkInputs, dispatch])
-    
-    useEffect(()=>{
-        const data = JSON.parse(localStorage.getItem('userData'))
-        if(data && data.token && data.userNick){
-            dispatch(authentication(data.token, data.userNick))
-        }
-    }, [dispatch])
 
     const clearForm= async()=>{
         dispatch(clearInputs())

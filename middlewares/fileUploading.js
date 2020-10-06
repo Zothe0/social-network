@@ -3,7 +3,7 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
     destination(req, file, cb){
-        cb(null, 'uploads/')
+        cb(null, 'model/static/images/avatars/')
     },
     filename(req, file, cb){
         cb(null, `${Math.floor(Date.now()/1000)}-${file.originalname}`)

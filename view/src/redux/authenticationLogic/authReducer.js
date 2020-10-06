@@ -60,6 +60,9 @@ export default function authReducer(state = initialState, action){
         case types.IS_AUTH_FALSE:
             return {...state, authorized: false}
 
+        case types.CHANGE_AVATAR_URL:
+            return {...state, avatarUrl: action.newAvatarUrl}
+
         default:
             return state
     }

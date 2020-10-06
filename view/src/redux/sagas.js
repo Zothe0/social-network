@@ -1,8 +1,9 @@
 import { call, put, select, takeEvery, takeLeading } from 'redux-saga/effects'
 import * as authTypes from './authenticationLogic/authTypes'
 import * as postsTypes from './postsLogic/postsTypes'
+import * as profileTypes from './profileLogic/profileTypes'
 import {request} from './Api'
-import { authentication, clearInputs, clearPasswordInput, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
+import { authentication, changeAvatarUrl, clearInputs, clearPasswordInput, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
 import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from './postsLogic/postsActionCreators'
 
 
@@ -11,6 +12,7 @@ export default function* Saga() {
     yield takeEvery(authTypes.LOGIN, login)
     yield takeEvery(postsTypes.PUBLISH_POST, publishPost)
     yield takeLeading(postsTypes.UPLOAD_POSTS, fetchPosts)
+    yield takeLeading(profileTypes.SEND_AVATAR_IMAGE, sendAvatarImage)
 }
 
 // worker Saga: будет запускаться на экшены типа `USER_FETCH_REQUESTED`
@@ -47,7 +49,7 @@ function* fetchForm(action) {
         const response = yield call(request, '/api/auth/login', 'POST', action.body)
 
         if(response.ok){
-            yield put(authentication(response.token, response.userNick, response.avatarUrl))
+            yield put(authentication(response.token, response.userNick))
             yield put(clearInputs())
         }else{
             yield put(clearPasswordInput())
@@ -84,8 +86,8 @@ function* fetchForm(action) {
  }
 
  function* fetchPosts(){
+    yield put(setLoadingTrue())
     try {
-        yield put(setLoadingTrue())
         const posts = yield select(state => state.postsReducer)
         const body = {
             loadedPostsQuantity: posts.uploadedPosts.length
@@ -98,4 +100,22 @@ function* fetchForm(action) {
         yield put(setLoadingFalse())
         throw error
     }
+ }
+
+ function* sendAvatarImage(action){
+    yield put(setLoadingTrue())
+    const fileInput = yield select(state => state.profileReducer.fileInputRef)
+    try {
+        const response = yield call(request, '/api/profile/load-avatar', 'POST', action.form, {})
+        if(response.ok){
+            console.log(response.avatarUrl)
+            yield put(changeAvatarUrl(response.avatarUrl))
+        }
+        else{
+            yield put(setMessage(response.message))
+        }
+     } catch (error) {
+        throw error
+     }
+     fileInput.value=null
  }

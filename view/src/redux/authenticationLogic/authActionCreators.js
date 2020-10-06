@@ -36,12 +36,12 @@ export const setSubmitEnabled = ()=>{
 export const setSubmitDisabled = ()=>{
     return({ type: types.SET_SUBMIT_DISABLED })
 }
-export const authentication = (token, userNick, avatarUrl)=>{
+export const authentication = (token, userNick)=>{
     return async(dispatch, getState)=>{
         if(!localStorage.getItem('userData')){
-            localStorage.setItem('userData', JSON.stringify({token, userNick, avatarUrl}))
+            localStorage.setItem('userData', JSON.stringify({token, userNick}))
         }
-        await dispatch({ type: types.LOGIN_USER, token, userNick, avatarUrl})
+        await dispatch({ type: types.LOGIN_USER, token, userNick})
         const state = getState()
         if(!!state.authReducer.token){
             dispatch({ type: types.IS_AUTH_TRUE })
@@ -57,4 +57,8 @@ export const logout = ()=>{
             dispatch({ type: types.IS_AUTH_FALSE })
         }
     }
+}
+
+export const changeAvatarUrl = (newAvatarUrl)=>{
+    return ({ type: types.CHANGE_AVATAR_URL, newAvatarUrl })
 }

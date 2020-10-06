@@ -1,11 +1,12 @@
 const {Router} = require('express')
-const multer = require('multer')
 const profile = require('../controller/profileController')
 const router = Router()
-const upload = multer({ dest: '/uploads'})
+const upload = require('../middlewares/fileUploading')
 
 
 // /api/profile роутинг
 router.post('/load-avatar', upload.single('avatar'), profile.loadAvatar)
+
+router.get('/avatar-url', )
 
 module.exports = router

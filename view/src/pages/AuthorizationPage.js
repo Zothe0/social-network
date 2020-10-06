@@ -47,7 +47,7 @@ export default function AuthorizationPage(){
     useEffect(()=>{
         const data = JSON.parse(localStorage.getItem('userData'))
         if(data && data.token){
-            dispatch(authentication(data.token, data.userNick, data.avatarUrl))
+            dispatch(authentication(data.token, data.userNick))
         }
     }, [dispatch])
 
