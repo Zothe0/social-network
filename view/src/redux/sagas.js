@@ -5,6 +5,7 @@ import * as profileTypes from './profileLogic/profileTypes'
 import {request} from './Api'
 import { authentication, changeAvatarUrl, clearInputs, clearPasswordInput, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
 import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from './postsLogic/postsActionCreators'
+import { setCurrentProfileAvatarUrl } from './profileLogic/profileActionCreators'
 
 
 export default function* Saga() {
@@ -14,6 +15,7 @@ export default function* Saga() {
     yield takeLeading(postsTypes.UPLOAD_POSTS, fetchPosts)
     yield takeLeading(profileTypes.SEND_AVATAR_IMAGE, sendAvatarImage)
     yield takeLeading(authTypes.GET_AVATAR_URL, getAvatarUrl)
+    yield takeLeading(profileTypes.UPLOAD_CURRENT_PROFILE_AVATAR_URL, uploadCurrentProfileAvatarUrl)
 }
 
 // worker Saga: будет запускаться на экшены типа `USER_FETCH_REQUESTED`
@@ -126,15 +128,27 @@ function* getAvatarUrl(action){
         const body = {
             nickName: action.nickName
         }
-
-        const response = yield call(request, '/api/profile/avatar-url', 'POST', body )
+        const response = yield call(request, '/api/profile/avatar-url', 'POST', body)
         if(response.ok){
             yield put(changeAvatarUrl(response.avatarUrl))
         }
-        else{
-
-        }
+        else{}
     } catch (error) {
-        
+        throw error
+    }
+}
+
+export function* uploadCurrentProfileAvatarUrl(action){
+    try {
+        const body = {
+            nickName: action.nickName
+        }
+        const response = yield call(request, '/api/profile/avatar-url', 'POST', body)
+        if(response.ok){
+            yield put(setCurrentProfileAvatarUrl(response.avatarUrl))
+        }
+        else{}
+    } catch (error) {
+        throw error
     }
 }
