@@ -40,7 +40,7 @@ export default function Post({ post, currentTime }){
             const formatedMin = postMin<10? `0${postMin}`: postMin
             return `сегодня в ${postHour}:${formatedMin}`
         }
-        else if((Math.floor(timeDiffSec/3600)<48)) {
+        else if((currentDay === postDay+1 && currentMonth === postMonth && currentYear === postYear) || (postDay > currentDay && ((currentMonth === postMonth+1 && currentYear === postYear) || (postMonth - currentMonth === 11 && currentYear - postYear === 1)))){
             const formatedMin = postMin<10? `0${postMin}`: postMin
             return `вчера в ${postHour}:${formatedMin}`
         }

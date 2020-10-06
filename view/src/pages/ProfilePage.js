@@ -18,10 +18,9 @@ export default function ProfilePage(){
     const [checkTokenExpire, logoutApp] = useCheckToken()
     const file= useRef(null)
 
-
     const getAvatarUrl = useCallback(async()=>{
-        dispatch({ type: GET_AVATAR_URL, nickName: auth.userNick })
-    }, [dispatch, auth.userNick])
+        dispatch({ type: GET_AVATAR_URL, nickName: id })
+    }, [dispatch, id])
 
     useEffect(()=>{
         if(!checkTokenExpire()){
