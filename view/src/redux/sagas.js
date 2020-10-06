@@ -118,6 +118,7 @@ function* sendAvatarImage(action){
         throw error
      }
      fileInput.value=null
+    yield put(setLoadingFalse())
 }
 
 function* getAvatarUrl(action){

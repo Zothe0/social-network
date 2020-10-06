@@ -5,7 +5,7 @@ const upload = require('../middlewares/fileUploading')
 
 
 // /api/profile роутинг
-router.post('/load-avatar', upload.single('avatar'), profile.loadAvatar)
+router.post('/load-avatar', upload.single('avatar'), profile.changeAvatar)
 
 router.post('/avatar-url', profile.getAvatarUrl)
 

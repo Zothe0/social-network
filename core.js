@@ -16,7 +16,7 @@ server.use('/api/profile', require('./routes/profile.routes'))
 // При подключении к серверу отдаётся страничка с реактом
 server.get('/model/static/*', express.static(path.join(__dirname, 'model', 'static')), (req, res)=>{
     res.sendFile(path.join(__dirname, req.path))
-    console.log(req.path)
+    // console.log(req.path)
 } )
 
 server.get('*', express.static(path.join(__dirname, 'view', 'build')), (req, res)=> res.sendFile(path.join(__dirname, 'view', 'build', 'index.html')))

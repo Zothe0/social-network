@@ -11,7 +11,7 @@ import { SEND_AVATAR_IMAGE } from '../redux/profileLogic/profileTypes'
 
 
 export default function ProfilePage(){
-    const posts = useSelector(state => state.postsReducer)
+    const store = useSelector(state => state)
     const auth = useSelector(state => state.authReducer)
     const dispatch = useDispatch()
     const {id} = useParams()
@@ -21,15 +21,24 @@ export default function ProfilePage(){
 
     const getAvatarUrl = useCallback(async()=>{
         dispatch({ type: GET_AVATAR_URL, nickName: auth.userNick })
-    }, [dispatch])
+    }, [dispatch, auth.userNick])
 
-    const formHandler = useCallback(async(e)=>{
+    useEffect(()=>{
+        if(!checkTokenExpire()){
+            dispatch(setFileInput(file.current))
+            getAvatarUrl()
+            ibg()
+        }
+    }, [checkTokenExpire, dispatch, getAvatarUrl, auth.avatarUrl])
+
+    const formHandler = async(e)=>{
         e.preventDefault()
         const form = new FormData(e.target)
         form.append('userNick', `${auth.userNick}`)
+        console.log(store)
+        form.append('previousAvatarUrl', auth.avatarUrl)
         if(!checkTokenExpire()) dispatch({ type: SEND_AVATAR_IMAGE, form })
-    }, [dispatch])
-
+    }
     const ibg = ()=>{
         let ibg=document.querySelectorAll(".ibg");
         for (var i = 0; i < ibg.length; i++) {
@@ -38,14 +47,6 @@ export default function ProfilePage(){
                 }
             }
         }
-
-    useEffect(()=>{
-        if(!checkTokenExpire()){
-            ibg()
-            dispatch(setFileInput(file.current))
-            getAvatarUrl()
-        }
-    }, [checkTokenExpire, dispatch, getAvatarUrl, auth.avatarUrl])
 
     return(<>
         <title>Профиль</title>
