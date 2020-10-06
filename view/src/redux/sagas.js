@@ -1,4 +1,4 @@
-import { call, put, select, takeEvery, takeLeading } from 'redux-saga/effects'
+import { call, put, select, takeLeading } from 'redux-saga/effects'
 import * as authTypes from './authenticationLogic/authTypes'
 import * as postsTypes from './postsLogic/postsTypes'
 import * as profileTypes from './profileLogic/profileTypes'
@@ -8,11 +8,12 @@ import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from '
 
 
 export default function* Saga() {
-    yield takeEvery(authTypes.SEND_FORM, fetchForm)
-    yield takeEvery(authTypes.LOGIN, login)
-    yield takeEvery(postsTypes.PUBLISH_POST, publishPost)
+    yield takeLeading(authTypes.SEND_FORM, fetchForm)
+    yield takeLeading(authTypes.LOGIN, login)
+    yield takeLeading(postsTypes.PUBLISH_POST, publishPost)
     yield takeLeading(postsTypes.UPLOAD_POSTS, fetchPosts)
     yield takeLeading(profileTypes.SEND_AVATAR_IMAGE, sendAvatarImage)
+    yield takeLeading(authTypes.GET_AVATAR_URL, getAvatarUrl)
 }
 
 // worker Saga: будет запускаться на экшены типа `USER_FETCH_REQUESTED`
@@ -102,13 +103,12 @@ function* fetchForm(action) {
     }
  }
 
- function* sendAvatarImage(action){
+function* sendAvatarImage(action){
     yield put(setLoadingTrue())
     const fileInput = yield select(state => state.profileReducer.fileInputRef)
     try {
         const response = yield call(request, '/api/profile/load-avatar', 'POST', action.form, {})
         if(response.ok){
-            console.log(response.avatarUrl)
             yield put(changeAvatarUrl(response.avatarUrl))
         }
         else{
@@ -118,4 +118,22 @@ function* fetchForm(action) {
         throw error
      }
      fileInput.value=null
- }
+}
+
+function* getAvatarUrl(action){
+    try {
+        const body = {
+            nickName: action.nickName
+        }
+
+        const response = yield call(request, '/api/profile/avatar-url', 'POST', body )
+        if(response.ok){
+            yield put(changeAvatarUrl(response.avatarUrl))
+        }
+        else{
+
+        }
+    } catch (error) {
+        
+    }
+}

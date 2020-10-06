@@ -7,6 +7,6 @@ const upload = require('../middlewares/fileUploading')
 // /api/profile роутинг
 router.post('/load-avatar', upload.single('avatar'), profile.loadAvatar)
 
-router.get('/avatar-url', )
+router.post('/avatar-url', profile.getAvatarUrl)
 
 module.exports = router

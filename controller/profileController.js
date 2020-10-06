@@ -18,11 +18,9 @@ const loadAvatar = async(req, res)=>{
 }
 
 const getAvatarUrl = async(req, res)=>{
-    // const avatarUrl = (await User.findOne({nickName: req.nickName})).get('avatarUrl')
-    console.log(req.headers)
+    const avatarUrl = (await User.findOne({nickName: req.body.nickName})).get('avatarUrl')
+    console.log(avatarUrl)
     res.status(200).json({ ok: true, avatarUrl })
 }
 
-module.exports = {
-    loadAvatar
-}
+module.exports = {  loadAvatar, getAvatarUrl }

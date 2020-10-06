@@ -1,8 +1,11 @@
+import { body } from 'express-validator'
 import React, {useEffect, useCallback, useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import Header from '../components/Header'
 import useCheckToken from '../hooks/useCheckToken'
+import { request } from '../redux/Api'
+import { GET_AVATAR_URL } from '../redux/authenticationLogic/authTypes'
 import { setFileInput } from '../redux/profileLogic/profileActionCreators'
 import { SEND_AVATAR_IMAGE } from '../redux/profileLogic/profileTypes'
 
@@ -16,14 +19,16 @@ export default function ProfilePage(){
     const file= useRef(null)
 
 
+    const getAvatarUrl = useCallback(async()=>{
+        dispatch({ type: GET_AVATAR_URL, nickName: auth.userNick })
+    }, [dispatch])
 
-    const formHandler = async(e)=>{
+    const formHandler = useCallback(async(e)=>{
         e.preventDefault()
-    console.log(1)
         const form = new FormData(e.target)
         form.append('userNick', `${auth.userNick}`)
         if(!checkTokenExpire()) dispatch({ type: SEND_AVATAR_IMAGE, form })
-    }
+    }, [dispatch])
 
     const ibg = ()=>{
         let ibg=document.querySelectorAll(".ibg");
@@ -38,8 +43,9 @@ export default function ProfilePage(){
         if(!checkTokenExpire()){
             ibg()
             dispatch(setFileInput(file.current))
+            getAvatarUrl()
         }
-    }, [checkTokenExpire])
+    }, [checkTokenExpire, dispatch, getAvatarUrl, auth.avatarUrl])
 
     return(<>
         <title>Профиль</title>
