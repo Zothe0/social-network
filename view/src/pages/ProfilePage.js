@@ -22,7 +22,7 @@ export default function ProfilePage(){
     const formHandler = async(e)=>{
         e.preventDefault()
         const form = new FormData(e.target)
-        form.append('userNick', `${auth.userNick}`)
+        form.append('nickName', `${auth.nickName}`)
         form.append('previousAvatarUrl', profile.currentProfileAvatarUrl)
         if(!checkTokenExpire()) dispatch({ type: SEND_AVATAR_IMAGE, form })
     }
@@ -54,7 +54,7 @@ export default function ProfilePage(){
                         <img src={profile.currentProfileAvatarUrl} alt='АВАТАР'></img>
                     </div>
                     <div className='auth-warn'>{auth.responseMessage}</div>
-                    {auth.userNick === id ? <>
+                    {auth.nickName === id ? <>
                         <div className='profile__header'>Загрузить фотографию</div>
                         <form
                             onSubmit={formHandler}

@@ -8,7 +8,7 @@ const changeAvatar = async(req, res)=>{
     if(file){
         const outputFile = `${file.destination}${file.filename.split('.')[0]}.webp`
         await webp.cwebp(file.path, outputFile, '-q 65')
-        await User.updateOne({nickName: req.body.userNick}, { avatarUrl: `/${outputFile}` })
+        await User.updateOne({nickName: req.body.nickName}, { avatarUrl: `/${outputFile}` })
         res.status(201).json({ ok: true, avatarUrl: `/${outputFile}` })
         fs.unlink(file.path, err=> {if(err) throw err})
         fs.unlink(req.body.previousAvatarUrl.slice(1), err=> {if(err) throw err})

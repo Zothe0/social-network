@@ -6,8 +6,8 @@ import useCheckToken from '../hooks/useCheckToken'
 
 export default function Header(){
 
-    const userNick = useSelector(state => state.authReducer.userNick)
-    const linkToProfile = `/profile/${userNick}`
+    const nickName = useSelector(state => state.authReducer.nickName)
+    const linkToProfile = `/profile/${nickName}`
     const [checkTokenExpire, logoutApp] = useCheckToken()
 
     return(<>

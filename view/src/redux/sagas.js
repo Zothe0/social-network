@@ -51,7 +51,7 @@ function* fetchForm(action) {
         const response = yield call(request, '/api/auth/login', 'POST', action.body)
 
         if(response.ok){
-            yield put(authentication(response.token, response.userNick))
+            yield put(authentication(response.token, response.nickName))
             yield put(clearInputs())
         }else{
             yield put(clearPasswordInput())
@@ -65,13 +65,12 @@ function* fetchForm(action) {
  function* publishPost(){
      try {
         const posts = yield select(state => state.postsReducer)
-        const app = yield select(state => state.authReducer)
+        const auth = yield select(state => state.authReducer)
         const date = Date.now()
         const body = {
-            token: app.token,
             text: posts.postField,
             date: date,
-            author: app.userNick
+            author: auth.nickName
         }
         const response = yield call(request, '/api/posts/create', 'POST', body)
         if(response.ok){
@@ -107,7 +106,7 @@ function* fetchForm(action) {
 function* sendAvatarImage(action){
     yield put(setLoadingTrue())
     const fileInput = yield select(state => state.profileReducer.fileInputRef)
-    const nickName = yield select(state => state.authReducer.userNick)
+    const nickName = yield select(state => state.authReducer.nickName)
     try {
         const response = yield call(request, '/api/profile/load-avatar', 'POST', action.form, {})
         if(response.ok){

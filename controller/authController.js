@@ -70,7 +70,7 @@ const login = async(req, res)=>{
                 // Создаёт jwt токен который истекает через час
                 const token = jwt.sign({ userId: user.id }, constants.JWT_SECRET, { expiresIn: '1h' })
                 // Отправляет на фронт ник и токен
-                res.status(201).json({ok: true, token, userNick: user.nickName, avatarUrl: user.avatarUrl})
+                res.status(201).json({ok: true, token, nickName: user.nickName, avatarUrl: user.avatarUrl})
             }
         // Если юзер не найден
         }else{

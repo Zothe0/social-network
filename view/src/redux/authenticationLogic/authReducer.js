@@ -14,7 +14,7 @@ const initialState = {
     responseMessage: null,
     authorized: false,
     token: null,
-    userNick: null,
+    nickName: null,
 }
 
 export default function authReducer(state = initialState, action){
@@ -48,7 +48,7 @@ export default function authReducer(state = initialState, action){
             return {...state, responseMessage: null}
 
         case types.LOGIN_USER:
-            return {...state, token: action.token, userNick: action.userNick, avatarUrl: action.avatarUrl}
+            return {...state, token: action.token, nickName: action.nickName, avatarUrl: action.avatarUrl}
 
         case types.LOGOUT_USER:
             return {...state, token: null, userId: null}
