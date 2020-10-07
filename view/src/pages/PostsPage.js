@@ -1,11 +1,8 @@
 import React, { useEffect, useCallback, useRef } from 'react'
-import { verify } from 'jsonwebtoken'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { logout, setMessage } from '../redux/authenticationLogic/authActionCreators'
+import { setMessage } from '../redux/authenticationLogic/authActionCreators'
 import { changePostField, clearPostField } from '../redux/postsLogic/postsActionCreators'
 import * as types from '../redux/postsLogic/postsTypes'
-import { JWTSecret } from '../constants'
 import PostList from '../components/PostList'
 import useCheckToken from '../hooks/useCheckToken'
 import Header from '../components/Header'
@@ -17,7 +14,6 @@ export default function PostsPage(){
     const auth = useSelector(state => state.authReducer)
     const posts = useSelector(state => state.postsReducer)
     const [checkTokenExpire, logoutApp] = useCheckToken()
-    const linkToProfile = `/profile/${auth.userNick}`
     const bottomBreackPoint = useRef(null)
     let previousYOffset = window.pageYOffset 
 

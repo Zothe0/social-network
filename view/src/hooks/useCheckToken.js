@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { verify } from 'jsonwebtoken'
 import { logout, setMessage } from '../redux/authenticationLogic/authActionCreators'

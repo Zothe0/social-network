@@ -1,9 +1,8 @@
 import React, {useEffect, useCallback, useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Header from '../components/Header'
 import useCheckToken from '../hooks/useCheckToken'
-import { GET_AVATAR_URL } from '../redux/authenticationLogic/authTypes'
 import { setFileInput } from '../redux/profileLogic/profileActionCreators'
 import { SEND_AVATAR_IMAGE, UPLOAD_CURRENT_PROFILE_AVATAR_URL } from '../redux/profileLogic/profileTypes'
 
@@ -52,7 +51,7 @@ export default function ProfilePage(){
             <div className='profile'>
                 <div className='profile__container'>
                     <div className='profile__avatar ibg'>
-                        <img src={profile.currentProfileAvatarUrl}></img>
+                        <img src={profile.currentProfileAvatarUrl} alt='АВАТАР'></img>
                     </div>
                     <div className='auth-warn'>{auth.responseMessage}</div>
                     {auth.userNick === id ? <>

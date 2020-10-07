@@ -3,7 +3,7 @@ import * as authTypes from './authenticationLogic/authTypes'
 import * as postsTypes from './postsLogic/postsTypes'
 import * as profileTypes from './profileLogic/profileTypes'
 import {request} from './Api'
-import { authentication, changeAvatarUrl, clearInputs, clearPasswordInput, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
+import { authentication, clearInputs, clearPasswordInput, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
 import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from './postsLogic/postsActionCreators'
 import { setCurrentProfileAvatarUrl } from './profileLogic/profileActionCreators'
 
