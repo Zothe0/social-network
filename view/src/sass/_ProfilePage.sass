@@ -3,13 +3,14 @@
     flex-direction: column
     flex: 1 1 100%
     &__container
-    display: flex
-    padding: 20px
-    flex: 1 1 auto
-    width:  800px
-    margin: 70px auto 0 auto
-    border: 1px solid #000
-    flex-direction: column
+        display: flex
+        padding: 20px
+        flex: 1 0 auto
+        width: 760px
+        margin: 100px auto 30px auto
+        flex-direction: column
+        background-color: #e6e6e6
+        border-radius: 10px
     &__avatar
         height: 300px
         width: 230px
@@ -18,3 +19,27 @@
         margin-bottom: 15px
     &__header
         margin-bottom: 5px
+    &__file
+        cursor: pointer
+@media screen and ( max-width: 767px )
+    .profile
+        margin: 80px auto 0 auto
+        &__header
+            margin-top: 10px
+            margin-bottom: 10px
+        &__file
+            margin-bottom: 10px
+        &__container
+            width: 400px
+        &__avatar
+            margin: 0 auto
+@media screen and ( max-width: 576px )
+    .profile
+        margin: 80px auto 0 auto
+        &__container
+            width: 280px
+        &__form
+        
+        #avatar
+            width: 135px
+            margin-right: 10px

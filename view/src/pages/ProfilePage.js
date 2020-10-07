@@ -55,6 +55,7 @@ export default function ProfilePage(){
                             encType="multipart/form-data"
                             action="/api/profile/load-avatar"
                             method="post"
+                            placeholder='none'
                         >
                             <input
                                 type='file' 
@@ -62,6 +63,7 @@ export default function ProfilePage(){
                                 name='avatar'
                                 id='avatar'
                                 ref={file}
+                                className='profile__file'
                             ></input>
                             <button type='submit'>Отправить</button>
                         </form>
