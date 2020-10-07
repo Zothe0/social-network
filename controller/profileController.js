@@ -5,8 +5,6 @@ const User = require('../model/User')
 
 const changeAvatar = async(req, res)=>{
     const file = req.file
-    console.log(req.body.previousAvatarUrl.slice(1))
-    console.log(file.path)
     if(file){
         const outputFile = `${file.destination}${file.filename.split('.')[0]}.webp`
         await webp.cwebp(file.path, outputFile, '-q 65')
@@ -21,7 +19,6 @@ const changeAvatar = async(req, res)=>{
 
 const getAvatarUrl = async(req, res)=>{
     const avatarUrl = (await User.findOne({nickName: req.body.nickName})).get('avatarUrl')
-    // console.log(avatarUrl)
     res.status(200).json({ ok: true, avatarUrl })
 }
 

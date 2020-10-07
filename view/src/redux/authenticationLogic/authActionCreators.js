@@ -58,7 +58,3 @@ export const logout = ()=>{
         }
     }
 }
-
-export const changeAvatarUrl = (newAvatarUrl)=>{
-    return ({ type: types.CHANGE_AVATAR_URL, newAvatarUrl })
-}

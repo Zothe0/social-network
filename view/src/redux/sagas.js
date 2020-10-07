@@ -14,7 +14,6 @@ export default function* Saga() {
     yield takeLeading(postsTypes.PUBLISH_POST, publishPost)
     yield takeLeading(postsTypes.UPLOAD_POSTS, fetchPosts)
     yield takeLeading(profileTypes.SEND_AVATAR_IMAGE, sendAvatarImage)
-    yield takeLeading(authTypes.GET_AVATAR_URL, getAvatarUrl)
     yield takeLeading(profileTypes.UPLOAD_CURRENT_PROFILE_AVATAR_URL, uploadCurrentProfileAvatarUrl)
 }
 
@@ -108,10 +107,11 @@ function* fetchForm(action) {
 function* sendAvatarImage(action){
     yield put(setLoadingTrue())
     const fileInput = yield select(state => state.profileReducer.fileInputRef)
+    const nickName = yield select(state => state.authReducer.userNick)
     try {
         const response = yield call(request, '/api/profile/load-avatar', 'POST', action.form, {})
         if(response.ok){
-            yield put(changeAvatarUrl(response.avatarUrl))
+            yield put({ type: profileTypes.UPLOAD_CURRENT_PROFILE_AVATAR_URL, nickName })
         }
         else{
             yield put(setMessage(response.message))
@@ -121,21 +121,6 @@ function* sendAvatarImage(action){
      }
      fileInput.value=null
     yield put(setLoadingFalse())
-}
-
-function* getAvatarUrl(action){
-    try {
-        const body = {
-            nickName: action.nickName
-        }
-        const response = yield call(request, '/api/profile/avatar-url', 'POST', body)
-        if(response.ok){
-            yield put(changeAvatarUrl(response.avatarUrl))
-        }
-        else{}
-    } catch (error) {
-        throw error
-    }
 }
 
 export function* uploadCurrentProfileAvatarUrl(action){
