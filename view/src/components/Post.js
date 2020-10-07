@@ -109,20 +109,22 @@ export default function Post({ post, currentTime }){
     }
 
     return(
-        <div className="content__item">
-            <div className="content__header">
-                <div className="content__info">
-                    <div className="content__avatar">Аватар</div>
-                    <div className="content__nick">{post.author}</div>
+        <div className="posts-content__item">
+            <div className="posts-content__header">
+                <div className="posts-content__avatar ibg">
+                    <img src ='' alt='аватарка'/>
                 </div>
-                <div className="content__date">{dateFormating(currentSec - postSec)}</div>
+                <div className="posts-content__info">
+                    <div className="posts-content__nick">{post.author}</div>
+                    <div className="posts-content__date">{dateFormating(currentSec - postSec)}</div>
+                </div>
             </div>
-            <div className="content__body">
+            <div className="posts-content__body">
                 {post.text}
             </div>
-            <div className="content__footer">
-                <div className="content__statistic">Лайки {post.likes}</div>
-                <div className="content__statistic">Просмотры {post.views}</div>
+            <div className="posts-content__footer">
+                <div className="posts-content__statistic">Лайки {post.likes}</div>
+                <div className="posts-content__statistic">Просмотры {post.views}</div>
             </div>
         </div>
     )

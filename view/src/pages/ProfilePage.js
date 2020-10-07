@@ -51,7 +51,7 @@ export default function ProfilePage(){
             <div className='profile'>
                 <div className='profile__container'>
                     <div className='profile__avatar ibg'>
-                        <img src={profile.currentProfileAvatarUrl} alt='АВАТАР'></img>
+                        <img src={profile.currentProfileAvatarUrl} alt='аватарка'/>
                     </div>
                     <div className='auth-warn'>{auth.responseMessage}</div>
                     {auth.nickName === id ? <>

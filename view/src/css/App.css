@@ -526,7 +526,7 @@ button {
   margin-right: 10px;
 }
 
-.content {
+.posts-content {
   width: 440px;
   margin: 80px auto 20px auto;
   padding: 20px;
@@ -539,7 +539,7 @@ button {
           flex-direction: column;
 }
 
-.content__form {
+.posts-content__form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -550,29 +550,29 @@ button {
   padding: 10px;
 }
 
-.content__label {
+.posts-content__label {
   margin-bottom: 7px;
 }
 
-.content__textarea {
+.posts-content__textarea {
   resize: none;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 7px;
 }
 
-.content__btn {
+.posts-content__btn {
   -ms-flex-item-align: end;
       align-self: flex-end;
   padding: 5px;
   border-radius: 3px;
 }
 
-.content__breakpoint {
+.posts-content__breakpoint {
   color: #f00;
   font-size: 18px;
 }
 
-.content__item {
+.posts-content__item {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -590,28 +590,41 @@ button {
   margin: 10px auto;
 }
 
-.content__header {
+.posts-content__header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   font-size: 12px;
   margin-bottom: 12px;
 }
 
-.content__info {
+.posts-content__info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.content__nick {
+.posts-content__avatar {
+  margin-right: 10px;
+  height: 40px;
+  width: 40px;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+.posts-content__nick {
   font-weight: bold;
+  margin-bottom: 6px;
 }
 
-.content__body {
+.posts-content__body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -620,14 +633,14 @@ button {
   line-height: 17px;
 }
 
-.content__footer {
+.posts-content__footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   font-size: 12px;
 }
 
-.content__statistic {
+.posts-content__statistic {
   margin-right: 7px;
 }
 
@@ -667,18 +680,18 @@ button {
   .header__link {
     margin-right: 10px;
   }
-  .content {
+  .posts-content {
     margin: 100px auto 20px auto;
     width: 300px;
   }
-  .content__form {
+  .posts-content__form {
     width: 260px;
     margin: 0 auto;
   }
-  .content__item {
+  .posts-content__item {
     width: 260px;
   }
-  .content__breakpoint {
+  .posts-content__breakpoint {
     display: inline-block;
   }
 }

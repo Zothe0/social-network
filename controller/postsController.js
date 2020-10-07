@@ -8,6 +8,7 @@ const createPost = async(req, res)=>{
         post = new Post({ 
             text: data.text,
             author: data.author,
+            avatarUrl: data.avatarUrl,
             date: data.date,
             likes: 0,
             views: 1})

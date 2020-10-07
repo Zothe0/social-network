@@ -26,7 +26,7 @@
         display: flex
     &__link
         margin-right: 10px
-.content
+.posts-content
     width: 440px
     margin: 80px auto 20px auto
     padding: 20px
@@ -60,15 +60,21 @@
         margin: 10px auto
     &__header
         display: flex
-        justify-content: space-between
         font-size: 12px
         margin-bottom: 12px
     &__info
         display: flex
+        flex-direction: column
+        justify-content: center
     &__avatar
-        // margin-right: 5px
+        margin-right: 10px
+        height: 40px
+        width: 40px
+        background-color: #000
+        border-radius: 50%
     &__nick
         font-weight: bold
+        margin-bottom: 6px
     &__date
 
     &__body
@@ -102,7 +108,7 @@
             display: flex
         &__link
             margin-right: 10px
-    .content
+    .posts-content
         margin: 100px auto 20px auto
         width: 300px
         &__form

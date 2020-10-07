@@ -3,7 +3,7 @@ import * as authTypes from './authenticationLogic/authTypes'
 import * as postsTypes from './postsLogic/postsTypes'
 import * as profileTypes from './profileLogic/profileTypes'
 import {request} from './Api'
-import { authentication, clearInputs, clearPasswordInput, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
+import { authentication, clearInputs, clearPasswordInput, setAvatarUrl, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
 import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from './postsLogic/postsActionCreators'
 import { setCurrentProfileAvatarUrl } from './profileLogic/profileActionCreators'
 
@@ -65,11 +65,13 @@ function* fetchForm(action) {
  function* publishPost(){
      try {
         const posts = yield select(state => state.postsReducer)
+        const profile = yield select(state => state.profileReducer)
         const auth = yield select(state => state.authReducer)
         const date = Date.now()
         const body = {
             text: posts.postField,
             date: date,
+            avatarUrl: profile,
             author: auth.nickName
         }
         const response = yield call(request, '/api/posts/create', 'POST', body)
@@ -129,6 +131,8 @@ export function* uploadCurrentProfileAvatarUrl(action){
         }
         const response = yield call(request, '/api/profile/avatar-url', 'POST', body)
         if(response.ok){
+            const nickName = yield select(state => state.authReducer.nickName)
+            if(nickName === action.nickName) yield put(setAvatarUrl(response.avatarUrl))
             yield put(setCurrentProfileAvatarUrl(response.avatarUrl))
         }
         else{}

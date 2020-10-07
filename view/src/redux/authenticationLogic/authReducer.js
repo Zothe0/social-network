@@ -15,6 +15,7 @@ const initialState = {
     authorized: false,
     token: null,
     nickName: null,
+    avatarUrl: null
 }
 
 export default function authReducer(state = initialState, action){
@@ -59,6 +60,9 @@ export default function authReducer(state = initialState, action){
         case types.IS_AUTH_FALSE:
             return {...state, authorized: false}
             
+        case types.SET_AVATAR_URL:
+            return {...state, avatarUrl: action.newAvatarUrl}
+
         default:
             return state
     }

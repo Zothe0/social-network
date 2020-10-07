@@ -6,6 +6,7 @@ import * as types from '../redux/postsLogic/postsTypes'
 import PostList from '../components/PostList'
 import useCheckToken from '../hooks/useCheckToken'
 import Header from '../components/Header'
+import { UPLOAD_CURRENT_PROFILE_AVATAR_URL } from '../redux/profileLogic/profileTypes'
 
 
 export default function PostsPage(){
@@ -58,22 +59,26 @@ export default function PostsPage(){
         if(!checkTokenExpire() && posts.uploadedPosts.length===0)uploadPosts()
     }, [checkTokenExpire, posts.uploadedPosts, uploadPosts])
 
+    useEffect(()=>{
+        if(!checkTokenExpire())dispatch({ type: UPLOAD_CURRENT_PROFILE_AVATAR_URL, nickName: auth.nickName })
+    },[auth.nickName])
+
     return(<>
         <title>Посты</title>
         <div className="wrapper">
             <Header/>
-            <div className="content">
+            <div className="posts-content">
                 <form
-                    className='content__form'
+                    className='posts-content__form'
                     onSubmit={publish}
                 >
                     <div className='auth-warn'>{auth.responseMessage}</div>
                     <label
-                        className='content__label'
+                        className='posts-content__label'
                         htmlFor='textarea'
                     >Создать новый пост:</label>
                     <textarea
-                        className='content__textarea'
+                        className='posts-content__textarea'
                         id='textarea'
                         name='textarea'
                         maxLength='120'
@@ -85,12 +90,12 @@ export default function PostsPage(){
                     ></textarea>
                     <button
                         type='submit'
-                        className='content__btn'
+                        className='posts-content__btn'
                     >Опубликовать</button>
                 </form>
-                {posts.loading ? <div className='content__loading'>Загрузка...</div> : null}
+                {posts.loading ? <div className='posts-content__loading'>Загрузка...</div> : null}
                 <PostList uploadedPosts={posts.uploadedPosts}/>
-                <div ref={bottomBreackPoint} className='content__breakpoint'>Посты закончились</div>
+                <div ref={bottomBreackPoint} className='posts-content__breakpoint'>Посты закончились</div>
             </div>
         </div>
     </>)

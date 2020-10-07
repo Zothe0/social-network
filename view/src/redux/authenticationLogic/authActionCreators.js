@@ -58,3 +58,6 @@ export const logout = ()=>{
         }
     }
 }
+export const setAvatarUrl = (newAvatarUrl)=>{
+    return ({ type: types.SET_AVATAR_URL, newAvatarUrl })
+}

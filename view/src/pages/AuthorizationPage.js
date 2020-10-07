@@ -9,16 +9,16 @@ export default function AuthorizationPage(){
 
     // Получаем dispatch из react-redux
     const dispatch = useDispatch()
-    // Получаем state из appReducer
-    const app = useSelector(state => state.authReducer)
+    // Получаем state из authReducer
+    const auth = useSelector(state => state.authReducer)
     
     
     // Отправляет форму на сервер
     const submitForm = async(e)=>{
         e.preventDefault()
         const body={
-            mix: app.formInputs.nickName,
-            password: app.formInputs.password
+            mix: auth.formInputs.nickName,
+            password: auth.formInputs.password
         }
         dispatch({ type: LOGIN, body })
     }
@@ -30,10 +30,10 @@ export default function AuthorizationPage(){
 
     // Функция для проверки полей инпутов
     const checkInputs = useCallback(()=>{
-        if(app.formInputs.nickName==='') return false
-        else if(app.formInputs.password==='') return false
+        if(auth.formInputs.nickName==='') return false
+        else if(auth.formInputs.password==='') return false
         else return true
-    }, [app.formInputs.nickName, app.formInputs.password])
+    }, [auth.formInputs.nickName, auth.formInputs.password])
 
     // Следим за изменением инпутов, и при их изменении, проверяем пустые ли они, если все поля заполнены, кнопка становится активной
     useEffect(()=>{
@@ -42,7 +42,7 @@ export default function AuthorizationPage(){
         }else{
             dispatch(setSubmitDisabled())
         }
-    }, [app.formInputs, checkInputs, dispatch])
+    }, [auth.formInputs, checkInputs, dispatch])
     
     useEffect(()=>{
         const data = JSON.parse(localStorage.getItem('userData'))
@@ -60,7 +60,7 @@ export default function AuthorizationPage(){
         <div className='auth-container'>
             <form className='auth-column'>
                 <div className='auth-header'>Авторизация</div>
-                {app.responseMessage? <div className='auth-warn'>{app.responseMessage}</div>: null}
+                {auth.responseMessage? <div className='auth-warn'>{auth.responseMessage}</div>: null}
                 <label htmlFor='nick'>Введите ник или почту</label>
                 <input
                     id='nick'
@@ -68,7 +68,7 @@ export default function AuthorizationPage(){
                     name='nickName'
                     onChange={inputHandler}
                     autoComplete='off'
-                    value={app.formInputs.nickName}
+                    value={auth.formInputs.nickName}
                 ></input>
                 <label htmlFor='pass'>Введите пароль</label>
                 <input
@@ -77,13 +77,13 @@ export default function AuthorizationPage(){
                     name='password'
                     onChange={inputHandler}
                     autoComplete='off'
-                    value={app.formInputs.password}
+                    value={auth.formInputs.password}
                 ></input>
                 <div className='auth-buttons'>
                     <button
                         type='submit'
                         onClick={submitForm}
-                        disabled={app.submitButton}
+                        disabled={auth.submitButton}
                     >Войти</button>
                     <Link to='/registration' className='auth-link' onClick={clearForm}>Регистрация</Link>
                 </div>
