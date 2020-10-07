@@ -1,8 +1,11 @@
 import React from 'react'
+import { ibg } from '../hooks/useIbg'
 
 
 export default function Post({ post, currentTime }){
 
+    console.log(typeof post.avatarUrl)
+    ibg()
     // currentTime time units
     const currentSec = Math.floor(currentTime/1000) 
     const currentDay = new Date(currentTime).getDate()
@@ -112,7 +115,7 @@ export default function Post({ post, currentTime }){
         <div className="posts-content__item">
             <div className="posts-content__header">
                 <div className="posts-content__avatar ibg">
-                    <img src ='' alt='аватарка'/>
+                    <img src ={post.avatarUrl} alt='аватарка'/>
                 </div>
                 <div className="posts-content__info">
                     <div className="posts-content__nick">{post.author}</div>

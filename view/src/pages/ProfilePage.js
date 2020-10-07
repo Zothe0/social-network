@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Header from '../components/Header'
 import useCheckToken from '../hooks/useCheckToken'
+import { ibg } from '../hooks/useIbg'
 import { setFileInput } from '../redux/profileLogic/profileActionCreators'
 import { SEND_AVATAR_IMAGE, UPLOAD_CURRENT_PROFILE_AVATAR_URL } from '../redux/profileLogic/profileTypes'
 
@@ -26,15 +27,6 @@ export default function ProfilePage(){
         form.append('previousAvatarUrl', profile.currentProfileAvatarUrl)
         if(!checkTokenExpire()) dispatch({ type: SEND_AVATAR_IMAGE, form })
     }
-    
-    const ibg = ()=>{
-        let ibg=document.querySelectorAll(".ibg");
-        for (var i = 0; i < ibg.length; i++) {
-            if(ibg[i].querySelector('img')){
-                ibg[i].style.backgroundImage = 'url('+ibg[i].querySelector('img').getAttribute('src')+')';
-                }
-            }
-        }
 
     useEffect(()=>{
         if(!checkTokenExpire()){

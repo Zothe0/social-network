@@ -65,13 +65,12 @@ function* fetchForm(action) {
  function* publishPost(){
      try {
         const posts = yield select(state => state.postsReducer)
-        const profile = yield select(state => state.profileReducer)
         const auth = yield select(state => state.authReducer)
         const date = Date.now()
         const body = {
             text: posts.postField,
             date: date,
-            avatarUrl: profile,
+            avatarUrl: auth.avatarUrl,
             author: auth.nickName
         }
         const response = yield call(request, '/api/posts/create', 'POST', body)
