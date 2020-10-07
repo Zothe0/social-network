@@ -47,7 +47,7 @@ export default function ProfilePage(){
                     </div>
                     <div className='auth-warn'>{auth.responseMessage}</div>
                     {auth.nickName === id ? <>
-                        <div className='profile__header'>Загрузить фотографию</div>
+                        <div className='profile__header'>Загрузить фотографию профиля</div>
                         <form
                             onSubmit={formHandler}
                             className='profile__form'

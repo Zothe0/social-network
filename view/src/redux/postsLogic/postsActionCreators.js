@@ -9,8 +9,8 @@ export const clearPostField = ()=>{
 export const updatePostList = (payload)=>{
     return({ type: types.UPDATE_POST_LIST, payload })
 }
-export const clearPostList = (publishedPost)=>{
-    return({ type: types.CLEAR_POST_LIST, publishedPost })
+export const clearPostList = ()=>{
+    return({ type: types.CLEAR_POST_LIST })
 }
 export const setLoadingTrue = ()=>{
     return({ type: types.SET_LOADING_TRUE })

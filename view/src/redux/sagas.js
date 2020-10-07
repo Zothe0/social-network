@@ -67,7 +67,7 @@ function* fetchForm(action) {
         const posts = yield select(state => state.postsReducer)
         const auth = yield select(state => state.authReducer)
         const date = Date.now()
-        const body = {
+        let body = {
             text: posts.postField,
             date: date,
             avatarUrl: auth.avatarUrl,
@@ -75,10 +75,10 @@ function* fetchForm(action) {
         }
         const response = yield call(request, '/api/posts/create', 'POST', body)
         if(response.ok){
-            const body = {
+            body = {
                 loadedPostsQuantity: 0
             }
-            const update = yield call(request, 'api/posts/upload', 'POST', body)
+            const update = yield call(request, '/api/posts/upload', 'POST', body)
             yield put(clearPostList())
             yield put(updatePostList(update))
         }else{}
@@ -94,7 +94,7 @@ function* fetchForm(action) {
         const body = {
             loadedPostsQuantity: posts.uploadedPosts.length
         }
-        const response = yield call(request, 'api/posts/upload', 'POST', body)
+        const response = yield call(request, '/api/posts/upload', 'POST', body)
         yield put(updatePostList(response))
         yield put(setLoadingFalse())
     } catch (error) {
@@ -112,6 +112,12 @@ function* sendAvatarImage(action){
         const response = yield call(request, '/api/profile/load-avatar', 'POST', action.form, {})
         if(response.ok){
             yield put({ type: profileTypes.UPLOAD_CURRENT_PROFILE_AVATAR_URL, nickName })
+            const body = {
+                loadedPostsQuantity: 0
+            }
+            const update = yield call(request, '/api/posts/upload', 'POST', body)
+            yield put(clearPostList())
+            yield put(updatePostList(update))
         }
         else{
             yield put(setMessage(response.message))

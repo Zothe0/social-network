@@ -7,6 +7,7 @@ import PostList from '../components/PostList'
 import useCheckToken from '../hooks/useCheckToken'
 import Header from '../components/Header'
 import { UPLOAD_CURRENT_PROFILE_AVATAR_URL } from '../redux/profileLogic/profileTypes'
+import { ibg } from '../hooks/useIbg'
 
 
 export default function PostsPage(){
@@ -63,6 +64,10 @@ export default function PostsPage(){
         if(!checkTokenExpire())dispatch({ type: UPLOAD_CURRENT_PROFILE_AVATAR_URL, nickName: auth.nickName })
     },[auth.nickName])
 
+    useEffect(()=>{
+        ibg()
+    },[])
+
     return(<>
         <title>Посты</title>
         <div className="wrapper">
@@ -81,9 +86,9 @@ export default function PostsPage(){
                         className='posts-content__textarea'
                         id='textarea'
                         name='textarea'
-                        maxLength='120'
+                        maxLength='400'
                         tabIndex='2'
-                        rows='3'
+                        rows='4'
                         onChange={inputHandler}
                         onKeyDown={enterHandler}
                         value={posts.postField}

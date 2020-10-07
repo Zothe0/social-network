@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { ibg } from '../hooks/useIbg'
 
 
 export default function Post({ post, currentTime }){
 
-    console.log(typeof post.avatarUrl)
     ibg()
+    const linkToAuthorProfile = `/profile/${post.author}`
     // currentTime time units
     const currentSec = Math.floor(currentTime/1000) 
     const currentDay = new Date(currentTime).getDate()
@@ -114,11 +115,11 @@ export default function Post({ post, currentTime }){
     return(
         <div className="posts-content__item">
             <div className="posts-content__header">
-                <div className="posts-content__avatar ibg">
+                <Link to={linkToAuthorProfile}className="posts-content__avatar ibg">
                     <img src ={post.avatarUrl} alt='аватарка'/>
-                </div>
+                </Link>
                 <div className="posts-content__info">
-                    <div className="posts-content__nick">{post.author}</div>
+                    <Link to={linkToAuthorProfile}><div className="posts-content__nick">{post.author}</div></Link>
                     <div className="posts-content__date">{dateFormating(currentSec - postSec)}</div>
                 </div>
             </div>

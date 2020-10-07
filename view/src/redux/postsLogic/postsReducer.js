@@ -2,9 +2,7 @@ import * as types from './postsTypes'
 
 const initialState = {
     postField: '',
-    uploadedPosts:[
-
-    ],
+    uploadedPosts: [],
     loading: false
 }
 
