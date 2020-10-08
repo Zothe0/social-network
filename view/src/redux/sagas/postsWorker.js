@@ -45,15 +45,13 @@ export function* uploadPosts(){
    }
 }
 
-export function* likePost(action){
+export function* likeChanging(action){
     const body = {
-        postId: action.postId
+        postId: action.postId,
+        newLikes: action.newLikes
     }
     const response = yield call(request, '/api/posts/like', 'PATCH', body)
     if(response.ok){
-        
+
     }
-}
-export function* unlikePost(){
-    
 }

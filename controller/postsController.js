@@ -13,7 +13,7 @@ const createPost = async(req, res)=>{
             likes: [],
             views: [data.author]})
         await post.save()
-        res.status(200).json({ ok: true, message: 'Пост опубликован' })
+        res.status(201).json({ ok: true, message: 'Пост опубликован' })
     } catch (error) {
         console.log(error.name)
         throw error
@@ -25,7 +25,7 @@ const fetchPosts = async(req, res)=>{
     try {
         // Кверим бд - "найти все объекты, сортируюя в обратном пордке по айдишнику, пропускаем то количество объектов которое уже выгрузили, лимит выборки 15 объектов"
         const data = await Post.find({}).sort('-_id').skip(req.body.loadedPostsQuantity).limit(15)
-        res.status(201).json(data)
+        res.status(200).json(data)
     } catch (error) {
         console.log(error.name)
         throw error
@@ -33,7 +33,8 @@ const fetchPosts = async(req, res)=>{
 }
 
 const likePost = async(req, res)=>{
-    console.log(req.body)
+    console.log(req.body.newLikes)
+    await Post.findByIdAndUpdate(req.body.postId, { likes: req.body.newLikes })
     res.status(200).end()
 }
 

@@ -33,7 +33,8 @@ async function start(){
         await mongoose.connect(dataBaseURL,{
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useFindAndModify: false
         })
         server.listen(constants.PORT, ()=>{console.log(`Server listen on port ${constants.PORT}...`)})
     } catch (error) {

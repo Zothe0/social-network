@@ -1,17 +1,14 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import useCheckToken from '../hooks/useCheckToken'
 import { ibg } from '../hooks/useIbg'
-import { LIKE_POST } from '../redux/postsLogic/postsTypes'
+import { LIKE_CHANGING } from '../redux/postsLogic/postsTypes'
 
 
 export default function Post({ post, currentTime }){
 
-    const dispatch = useDispatch()
-    const [checkTokenExpire, logoutApp] = useCheckToken()
     ibg()
-    const linkToAuthorProfile = `/profile/${post.author}`
     // currentTime time units
     const currentSec = Math.floor(currentTime/1000) 
     const currentDay = new Date(currentTime).getDate()
@@ -24,6 +21,16 @@ export default function Post({ post, currentTime }){
     const postDay = new Date(post.date).getDate()
     const postMonth = new Date(post.date).getMonth()
     const postYear = new Date(post.date).getFullYear()
+
+    const dispatch = useDispatch()
+    const nickName = useSelector(state => state.authReducer.nickName)
+    const checkTokenExpire= useCheckToken()
+    const linkToAuthorProfile = `/profile/${post.author}`
+    const [views, setViews] = useState(post.views)
+    const [likes, setLikes] = useState(post.likes)
+    const [liked, setLiked] = useState(likes.includes(nickName))
+    const [renderCount, setRenderCount] = useState(0)
+
 
     const dateFormating = (timeDiffSec)=>{
         // Секунды
@@ -117,11 +124,24 @@ export default function Post({ post, currentTime }){
         return ('Неверная дата')
     }
 
-    const likeHolder = (e)=>{
+    const likeHolder = useCallback((e)=>{
         if(!checkTokenExpire()){
-            dispatch({ type: LIKE_POST, postId: post._id})
+            if(!liked){
+                const tempLikes = [...likes]
+                tempLikes.push(nickName)
+                setLikes(tempLikes)
+            }else{
+                setLikes(state => state.filter(item => item !== nickName))
+            }
         }
-    }
+    }, [checkTokenExpire, liked, likes, nickName])
+    useEffect(()=>{
+        if(renderCount>0){
+            dispatch({ type: LIKE_CHANGING, postId: post._id, newLikes: likes})
+            setLiked(liked => !liked)
+        }
+        setRenderCount(renderCount => renderCount+1)
+    }, [dispatch, post._id, likes])
 
     return(
         <div className="posts-content__item">
@@ -138,8 +158,8 @@ export default function Post({ post, currentTime }){
                 {post.text}
             </div>
             <div className="posts-content__footer">
-                <div className="posts-content__likes" onClick={likeHolder}> {false ? <i className="fas fa-heart"/> : <i className="far fa-heart"/>} {post.likes.length}</div>
-                <div className="posts-content__views"><i className="fas fa-eye"/> {post.views.length}</div>
+                <div className="posts-content__likes" onClick={likeHolder}> {liked ? <i className="fas fa-heart"/> : <i className="far fa-heart"/>} {likes.length}</div>
+                <div className="posts-content__views"><i className="fas fa-eye"/> {views.length}</div>
             </div>
         </div>
     )

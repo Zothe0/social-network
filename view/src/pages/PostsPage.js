@@ -15,7 +15,7 @@ export default function PostsPage(){
     const dispatch = useDispatch()
     const auth = useSelector(state => state.authReducer)
     const posts = useSelector(state => state.postsReducer)
-    const [checkTokenExpire, logoutApp] = useCheckToken()
+    const checkTokenExpire= useCheckToken()
     const bottomBreackPoint = useRef(null)
     let previousYOffset = window.pageYOffset 
 
@@ -62,7 +62,7 @@ export default function PostsPage(){
 
     useEffect(()=>{
         if(!checkTokenExpire())dispatch({ type: UPLOAD_CURRENT_PROFILE_AVATAR_URL, nickName: auth.nickName })
-    },[auth.nickName])
+    },[checkTokenExpire, dispatch, auth.nickName])
 
     useEffect(()=>{
         ibg()

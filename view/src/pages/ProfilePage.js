@@ -13,7 +13,7 @@ export default function ProfilePage(){
     const auth = useSelector(state => state.authReducer)
     const dispatch = useDispatch()
     const {id} = useParams()
-    const [checkTokenExpire, logoutApp] = useCheckToken()
+    const checkTokenExpire = useCheckToken()
     const file= useRef(null)
 
     const getAvatarUrl = useCallback(()=>{

@@ -1,14 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import useCheckToken from '../hooks/useCheckToken'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../redux/authenticationLogic/authActionCreators'
 
 
 export default function Header(){
 
+    const dispatch = useDispatch()
     const nickName = useSelector(state => state.authReducer.nickName)
     const linkToProfile = `/profile/${nickName}`
-    const [checkTokenExpire, logoutApp] = useCheckToken()
+
+    const logoutApp = ()=>{
+        dispatch(logout())
+    }
 
     return(<>
         <div className="header">

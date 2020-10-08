@@ -25,5 +25,5 @@ export default function useCheckToken(){
         }
     }, [token, logoutApp])
 
-    return [checkTokenExpire, logoutApp]
+    return checkTokenExpire
 }
