@@ -13,7 +13,7 @@ const changeAvatar = async(req, res)=>{
         await Post.updateMany({author: req.body.nickName}, {avatarUrl: `/${outputFile}`})
         res.status(201).json({ ok: true, avatarUrl: `/${outputFile}` })
         fs.unlink(file.path, err=> {if(err) throw err})
-        fs.unlink(req.body.previousAvatarUrl.slice(1), err=> {if(err) throw err})
+        if(!(req.body.previousAvatarUrl.includes('default.webp'))) fs.unlink(req.body.previousAvatarUrl.slice(1), err=> {if(err) throw err})
     }else{
         res.status(401).json({ ok: false, message: 'Неверный тип файла' })
     }
