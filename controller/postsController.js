@@ -33,7 +33,7 @@ const fetchPosts = async(req, res)=>{
 }
 
 const likePost = async(req, res)=>{
-    console.log(req.body.newLikes)
+    // console.log(req.body.newLikes)
     await Post.findByIdAndUpdate(req.body.postId, { likes: req.body.newLikes })
     res.status(200).end()
 }
