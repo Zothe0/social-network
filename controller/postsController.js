@@ -10,8 +10,8 @@ const createPost = async(req, res)=>{
             author: data.author,
             avatarUrl: data.avatarUrl,
             date: data.date,
-            likes: 0,
-            views: 1})
+            likes: [],
+            views: [data.author]})
         await post.save()
         res.status(200).json({ ok: true, message: 'Пост опубликован' })
     } catch (error) {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
+import './css/all.min.css'
 import './css/App.css'
 import Routes from './Routes'
 

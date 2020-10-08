@@ -6,8 +6,8 @@ const schema = Schema({
     author: { type: String, index: true, required: true },
     avatarUrl: { type: String, required: true },
     date: { type: Number, index: true, required: true },
-    likes: { type: Number, required: true },
-    views: { type: Number, required: true }
+    likes: [String],
+    views: [String]
 })
 
 module.exports = model('Post', schema)

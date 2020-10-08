@@ -112,6 +112,11 @@ export default function Post({ post, currentTime }){
         return ('Неверная дата')
     }
 
+    const likeHolder = (e)=>{
+        console.log(e.target)
+        console.log(post._id)
+    }
+
     return(
         <div className="posts-content__item">
             <div className="posts-content__header">
@@ -127,8 +132,8 @@ export default function Post({ post, currentTime }){
                 {post.text}
             </div>
             <div className="posts-content__footer">
-                <div className="posts-content__statistic">Лайки {post.likes}</div>
-                <div className="posts-content__statistic">Просмотры {post.views}</div>
+                <div className="posts-content__likes" onClick={likeHolder}> {false ? <i className="fas fa-heart"/> : <i className="far fa-heart"/>} {post.likes.length}</div>
+                <div className="posts-content__views"><i className="fas fa-eye"/> {post.views.length}</div>
             </div>
         </div>
     )
