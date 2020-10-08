@@ -1,11 +1,11 @@
 import { call, put, select, takeLeading } from 'redux-saga/effects'
-import * as authTypes from './authenticationLogic/authTypes'
-import * as postsTypes from './postsLogic/postsTypes'
-import * as profileTypes from './profileLogic/profileTypes'
-import {request} from './Api'
-import { authentication, clearInputs, clearPasswordInput, setAvatarUrl, setMessage, setOnWarning } from './authenticationLogic/authActionCreators'
-import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from './postsLogic/postsActionCreators'
-import { setCurrentProfileAvatarUrl } from './profileLogic/profileActionCreators'
+import * as authTypes from '../redux/authenticationLogic/authTypes'
+import * as postsTypes from '../redux/postsLogic/postsTypes'
+import * as profileTypes from '../redux/profileLogic/profileTypes'
+import {request} from '../redux/Api'
+import { authentication, clearInputs, clearPasswordInput, setAvatarUrl, setMessage, setOnWarning } from '../redux/authenticationLogic/authActionCreators'
+import { setLoadingFalse, setLoadingTrue, updatePostList, clearPostList } from '../redux/postsLogic/postsActionCreators'
+import { setCurrentProfileAvatarUrl } from '../redux/profileLogic/profileActionCreators'
 
 
 export default function* Saga() {

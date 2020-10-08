@@ -33,7 +33,7 @@ const fetchPosts = async(req, res)=>{
 }
 
 const likePost = async(req, res)=>{
-
+    console.log(req.body)
 }
 
 module.exports = { createPost, fetchPosts, likePost }
