@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import useCheckToken from '../hooks/useCheckToken'
 import { ibg } from '../hooks/useIbg'
 import { LIKE_POST } from '../redux/postsLogic/postsTypes'
 
@@ -8,6 +9,7 @@ import { LIKE_POST } from '../redux/postsLogic/postsTypes'
 export default function Post({ post, currentTime }){
 
     const dispatch = useDispatch()
+    const [checkTokenExpire, logoutApp] = useCheckToken()
     ibg()
     const linkToAuthorProfile = `/profile/${post.author}`
     // currentTime time units
@@ -116,8 +118,9 @@ export default function Post({ post, currentTime }){
     }
 
     const likeHolder = (e)=>{
-        console.log(post._id)
-        dispatch({ type: LIKE_POST, postId: post._id})
+        if(!checkTokenExpire()){
+            dispatch({ type: LIKE_POST, postId: post._id})
+        }
     }
 
     return(

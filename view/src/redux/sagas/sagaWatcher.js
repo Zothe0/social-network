@@ -3,8 +3,8 @@ import * as authTypes from '../authenticationLogic/authTypes'
 import * as postsTypes from '../postsLogic/postsTypes'
 import * as profileTypes from '../profileLogic/profileTypes'
 import { login, registration } from './authWorker'
-import { publishPost, uploadPosts } from './postsWorker'
-import { likePost, sendAvatarImage, uploadCurrentProfileAvatarUrl } from './profileWorker'
+import { likePost, publishPost, unlikePost, uploadPosts } from './postsWorker'
+import { sendAvatarImage, uploadCurrentProfileAvatarUrl } from './profileWorker'
 
 // Saga watcher
 export default function* Saga() {
@@ -15,4 +15,5 @@ export default function* Saga() {
     yield takeLeading(profileTypes.SEND_AVATAR_IMAGE, sendAvatarImage)
     yield takeLeading(profileTypes.UPLOAD_CURRENT_PROFILE_AVATAR_URL, uploadCurrentProfileAvatarUrl)
     yield takeLeading(postsTypes.LIKE_POST, likePost)
+    yield takeLeading(postsTypes.UNLIKE_POST, unlikePost)
 }

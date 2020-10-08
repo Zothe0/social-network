@@ -47,7 +47,3 @@ export function* uploadCurrentProfileAvatarUrl(action){
         throw error
     }
 }
-
-export function* likePost(){
-    
-}

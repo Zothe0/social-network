@@ -44,3 +44,16 @@ export function* uploadPosts(){
        throw error
    }
 }
+
+export function* likePost(action){
+    const body = {
+        postId: action.postId
+    }
+    const response = yield call(request, '/api/posts/like', 'PATCH', body)
+    if(response.ok){
+        
+    }
+}
+export function* unlikePost(){
+    
+}
