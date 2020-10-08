@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {  changeInput, sendForm, setSubmitEnabled, setSubmitDisabled, clearInputs, clearMessage } from '../redux/authenticationLogic/authActionCreators'
+import {  changeInput, setSubmitEnabled, setSubmitDisabled, clearInputs, clearMessage } from '../redux/authenticationLogic/authActionCreators'
+import { REGISTRATION } from '../redux/authenticationLogic/authTypes'
 
 
 export default function RegistrationPage(){
@@ -16,7 +17,7 @@ export default function RegistrationPage(){
     const submitForm = async(e)=>{
         // TODO: запретить использовать в нике особые символы типа $%^&@!()
         e.preventDefault()
-        dispatch(sendForm(app.formInputs))
+        dispatch({type: REGISTRATION, body: app.formInputs})
     }
 
     // Записывает значение инпута в соответсвующее поле в нашем store

@@ -9,9 +9,6 @@ export const clearInputs = ()=>{
 export const clearPasswordInput = ()=>{
     return({ type: types.CLEAR_PASSWORD_INPUT })
 }
-export const sendForm = (body)=>{
-    return({ type: types.SEND_FORM, body })
-}
 export const setMessage = (message)=>{
     return async(dispatch)=>{
         dispatch({ type: types.SET_MESSAGE, message })

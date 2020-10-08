@@ -8,7 +8,7 @@ import createSagaMiddleware from 'redux-saga'
 import App from './App'
 import { rootReducer } from './redux/rootReducer'
 import * as serviceWorker from './serviceWorker'
-import Saga from './redux/sagas'
+import Saga from './redux/sagas/sagaWatcher'
 
 const saga = createSagaMiddleware()
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ibg } from '../hooks/useIbg'
 import { LIKE_POST } from '../redux/postsLogic/postsTypes'
@@ -6,6 +7,7 @@ import { LIKE_POST } from '../redux/postsLogic/postsTypes'
 
 export default function Post({ post, currentTime }){
 
+    const dispatch = useDispatch()
     ibg()
     const linkToAuthorProfile = `/profile/${post.author}`
     // currentTime time units
