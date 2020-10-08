@@ -32,6 +32,8 @@ const fetchPosts = async(req, res)=>{
     }
 }
 
-module.exports = {
-    createPost, fetchPosts
+const likePost = async(req, res)=>{
+
 }
+
+module.exports = { createPost, fetchPosts, likePost }

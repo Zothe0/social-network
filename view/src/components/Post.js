@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ibg } from '../hooks/useIbg'
+import { LIKE_POST } from '../redux/postsLogic/postsTypes'
 
 
 export default function Post({ post, currentTime }){
@@ -113,8 +114,8 @@ export default function Post({ post, currentTime }){
     }
 
     const likeHolder = (e)=>{
-        console.log(e.target)
         console.log(post._id)
+        dispatch({ type: LIKE_POST, postId: post._id})
     }
 
     return(

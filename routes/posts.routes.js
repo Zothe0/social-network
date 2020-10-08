@@ -7,4 +7,6 @@ router.post('/create', posts.createPost)
 
 router.post('/upload', posts.fetchPosts)
 
+router.patch('/like', posts.likePost)
+
 module.exports = router
