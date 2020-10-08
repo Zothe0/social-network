@@ -539,6 +539,13 @@ button {
           flex-direction: column;
 }
 
+.posts-content__warn {
+  font-size: 18px;
+  color: #f00;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
 .posts-content__form {
   display: -webkit-box;
   display: -ms-flexbox;

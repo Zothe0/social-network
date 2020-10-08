@@ -24,6 +24,7 @@ export default function Post({ post, currentTime }){
 
     const dispatch = useDispatch()
     const nickName = useSelector(state => state.authReducer.nickName)
+    const [warn, setWarn] = useState(null)
     const checkTokenExpire= useCheckToken()
     const linkToAuthorProfile = `/profile/${post.author}`
     const [views, setViews] = useState(post.views)
@@ -125,7 +126,7 @@ export default function Post({ post, currentTime }){
     }
 
     const likeHolder = useCallback((e)=>{
-        if(!checkTokenExpire()){
+        if(!checkTokenExpire() && post.author !== nickName){
             if(!liked){
                 const tempLikes = [...likes]
                 tempLikes.push(nickName)
@@ -133,6 +134,9 @@ export default function Post({ post, currentTime }){
             }else{
                 setLikes(state => state.filter(item => item !== nickName))
             }
+        }else{
+            setWarn('Нельзя лайкать свои посты')
+            setTimeout(()=>setWarn(null), 1700)
         }
     }, [checkTokenExpire, liked, likes, nickName])
     useEffect(()=>{
@@ -145,6 +149,7 @@ export default function Post({ post, currentTime }){
 
     return(
         <div className="posts-content__item">
+            {warn ? <div className='posts-content__warn'>{warn}</div>: null}
             <div className="posts-content__header">
                 <Link to={linkToAuthorProfile}className="posts-content__avatar ibg">
                     <img src ={post.avatarUrl} alt='аватарка'/>
