@@ -28,15 +28,22 @@ export function* publishPost(){
     }
 }
 
-export function* uploadPosts(){
+export function* uploadPosts(action){
    yield put(setLoadingTrue())
    try {
        const posts = yield select(state => state.postsReducer)
-       const body = {
-           loadedPostsQuantity: posts.uploadedPosts.length
-       }
-       const response = yield call(request, '/api/posts/upload', 'POST', body)
-       yield put(updatePostList(response))
+       const nickName = yield select(state => state.authReducer.nickName)
+       const body = {nickName, loadedPostsQuantity: posts.uploadedPosts.length}
+       if(action.render) {
+            body.loadedPostsQuantity = 0
+            const update = yield call(request, '/api/posts/upload', 'POST', body)
+            yield put(clearPostList())
+            yield put(updatePostList(update))
+        }else{
+            const response = yield call(request, '/api/posts/upload', 'POST', body)
+            yield put(updatePostList(response))
+        }
+       console.log(body.loadedPostsQuantity)
        yield put(setLoadingFalse())
    } catch (error) {
        console.log(error.name)

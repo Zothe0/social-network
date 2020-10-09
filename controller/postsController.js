@@ -21,10 +21,20 @@ const createPost = async(req, res)=>{
 }
 
 // Контроллер получения массива постов
-const fetchPosts = async(req, res)=>{
+const uploadPosts = async(req, res)=>{
     try {
+        const nickName = req.body.nickName
         // Кверим бд - "найти все объекты, сортируюя в обратном пордке по айдишнику, пропускаем то количество объектов которое уже выгрузили, лимит выборки 15 объектов"
-        const data = await Post.find({}).sort('-_id').skip(req.body.loadedPostsQuantity).limit(15)
+        const data = await Post.find({}).sort('-_id').skip(req.body.loadedPostsQuantity).limit(10)
+        // console.log(nickName)
+        data.forEach(async item => {
+            const newViews = item.get('views')
+            // await item.updateOne({views: []})
+            if(!newViews.includes(nickName) && nickName !== null) {
+                newViews.push(nickName)
+                await item.updateOne({views: [...newViews]})
+            }
+        })
         res.status(200).json(data)
     } catch (error) {
         console.log(error.name)
@@ -38,4 +48,4 @@ const likePost = async(req, res)=>{
     res.status(200).end()
 }
 
-module.exports = { createPost, fetchPosts, likePost }
+module.exports = { createPost, uploadPosts, likePost }

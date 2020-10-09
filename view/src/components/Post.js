@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import useCheckToken from '../hooks/useCheckToken'
@@ -31,6 +31,7 @@ export default function Post({ post, currentTime }){
     const [likes, setLikes] = useState(post.likes)
     const [liked, setLiked] = useState(likes.includes(nickName))
     const [renderCount, setRenderCount] = useState(0)
+    const item = useRef(null)
 
 
     const dateFormating = (timeDiffSec)=>{
@@ -138,7 +139,7 @@ export default function Post({ post, currentTime }){
             setWarn('Нельзя лайкать свои посты')
             setTimeout(()=>setWarn(null), 1700)
         }
-    }, [checkTokenExpire, liked, likes, nickName])
+    }, [checkTokenExpire, liked, likes, nickName, post.author])
     useEffect(()=>{
         if(renderCount>0){
             dispatch({ type: LIKE_CHANGING, postId: post._id, newLikes: likes})
@@ -148,7 +149,7 @@ export default function Post({ post, currentTime }){
     }, [dispatch, post._id, likes])
 
     return(
-        <div className="posts-content__item">
+        <div ref={item} className="posts-content__item">
             {warn ? <div className='posts-content__warn'>{warn}</div>: null}
             <div className="posts-content__header">
                 <Link to={linkToAuthorProfile}className="posts-content__avatar ibg">

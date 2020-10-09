@@ -21,18 +21,20 @@ export default function PostsPage(){
 
     window.onscroll = ()=>{
         if(bottomBreackPoint.current && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1000)) && (window.pageYOffset > previousYOffset)){
-            checkTokenExpire()
-            uploadPosts()
-            previousYOffset = window.pageYOffset 
+            if(!checkTokenExpire()){
+                uploadPosts()
+                previousYOffset = window.pageYOffset
+            }
         }
     }
 
     const inputHandler = (e)=>{
         dispatch(changePostField(e.target.value))
+        dispatch({ type: types.UPLOAD_POSTS, render: true})
     }
 
     const checkInput = ()=>{
-        if(posts.postField==='') return false
+        if(posts.postField === '') return false
         else return true
     }
 
@@ -57,7 +59,7 @@ export default function PostsPage(){
     // Проверка действительности токена при каждом ререндере страницы
     // А также загрузка первой партии постов
     useEffect(()=>{
-        if(!checkTokenExpire() && posts.uploadedPosts.length===0)uploadPosts()
+        if(!checkTokenExpire() && posts.uploadedPosts.length === 0)uploadPosts()
     }, [checkTokenExpire, posts.uploadedPosts, uploadPosts])
 
     useEffect(()=>{

@@ -5,7 +5,7 @@ const router = Router()
 // /api/posts роутинг
 router.post('/create', posts.createPost)
 
-router.post('/upload', posts.fetchPosts)
+router.post('/upload', posts.uploadPosts)
 
 router.patch('/like', posts.likePost)
 
