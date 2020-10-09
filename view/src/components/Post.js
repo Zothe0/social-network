@@ -27,7 +27,6 @@ export default function Post({ post, currentTime }){
     const [warn, setWarn] = useState(null)
     const checkTokenExpire= useCheckToken()
     const linkToAuthorProfile = `/profile/${post.author}`
-    const [views, setViews] = useState(post.views)
     const [likes, setLikes] = useState(post.likes)
     const [liked, setLiked] = useState(likes.includes(nickName))
     const [renderCount, setRenderCount] = useState(0)
@@ -165,7 +164,7 @@ export default function Post({ post, currentTime }){
             </div>
             <div className="posts-content__footer">
                 <div className="posts-content__likes" onClick={likeHolder}> {liked ? <i className="fas fa-heart"/> : <i className="far fa-heart"/>} {likes.length}</div>
-                <div className="posts-content__views"><i className="fas fa-eye"/> {views.length}</div>
+                <div className="posts-content__views"><i className="fas fa-eye"/> {post.views.length}</div>
             </div>
         </div>
     )

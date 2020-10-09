@@ -30,7 +30,8 @@ export default function PostsPage(){
 
     const inputHandler = (e)=>{
         dispatch(changePostField(e.target.value))
-        dispatch({ type: types.UPLOAD_POSTS, render: true})
+        // dispatch({ type: types.UPLOAD_POSTS, render: true})
+        dispatch({type: types.CHECK_NEW_POSTS})
     }
 
     const checkInput = ()=>{

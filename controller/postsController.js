@@ -30,7 +30,8 @@ const uploadPosts = async(req, res)=>{
         data.forEach(async item => {
             const newViews = item.get('views')
             // await item.updateOne({views: []})
-            if(!newViews.includes(nickName) && nickName !== null) {
+            if(!newViews.includes(nickName) && nickName !== null && nickName){
+                // console.log(nickName)
                 newViews.push(nickName)
                 await item.updateOne({views: [...newViews]})
             }
@@ -43,9 +44,19 @@ const uploadPosts = async(req, res)=>{
 }
 
 const likePost = async(req, res)=>{
-    // console.log(req.body.newLikes)
     await Post.findByIdAndUpdate(req.body.postId, { likes: req.body.newLikes })
     res.status(200).end()
 }
 
-module.exports = { createPost, uploadPosts, likePost }
+const checkNewPosts = async(req, res)=>{
+    try {
+        const tempQuerry = await Post.find({})
+        const latestPostId = tempQuerry[tempQuerry.length-1]._id
+        res.status(200).json({ latestPostId})
+    } catch (error) {
+        res.status(500).end()
+        throw error
+    }
+}
+
+module.exports = { createPost, uploadPosts, likePost, checkNewPosts }

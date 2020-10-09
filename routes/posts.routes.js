@@ -9,4 +9,6 @@ router.post('/upload', posts.uploadPosts)
 
 router.patch('/like', posts.likePost)
 
+router.get('/check-new-posts', posts.checkNewPosts)
+
 module.exports = router

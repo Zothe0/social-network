@@ -16,49 +16,59 @@ export function* publishPost(){
        }
        const response = yield call(request, '/api/posts/create', 'POST', body)
        if(response.ok){
-           body = {
-               loadedPostsQuantity: 0
-           }
+        const nickName = yield select(state => state.authReducer.nickName)
+           body = { nickName, loadedPostsQuantity: 0 }
            const update = yield call(request, '/api/posts/upload', 'POST', body)
            yield put(clearPostList())
            yield put(updatePostList(update))
        }else{}
-    } catch (e) {
-        throw e
+    } catch (error) {
+        // throw error
     }
 }
 
-export function* uploadPosts(action){
+export function* uploadPosts(){
    yield put(setLoadingTrue())
    try {
        const posts = yield select(state => state.postsReducer)
        const nickName = yield select(state => state.authReducer.nickName)
        const body = {nickName, loadedPostsQuantity: posts.uploadedPosts.length}
-       if(action.render) {
-            body.loadedPostsQuantity = 0
-            const update = yield call(request, '/api/posts/upload', 'POST', body)
-            yield put(clearPostList())
-            yield put(updatePostList(update))
-        }else{
-            const response = yield call(request, '/api/posts/upload', 'POST', body)
-            yield put(updatePostList(response))
-        }
-       console.log(body.loadedPostsQuantity)
-       yield put(setLoadingFalse())
+        const response = yield call(request, '/api/posts/upload', 'POST', body)
+        yield put(updatePostList(response))
    } catch (error) {
        console.log(error.name)
-       yield put(setLoadingFalse())
-       throw error
+    //    throw error
    }
+   yield put(setLoadingFalse())
 }
 
 export function* likeChanging(action){
-    const body = {
-        postId: action.postId,
-        newLikes: action.newLikes
+    try {
+        const body = {
+            postId: action.postId,
+            newLikes: action.newLikes
+        }
+        const response = yield call(request, '/api/posts/like', 'PATCH', body)
+        if(response.ok){
+    
+        }
+    } catch (error) {
+        // throw error
     }
-    const response = yield call(request, '/api/posts/like', 'PATCH', body)
-    if(response.ok){
+}
 
+export function* checkNewPosts(){
+    try {
+        const currentLatestPostId = yield select(state => state.postsReducer.uploadedPosts[0]._id)
+        const nickName = yield select(state => state.authReducer.nickName)
+        const response = yield call(request, '/api/posts/check-new-posts')
+        if(currentLatestPostId && currentLatestPostId !== response.latestPostId){
+                const body = {nickName, loadedPostsQuantity: 0}
+                const update = yield call(request, '/api/posts/upload', 'POST', body)
+                yield put(clearPostList())
+                yield put(updatePostList(update))
+        }
+    } catch (error) {
+        // throw error
     }
 }
