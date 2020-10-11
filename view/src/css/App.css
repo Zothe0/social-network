@@ -460,6 +460,18 @@ button {
           align-items: center;
 }
 
+@media screen and (max-width: 767px) {
+  .auth-header__container {
+    height: 40px;
+  }
+  .auth-header__mini-logo img {
+    height: 30px;
+  }
+  .auth-header__logo img {
+    height: 30px;
+  }
+}
+
 .auth {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -530,11 +542,6 @@ button {
   margin-bottom: 26px;
 }
 
-.auth__label {
-  font-size: 18px;
-  margin-bottom: 12px;
-}
-
 .auth__input {
   width: 400px;
   height: 36px;
@@ -578,8 +585,6 @@ button {
 }
 
 .auth__button {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   width: 163px;
   height: 40px;
   display: -webkit-box;
@@ -606,6 +611,48 @@ button {
   background-color: #B2EABA;
 }
 
+@media screen and (max-width: 1000px) {
+  .auth__body-image {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .auth__container {
+    margin-top: 40px;
+  }
+  .auth__form {
+    margin: 25px auto;
+  }
+  .auth__header {
+    font-size: 26px;
+    margin-bottom: 26px;
+  }
+  .auth__input {
+    width: 250px;
+    margin-bottom: 20px;
+    padding: 0 6px;
+    font-size: 13px;
+    font-weight: bold;
+  }
+  .auth__buttons {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .auth__button {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .auth__button:last-child {
+    margin: 0;
+  }
+  .auth__body-image {
+    display: none;
+  }
+}
+
 .auth-footer {
   background-color: #f2f2f2;
 }
@@ -622,8 +669,21 @@ button {
       justify-content: space-around;
 }
 
-.auth-footer__link {
-  font-weight: bolder;
+@media screen and (max-width: 767px) {
+  .auth-footer__container {
+    height: 40px;
+    -webkit-box-pack: space-center;
+        -ms-flex-pack: space-center;
+            justify-content: space-center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .auth-footer__link {
+    font-size: 10px;
+  }
 }
 
 .posts-content {

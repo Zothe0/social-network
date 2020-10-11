@@ -9,6 +9,16 @@
         justify-content: space-between
         height: 112px
         align-items: center
+@media screen and ( max-width: 767px)
+    .auth-header
+        &__container
+            height: 40px
+        &__mini-logo
+            img
+                height: 30px
+        &__logo
+            img
+                height: 30px
 .auth
     display: flex
     flex: 1 1 auto
@@ -35,9 +45,6 @@
     &__header
         font-size: 28px
         margin-bottom: 26px
-    &__label
-        font-size: 18px
-        margin-bottom: 12px
     &__input
         width: 400px
         height: 36px
@@ -55,7 +62,6 @@
         width: 100%
         justify-content: space-between
     &__button
-        box-sizing: border-box
         width: 163px
         height: 40px
         display: flex
@@ -71,6 +77,34 @@
     &__button.reg
         background-color: #B2EABA
     &__link
+@media screen and ( max-width: 1000px )
+    .auth
+         &__body-image
+            width: 30%
+@media screen and ( max-width: 767px )
+    .auth
+        &__container
+            margin-top: 40px
+        &__form
+            margin: 25px auto
+        &__header
+            font-size: 26px
+            margin-bottom: 26px
+        &__input
+            width: 250px
+            margin-bottom: 20px
+            padding: 0 6px
+            font-size: 13px
+            font-weight: bold
+        &__buttons
+            flex-direction: column
+        &__button
+            width: 100%
+            margin-bottom: 15px
+            &:last-child
+                margin: 0
+        &__body-image
+            display: none
 .auth-footer
     background-color: #f2f2f2
     &__container
@@ -78,5 +112,12 @@
         height: 112px
         align-items: center
         justify-content: space-around
-    &__link
-        font-weight: bolder
+@media screen and ( max-width: 767px )
+    .auth-footer
+        &__container
+            height: 40px
+            justify-content: space-center
+            justify-content: space-between
+            flex-wrap: wrap
+        &__link
+            font-size: 10px
