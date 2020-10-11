@@ -1,26 +1,78 @@
-.auth-container
-    display: flex
-    align-items: center
-    justify-content: center
-    height: 100%
-    max-width: 1200px
-    margin: 0 auto
-    padding: 15px
-.auth-column
-    flex: 1 1 auto
-    display: flex
-    flex-direction: column
-    max-width: 430px
-    height: 220px
-    justify-content: space-between
 .auth-header
-    font-size: 32px
-.auth-warn
-    font-size: 22px
-    color: #f00
-.auth-buttons
+    background-color: #e6e6e6
+    position: fixed
+    z-index: 10
+    width: 100%
+    background: linear-gradient(to right, #D4FFA2, #B2EABA)
+    &__container
+        display: flex
+        justify-content: space-between
+        height: 112px
+        align-items: center
+.auth
     display: flex
+    flex: 1 1 auto
+    flex-direction: column
     justify-content: space-between
-.auth-link
-    text-decoration: underline
-    color: #00f
+    font-family: HelveticaNeueCyr-Bold, serif
+    &__container
+        margin-top: 112px
+        display: flex
+    &__body
+        display: flex
+    &__body-image
+        flex: 1 1 auto
+        width: 60%
+    &__fields
+        flex: 1 1 auto
+        display: flex
+        align-items: center
+        justify-content: center
+    &__form
+        display: flex
+        flex-direction: column
+        align-items: center
+    &__header
+        font-size: 28px
+        margin-bottom: 26px
+    &__label
+        font-size: 18px
+        margin-bottom: 12px
+    &__input
+        width: 400px
+        height: 36px
+        border: 2px solid #000
+        border-radius: 20px
+        margin-bottom: 35px
+        padding: 0 12px
+    &__input.warning
+        border: 2px solid #f00
+        @include placeholder()
+            color: #f00
+    &__buttons
+        display: flex
+        flex: 1 1 auto
+        width: 100%
+        justify-content: space-between
+    &__button
+        padding: 12px 0
+        width: 163px
+        display: flex
+        align-items: center
+        justify-content: center
+        background: #D4FFA2
+        border-radius: 20px
+        font-family: HelveticaNeueCyr-Bold, serif
+        border: none
+    &__button.reg
+        background-color: #B2EABA
+    &__link
+.auth-footer
+    background-color: #f2f2f2
+    &__container
+        display: flex
+        height: 112px
+        align-items: center
+        justify-content: space-around
+    &__link
+        font-weight: bolder

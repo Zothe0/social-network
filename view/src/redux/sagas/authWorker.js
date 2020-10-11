@@ -41,7 +41,8 @@ export function* login(action){
             yield put(authentication(response.token, response.nickName))
             yield put(clearInputs())
         }else{
-            yield put(clearPasswordInput())
+            if(response.incorrectFiled === 'password') yield put(clearPasswordInput())
+            else yield put(clearInputs())
         }
         yield put(setMessage(response.message))
      } catch (e) {

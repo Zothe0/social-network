@@ -1,8 +1,6 @@
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const path = require('path')
-const fs = require('fs')
 const User = require('../model/User')
 const constants = require('../constants')
 const { PUBLIC_URL } = require('../constants')
@@ -65,16 +63,16 @@ const login = async(req, res)=>{
             // Провееряет пароли
             const isMatch = await bcrypt.compare(password, user.password)
             if(!isMatch){
-                return res.status(400).json({message:'Неверный пароль, введите заново'})
+                return res.status(400).json({ message:'Неверный пароль', incorrectFiled: 'password'})
             }else{
                 // Создаёт jwt токен который истекает через час
                 const token = jwt.sign({ userId: user.id }, constants.JWT_SECRET, { expiresIn: '1h' })
                 // Отправляет на фронт ник и токен
-                res.status(201).json({ok: true, token, nickName: user.nickName, avatarUrl: user.avatarUrl})
+                res.status(201).json({ok: true, token, nickName: user.nickName})
             }
         // Если юзер не найден
         }else{
-            res.status(401).json({ ok: false, message: `Пользователя с ${(mix.includes('@')? 'такой почтой' : 'таким ником')} не существует` })
+            res.status(401).json({ ok: false, message: 'Такого пользователя не существует', incorrectFiled: 'mix' })
         }
     } catch (error) {
         res.status(500).json({message: 'Ошибка на сервере'})
