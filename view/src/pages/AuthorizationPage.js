@@ -14,6 +14,7 @@ export default function AuthorizationPage(){
     const auth = useSelector(state => state.authReducer)
     const mix = useRef(null)
     const password = useRef(null)
+    const submit = useRef(null)
 
 
     const clearForm= async()=>{
@@ -47,8 +48,10 @@ export default function AuthorizationPage(){
     useEffect(()=>{
         if(checkInputs()){
             dispatch(setSubmitEnabled())
+            submit.current.classList.add('active')
         }else{
             dispatch(setSubmitDisabled())
+            submit.current.classList.remove('active')
         }
     }, [auth.formInputs, checkInputs, dispatch])
     
@@ -123,6 +126,7 @@ export default function AuthorizationPage(){
                             <div className="auth__buttons">
                                 <button
                                     className="auth__button"
+                                    ref={submit}
                                     type='submit'
                                     onClick={submitForm}
                                     disabled={auth.submitButton}

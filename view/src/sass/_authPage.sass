@@ -55,15 +55,19 @@
         width: 100%
         justify-content: space-between
     &__button
-        padding: 12px 0
+        box-sizing: border-box
         width: 163px
+        height: 40px
         display: flex
         align-items: center
         justify-content: center
-        background: #D4FFA2
+        background: #e4fcc9
         border-radius: 20px
         font-family: HelveticaNeueCyr-Bold, serif
         border: none
+    &__button.active
+        background: #cbff90
+        border: 4px solid #B2EABA
     &__button.reg
         background-color: #B2EABA
     &__link
