@@ -41,7 +41,7 @@ export default function Header(){
                     <img src={PUBLIC_URL+'/minilogo.svg'} alt="минилого" />
                 </Link>
                 <form className="header__form">
-                    <label className="header__label" htmlFor="search">Поиск по постам</label>
+                    <label className="header__label" htmlFor="search">Поиск постов</label>
                     <input className="header__search" type="search" placeholder="Текст поста..." />
                     <img className="header__search-btn" src={PUBLIC_URL+'/search-ico.svg'} alt='иконка поиска' />
                 </form>
