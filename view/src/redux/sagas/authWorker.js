@@ -1,6 +1,6 @@
 import { call, put, select } from 'redux-saga/effects'
 import {request} from '../Api'
-import { authentication, clearInputs, clearPasswordInput, setMessage, setOnWarning } from '../authenticationLogic/authActionCreators'
+import { authentication, clearAllInputs, clearInput, clearPasswordInput, setMessage, setOnWarning } from '../authenticationLogic/authActionCreators'
 import { LOGIN } from '../authenticationLogic/authTypes'
 
 
@@ -17,15 +17,15 @@ export function* registration(action) {
                 password: auth.formInputs.password
             }
             yield put({ type: LOGIN, body })
-            yield put(clearInputs())
-            yield put(setMessage(response.message))
+            yield put(clearAllInputs())
+            if(response.message) yield put(setMessage(response.message))
         }else{
             if(response.fault){
                 for(let i = 0; i < response.fault.length; i++){
                     yield put(setOnWarning(response.fault[i].param))
                 }
             }else{
-                yield put(setMessage(response.message))
+                if(response.message) yield put(setMessage(response.message))
             }
         }
     } catch (e) {
@@ -39,10 +39,10 @@ export function* login(action){
 
         if(response.ok){
             yield put(authentication(response.token, response.nickName))
-            yield put(clearInputs())
+            yield put(clearAllInputs())
         }else{
             if(response.incorrectFiled === 'password') yield put(clearPasswordInput())
-            else yield put(clearInputs())
+            else yield put(clearInput('nickName'))
         }
         yield put(setMessage(response.message))
      } catch (e) {

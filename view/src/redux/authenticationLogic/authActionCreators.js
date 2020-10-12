@@ -3,8 +3,11 @@ import * as types from './authTypes'
 export const changeInput = (name, value)=>{
     return({ type: types.CHANGE_INPUT, name, value })
 }
-export const clearInputs = ()=>{
-    return({ type: types.CLEAR_INPUTS })
+export const clearInput = (name)=>{
+    return({ type: types.CLEAR_INPUT, name })
+}
+export const clearAllInputs = ()=>{
+    return({ type: types.CLEAR_ALL_INPUTS })
 }
 export const clearPasswordInput = ()=>{
     return({ type: types.CLEAR_PASSWORD_INPUT })

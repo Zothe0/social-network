@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import AuthHeader from '../components/AuthHeader'
+import Footer from '../components/Footer'
 import { PUBLIC_URL } from '../constants'
-import { changeInput, clearInputs, setSubmitEnabled, setSubmitDisabled, authentication, clearMessage } from '../redux/authenticationLogic/authActionCreators'
+import { changeInput, clearAllInputs, setSubmitEnabled, setSubmitDisabled, authentication, clearMessage } from '../redux/authenticationLogic/authActionCreators'
 import { LOGIN } from '../redux/authenticationLogic/authTypes'
 
 
@@ -18,7 +20,7 @@ export default function AuthorizationPage(){
 
 
     const clearForm= async()=>{
-        dispatch(clearInputs())
+        dispatch(clearAllInputs())
         dispatch(clearMessage())
     }
 
@@ -79,73 +81,55 @@ export default function AuthorizationPage(){
                 password.current.classList.remove('warning')
                 break
         }
-        
     },[auth.responseMessage])
 
     return (<>
         <title>Вход</title>
         <div className="wrapper">
             <div className="auth">
-                <div className="auth-header">
-                    <div className="auth-header__container container">
-                        <div className="auth-header__mini-logo">
-                            <img src={PUBLIC_URL+'/minilogo.svg'} alt="минилого" />
-                        </div>
-                        <div className="auth-header__logo">
-                            <img src={PUBLIC_URL+'/logo.svg'} alt="лого" />
-                        </div>
-                    </div>
-                </div>
+                <AuthHeader/>
                 <div className="auth__container container">
-                <div className="auth__body">
-                    <img className="auth__body-image" src={PUBLIC_URL+'/auth-picture.svg'} alt='Куча людей' />
-                    <div className="auth__fields">
-                        <form className="auth__form">
-                            <div className="auth__header">Авторизация</div>
-                            {auth.responseMessage === 'Ошибка на сервере' ? <div>{auth.responseMessage}</div> : null}
-                            <input
-                                className="auth__input"
-                                ref={mix}
-                                type='text'
-                                name='nickName'
-                                onChange={inputHandler}
-                                autoComplete='off'
-                                value={auth.formInputs.nickName}
-                                placeholder='Введите ник или почту'
-                            ></input>
-                            <input
-                                className="auth__input"
-                                ref={password}
-                                type='password'
-                                name='password'
-                                onChange={inputHandler}
-                                autoComplete='off'
-                                value={auth.formInputs.password}
-                                placeholder='Введите пароль'
-                            ></input>
-                            <div className="auth__buttons">
-                                <button
-                                    className="auth__button"
-                                    ref={submit}
-                                    type='submit'
-                                    onClick={submitForm}
-                                    disabled={auth.submitButton}
-                                >Войти</button>
-                                <Link to='/registration' className='auth__button reg' onClick={clearForm}>Регистрация</Link>
-                            </div>
-                        </form>
+                    <div className="auth__body">
+                        <img className="auth__body-image" src={PUBLIC_URL+'/auth-picture.svg'} alt='Куча людей' />
+                        <div className="auth__fields">
+                            <form className="auth__form">
+                                <div className="auth__header">Авторизация</div>
+                                {auth.responseMessage === 'Ошибка на сервере' ? <div>{auth.responseMessage}</div> : null}
+                                <input
+                                    className="auth__input"
+                                    ref={mix}
+                                    type='text'
+                                    name='nickName'
+                                    onChange={inputHandler}
+                                    autoComplete='off'
+                                    value={auth.formInputs.nickName}
+                                    placeholder='Введите ник или почту'
+                                ></input>
+                                <input
+                                    className="auth__input"
+                                    ref={password}
+                                    type='password'
+                                    name='password'
+                                    onChange={inputHandler}
+                                    autoComplete='off'
+                                    value={auth.formInputs.password}
+                                    placeholder='Введите пароль'
+                                ></input>
+                                <div className="auth__buttons">
+                                    <button
+                                        className="auth__button"
+                                        ref={submit}
+                                        type='submit'
+                                        onClick={submitForm}
+                                        disabled={auth.submitButton}
+                                    >Войти</button>
+                                    <Link to='/registration' className='auth__button reg' onClick={clearForm}>Регистрация</Link>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                </div>
-                <div className="auth-footer">
-                <div className="auth-footer__container container">
-                    <a className="auth-footer__link" href="/">memegram 2020</a>
-                    <a className="auth-footer__link" href="/">О нас</a>
-                    <a className="auth-footer__link" href="/">Вакансии</a>
-                    <a className="auth-footer__link" href="/">Правила</a>
-                    <a className="auth-footer__link" href="/">Конфиденциальность</a>
-                </div>
-                </div>
+                <Footer/>
             </div>
         </div>
     </>)

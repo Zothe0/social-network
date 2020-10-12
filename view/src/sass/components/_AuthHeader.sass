@@ -1,0 +1,21 @@
+.auth-header
+    background-color: #e6e6e6
+    position: fixed
+    z-index: 10
+    width: 100%
+    background: linear-gradient(to right, #D4FFA2, #B2EABA)
+    &__container
+        display: flex
+        justify-content: space-between
+        height: 112px
+        align-items: center
+@media screen and ( max-width: 767px)
+    .auth-header
+        &__container
+            height: 40px
+        &__mini-logo
+            img
+                height: 30px
+        &__logo
+            img
+                height: 30px

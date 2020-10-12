@@ -1,6 +1,7 @@
 // For registrationReducer
 export const CHANGE_INPUT = 'CHANGE_INPUT'
-export const CLEAR_INPUTS = 'CLEAR_INPUTS'
+export const CLEAR_INPUT = 'CLEAR_INPUT'
+export const CLEAR_ALL_INPUTS = 'CLEAR_ALL_INPUTS'
 export const CLEAR_PASSWORD_INPUT = 'CLEAR_PASSWORD_INPUT'
 export const SET_ON_WARNING = 'SET_ON_WARNING'
 export const SET_OFF_WARNING = 'SET_OFF_WARNING'

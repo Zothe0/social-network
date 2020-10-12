@@ -1,24 +1,3 @@
-.auth-header
-    background-color: #e6e6e6
-    position: fixed
-    z-index: 10
-    width: 100%
-    background: linear-gradient(to right, #D4FFA2, #B2EABA)
-    &__container
-        display: flex
-        justify-content: space-between
-        height: 112px
-        align-items: center
-@media screen and ( max-width: 767px)
-    .auth-header
-        &__container
-            height: 40px
-        &__mini-logo
-            img
-                height: 30px
-        &__logo
-            img
-                height: 30px
 .auth
     display: flex
     flex: 1 1 auto
@@ -50,7 +29,7 @@
         height: 36px
         border: 2px solid #000
         border-radius: 20px
-        margin-bottom: 35px
+        margin-bottom: 25px
         padding: 0 12px
     &__input.warning
         border: 2px solid #f00
@@ -79,12 +58,16 @@
     &__link
 @media screen and ( max-width: 1000px )
     .auth
-         &__body-image
+        &__container
+            margin-top: 125px
+            margin-bottom: 25px
+        &__body-image
             width: 30%
 @media screen and ( max-width: 767px )
     .auth
         &__container
-            margin-top: 40px
+            margin-top: 32px
+            margin-bottom: 0
         &__form
             margin: 25px auto
         &__header
@@ -105,19 +88,3 @@
                 margin: 0
         &__body-image
             display: none
-.auth-footer
-    background-color: #f2f2f2
-    &__container
-        display: flex
-        height: 112px
-        align-items: center
-        justify-content: space-around
-@media screen and ( max-width: 767px )
-    .auth-footer
-        &__container
-            height: 40px
-            justify-content: space-center
-            justify-content: space-between
-            flex-wrap: wrap
-        &__link
-            font-size: 10px

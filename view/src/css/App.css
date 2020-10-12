@@ -379,7 +379,7 @@ textarea {
   height: 50px;
   background-color: #cbff90;
   width: 10px;
-  border-radius: 7px;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-corner {
@@ -472,6 +472,39 @@ button {
   }
 }
 
+.auth-footer {
+  background-color: #f2f2f2;
+}
+
+.auth-footer__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 112px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+@media screen and (max-width: 767px) {
+  .auth-footer__container {
+    height: 40px;
+    -webkit-box-pack: space-center;
+        -ms-flex-pack: space-center;
+            justify-content: space-center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .auth-footer__link {
+    font-size: 10px;
+  }
+}
+
 .auth {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -547,7 +580,7 @@ button {
   height: 36px;
   border: 2px solid #000;
   border-radius: 20px;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
   padding: 0 12px;
 }
 
@@ -612,6 +645,10 @@ button {
 }
 
 @media screen and (max-width: 1000px) {
+  .auth__container {
+    margin-top: 125px;
+    margin-bottom: 25px;
+  }
   .auth__body-image {
     width: 30%;
   }
@@ -619,7 +656,8 @@ button {
 
 @media screen and (max-width: 767px) {
   .auth__container {
-    margin-top: 40px;
+    margin-top: 32px;
+    margin-bottom: 0;
   }
   .auth__form {
     margin: 25px auto;
@@ -650,39 +688,6 @@ button {
   }
   .auth__body-image {
     display: none;
-  }
-}
-
-.auth-footer {
-  background-color: #f2f2f2;
-}
-
-.auth-footer__container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 112px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-}
-
-@media screen and (max-width: 767px) {
-  .auth-footer__container {
-    height: 40px;
-    -webkit-box-pack: space-center;
-        -ms-flex-pack: space-center;
-            justify-content: space-center;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-  }
-  .auth-footer__link {
-    font-size: 10px;
   }
 }
 

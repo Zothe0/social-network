@@ -23,7 +23,10 @@ export default function authReducer(state = initialState, action){
         case types.CHANGE_INPUT:
             return {...state, formInputs: {...state.formInputs, [action.name]: action.value}}
 
-        case types.CLEAR_INPUTS:
+        case types.CLEAR_INPUT:
+            return {...state, formInputs: {...state.formInputs, [action.name]: ''}}
+
+        case types.CLEAR_ALL_INPUTS:
             return {...state, formInputs: {...state.formInputs, nickName: '', email: '', password: ''}}
 
         case types.CLEAR_PASSWORD_INPUT:

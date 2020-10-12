@@ -15,7 +15,7 @@ const registration = async(req, res)=>{
     const saltRounds = 10
     // Если есть ошибки валидации отправляет их на фронт
     if (!errors.isEmpty()) {
-        return res.status(400).json({ ok: false, message: 'ошибка регистрации' , fault})
+        return res.status(400).json({ ok: false, fault})
     }
 
     // Проверяет на уникальность ник и почту
@@ -24,8 +24,7 @@ const registration = async(req, res)=>{
     const checkEmail= await User.findOne({email})
     // Если не уникально
     if(checkNick || checkEmail){
-        const paste = checkNick ? 'таким ником' : 'такой почтой'
-        res.status(400).json({ok: false, message: `Пользователь с ${paste} уже зарегистрирован`})
+        res.status(400).json({ok: false, message: checkNick ? 'Такой ник уже зарегистрирован' : 'Такая почта уже зарегистрирована'})
     // Иначе продолжает записывать
     }else{
         try {
@@ -35,8 +34,7 @@ const registration = async(req, res)=>{
                 // Сохраняет юзера в бд
                 user = new User({ nickName, email, password: hash, avatarUrl: defaultAvatarPath})
                 await user.save()
-                
-                res.status(201).json({ok: true, message: 'Успешная регистрация'})
+                res.status(201).json({ok: true})
             })
         } catch (error) {
             res.status(501).json({ok: false, message: 'Ошибка на сервере'})
