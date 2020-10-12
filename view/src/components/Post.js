@@ -147,7 +147,7 @@ export default function Post({ post, currentTime }){
         setRenderCount(renderCount => renderCount+1)
     }, [dispatch, post._id, likes])
 
-    return(
+    return(<>
         <div ref={item} className="posts-content__item">
             {warn ? <div className='posts-content__warn'>{warn}</div>: null}
             <div className="posts-content__header">
@@ -167,5 +167,5 @@ export default function Post({ post, currentTime }){
                 <div className="posts-content__views"><i className="fas fa-eye"/> {post.views.length}</div>
             </div>
         </div>
-    )
+    </>)
 }

@@ -104,7 +104,7 @@ export default function AuthorizationPage(){
                                     autoComplete='off'
                                     value={auth.formInputs.nickName}
                                     placeholder='Введите ник или почту'
-                                ></input>
+                                />
                                 <input
                                     className="auth__input"
                                     ref={password}
@@ -114,7 +114,7 @@ export default function AuthorizationPage(){
                                     autoComplete='off'
                                     value={auth.formInputs.password}
                                     placeholder='Введите пароль'
-                                ></input>
+                                />
                                 <div className="auth__buttons">
                                     <button
                                         className="auth__button"

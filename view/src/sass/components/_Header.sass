@@ -1,0 +1,86 @@
+.header
+    background-color: #e6e6e6
+    position: fixed
+    z-index: 10
+    width: 100%
+    background: linear-gradient(to right, #D4FFA2, #B2EABA)
+    &__container
+        display: flex
+        justify-content: space-between
+        height: 112px
+        align-items: center
+    &__form
+        display: flex
+        width: 700px
+        height: 40px
+        font-size: 24px
+    &__label
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 238px
+        background: #d4d4d4
+        border-radius: 41px
+        color: #919191
+        z-index: 10
+        font-family: Roboto, serif
+    &__search
+        border: none
+        background-color: #eaeaea
+        flex: 1 1 auto
+        padding: 0 23px 
+        margin-left: -17px
+        margin-right: -20px
+        font-size: 18px
+    &__search-btn
+        background-color: #FBFBFB
+        border-radius: 50%
+        height: 40px
+    &__menu
+        cursor: pointer
+        display: flex
+        justify-content: center
+        align-items: center
+        position: relative
+        padding: 0 20px
+        height: 47px
+        background: #A9CE5A
+        border-radius: 40px
+        font-size: 24px
+        font-family: HelveticaNeueCyr, serif
+        span
+            margin-right: 10px
+.additional-menu
+    position: absolute
+    top: 60px
+    height: 100px
+    width: 100%
+    font-size: 16px
+    padding: 10px
+    background: #A9CE5A
+    border-radius: 15px
+    z-index: 20
+    display: flex
+    flex-direction: column
+    &__link
+        display: flex
+        align-items: center
+        justify-content: flex-start
+        margin-bottom: 7px
+        span
+    &__avatar
+        border-radius: 50%
+        height: 30px
+        width: 30px 
+.additional-menu.covert
+    display: none
+@media screen and ( max-width: 767px)
+    .header
+        &__container
+            height: 40px
+        &__mini-logo
+            img
+                height: 30px
+        &__logo
+            img
+                height: 30px

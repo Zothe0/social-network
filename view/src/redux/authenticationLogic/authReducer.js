@@ -33,7 +33,6 @@ export default function authReducer(state = initialState, action){
             return {...state, formInputs: {...state.formInputs, password: ''}}
     
         case types.SET_ON_WARNING:
-            console.log(action.name)
             return {...state, warnings: {...state.warnings, [action.name]: true}}
 
         case types.SET_OFF_WARNING:

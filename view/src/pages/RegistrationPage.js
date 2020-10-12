@@ -125,7 +125,7 @@ export default function RegistrationPage(){
                                     autoComplete='off'
                                     value={auth.formInputs.nickName}
                                     placeholder='Введите ник'
-                                ></input>
+                                />
                                 <input
                                     className="auth__input"
                                     ref={email}
@@ -135,7 +135,7 @@ export default function RegistrationPage(){
                                     autoComplete='off'
                                     value={auth.formInputs.email}
                                     placeholder='Введите почту'
-                                ></input>
+                                />
                                 <input
                                     className="auth__input"
                                     ref={password}
@@ -145,7 +145,7 @@ export default function RegistrationPage(){
                                     autoComplete='off'
                                     value={auth.formInputs.password}
                                     placeholder='Введите пароль'
-                                ></input>
+                                />
                                 <div className="auth__buttons">
                                     <button
                                         className="auth__button"
