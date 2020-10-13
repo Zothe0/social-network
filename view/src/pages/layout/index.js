@@ -17,5 +17,5 @@ burger.onclick = event=>{
     burger.classList.toggle('active')
     document.querySelector('.burger__menu').classList.toggle('active')
     // Отлючает скролл по главной странице.
-    document.querySelector('body'.classList.toggle('locked')
+    document.querySelector('body'.classList.toggle('locked'))
 }

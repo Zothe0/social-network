@@ -42,8 +42,8 @@ export default function Header(){
                 </Link>
                 <form className="header__form">
                     <label className="header__label" htmlFor="search">Поиск постов</label>
-                    <input className="header__search" type="search" placeholder="Текст поста..." />
-                    <img className="header__search-btn" src={PUBLIC_URL+'/search-ico.svg'} alt='иконка поиска' />
+                    <input className="header__search" type="search" tabIndex='0' placeholder="Текст поста..." />
+                    <i class="fas fa-search"/>
                 </form>
                 <div
                     className="header__menu"

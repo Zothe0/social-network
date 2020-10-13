@@ -1,98 +1,128 @@
-.posts-content
-    width: 440px
-    margin: 80px auto 20px auto
-    padding: 20px
-    display: flex
-    flex-direction: column
-    &__warn
-        font-size: 18px
-        color: #f00
-        margin-top: 5px
-        margin-bottom: 10px
+.posts-body
+    margin: 112px auto 0 auto
+    border: 1px solid rgba(0, 0, 0, 0.26)
+    width: 610px
+    height: 100%
+    flex: 1 1 auto
+    font-family: Roboto, serif
+    box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.6)
     &__form
+        width: 100%
         display: flex
-        flex-direction: column
-        padding: 10px
-    &__label
-        margin-bottom: 7px
+        background-color: #c3f4ae
+        min-height: 63px
+        align-items: center
+        justify-content: space-between
+        padding: 20px 30px
+        margin-bottom: 61px
     &__textarea
         resize: none
-        font-family: Arial, Helvetica, sans-serif
-        margin-bottom: 7px
-    &__btn
-        align-self: flex-end
-        padding: 5px
-        border-radius: 3px
-    &__breakpoint
-        color: #f00
-        font-size: 18px
-    &__item
-        display: flex
+        font-size: 20px
         flex: 1 1 auto
-        flex-direction: column
-        width: 400px
-        background-color: #e6e6e6
-        padding: 10px
-        border-radius: 7px
-        margin: 10px auto
+        max-width: 500px
+        border: none
+        font-family: Roboto, serif
+        background-color: rgba(#fff, 0)
+        border-radius: 10px
+        &:focus
+            outline: 2px solid rgba(0, 0, 0, 0.26)
+            height: 100px
+        @include placeholder()
+            color: rgba(131, 131, 131, 1)
+    &__frame.btn
+        border: none
+    &__post
+        padding: 20px 45px
+        background-color: #c3f4ae
+        margin-bottom: 50px
+        width: 100%
     &__header
         display: flex
-        font-size: 12px
-        margin-bottom: 12px
+        justify-content: space-between
+        font-size: 18px
+        margin-bottom: 15px
     &__info
+        display: flex
+    &__avatar
+        height: 58px
+        width: 58px
+        border-radius: 50%
+        margin-right: 10px
+    &__info-column
         display: flex
         flex-direction: column
         justify-content: center
-    &__avatar
-        margin-right: 10px
-        height: 40px
-        width: 40px
-        border-radius: 50%
-    &__nick
-        font-weight: bold
-        margin-bottom: 6px
+        font-family: HelveticaNeueCyr, serif
+    &__author
+        margin-bottom: 5px
     &__date
+        color: #ABABAB
+    &__reply-btn
+        font-size: 20px
+    &__content
+        padding: 0 15px
+        margin-bottom: 15px
+    &__text
+        line-height: 18px
+        font-size: 20px
+    &__image
 
-    &__body
-        display: flex
-        margin-bottom: 12px
-        font-size: 14px
-        line-height: 17px
-        font-family: Roboto, serif
     &__footer
         display: flex
-        font-size: 14px
-    &__likes
+        justify-content: space-between
+        padding: 0 25px
+        font-size: 16px
+    &__stat
+        display: flex
+        align-items: center
+        i
+            margin-right: 6px
+    &__frame
+        display: flex
         cursor: pointer
-        margin-right: 8px
-@media screen and ( max-width: 767px )
-    .header
-        &__container
-            flex-direction: column
-            height: auto
-            align-items: start
-            padding: 15px
-            flex: 1 1 auto
+        justify-content: center
+        align-items: center
+        height: 35px
+        width: 35px
+        border-radius: 50%
+        background-color: #A9CE5A
+@media screen and ( max-width: 768px )
+    .posts-body
+        margin-top: 40px
+        width: 305px
+        &__form
+            align-items: center
+            margin-bottom: 35px
+        &__textarea
+            font-size: 16px
             width: 100%
-        &__logo
-            margin-bottom: 15px
-        &__form
-            margin-bottom: 15px
-        &__label
-            margin: 0
-        &__search
-            width: 30%
-        &__menu
-            display: flex
-        &__link
             margin-right: 10px
-    .posts-content
-        margin: 100px auto 20px auto
-        width: 300px
-        &__form
-            width: 260px
-            margin: 0 auto
-        &__item
-            width: 260px
-        &__breakpoint
-            display: inline-block
+            &:focus
+                height: 60px
+        &__frame.btn
+            align-self: center
+            font-size: 14px
+        &__post
+            padding: 10px 20px
+        &__header
+            font-size: 14px
+        &__avatar
+            height: 40px
+            width: 40px
+        &__text
+            font-size: 14px
+        &__footer
+            padding: 5px
+            font-size: 12px
+        &__frame
+            height: 25px
+            width: 25px
+        &__stat
+            i
+                margin-right: 4px
+@media screen and ( max-width: 400px )
+    .posts-body
+        width: 270px
+        box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.6)
+        &__content
+            padding: 0 5px

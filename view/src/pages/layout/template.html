@@ -16,9 +16,8 @@
                     <img src='./images/minilogo.svg' alt="минилого" />
                 </a>
                 <form class="header__form">
-                    <label class="header__label" for="search">Поиск по постам</label>
-                    <input class="header__search" type="search" placeholder="Текст поста..."/>
-                    <img class="header__search-btn" src="./images//search-ico.svg" alt=""/>
+                    <input class="header__search" id='search' type="search" placeholder="Поиск постов..." autocomplete="off"/>
+                    <i class="header__search-btn fas fa-search"></i>
                 </form>
                 <div class="header__menu">
                     <span>Меню</span> 
@@ -26,7 +25,163 @@
                 </div>
             </div>
         </div>
-        
+        <div class="posts-body">
+            <form action="" class="posts-body__form">
+                <textarea
+                    class="posts-body__textarea"
+                    name="textarea"
+                    cols="30"
+                    rows="1"
+                    maxLength='400'
+                    placeholder="Создать пост..."
+                ></textarea>
+                <button class='posts-body__frame btn' type="submit"><i class="fas fa-plus"></i></button>
+            </form>
+            <div class="posts-body__post">
+                <div class="posts-body__header">
+                    <div class="posts-body__info">
+                        <div class="posts-body__avatar ibg">
+                            <img src="./images/default.webp" alt="аватар">
+                        </div>
+                        <div class="posts-body__info-column">
+                            <span class="posts-body__author">автор</span>
+                            <span class="posts-body__date">минуту назад</span>
+                        </div>
+                    </div>
+                    <i class="posts-body__frame fas fa-reply"></i>
+                </div>
+                <div class="posts-body__content">
+                    <div class="posts-body__text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laboriosam unde nobis ratione voluptatum minima? Nulla fugit laboriosam rerum? Distinctio eius minus quia reprehenderit molestiae labore consequuntur id earum cum.
+                    </div>
+                    <div class="posts-body__image">
+
+                    </div>
+                </div>
+                <div class="posts-body__footer">
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-heart"></i>10
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-comment-alt"></i>1
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame fas fa-share"></i> 0
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-eye"></i>20
+                    </div>
+                </div>
+            </div>
+            <div class="posts-body__post">
+                <div class="posts-body__header">
+                    <div class="posts-body__info">
+                        <div class="posts-body__avatar ibg">
+                            <img src="./images/default.webp" alt="аватар">
+                        </div>
+                        <div class="posts-body__info-column">
+                            <span class="posts-body__author">автор</span>
+                            <span class="posts-body__date">минуту назад</span>
+                        </div>
+                    </div>
+                    <i class="posts-body__frame fas fa-reply"></i>
+                </div>
+                <div class="posts-body__content">
+                    <div class="posts-body__text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laboriosam unde nobis ratione voluptatum minima? Nulla fugit laboriosam rerum? Distinctio eius minus quia reprehenderit molestiae labore consequuntur id earum cum.
+                    </div>
+                    <div class="posts-body__image">
+
+                    </div>
+                </div>
+                <div class="posts-body__footer">
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-heart"></i>10
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-comment-alt"></i>1
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame fas fa-share"></i> 0
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-eye"></i>20
+                    </div>
+                </div>
+            </div>
+            <div class="posts-body__post">
+                <div class="posts-body__header">
+                    <div class="posts-body__info">
+                        <div class="posts-body__avatar ibg">
+                            <img src="./images/default.webp" alt="аватар">
+                        </div>
+                        <div class="posts-body__info-column">
+                            <span class="posts-body__author">автор</span>
+                            <span class="posts-body__date">минуту назад</span>
+                        </div>
+                    </div>
+                    <i class="posts-body__frame fas fa-reply"></i>
+                </div>
+                <div class="posts-body__content">
+                    <div class="posts-body__text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laboriosam unde nobis ratione voluptatum minima? Nulla fugit laboriosam rerum? Distinctio eius minus quia reprehenderit molestiae labore consequuntur id earum cum.
+                    </div>
+                    <div class="posts-body__image">
+
+                    </div>
+                </div>
+                <div class="posts-body__footer">
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-heart"></i>10
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-comment-alt"></i>1
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame fas fa-share"></i> 0
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-eye"></i>20
+                    </div>
+                </div>
+            </div>
+            <div class="posts-body__post">
+                <div class="posts-body__header">
+                    <div class="posts-body__info">
+                        <div class="posts-body__avatar ibg">
+                            <img src="./images/default.webp" alt="аватар">
+                        </div>
+                        <div class="posts-body__info-column">
+                            <span class="posts-body__author">автор</span>
+                            <span class="posts-body__date">минуту назад</span>
+                        </div>
+                    </div>
+                    <i class="posts-body__frame fas fa-reply"></i>
+                </div>
+                <div class="posts-body__content">
+                    <div class="posts-body__text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laboriosam unde nobis ratione voluptatum minima? Nulla fugit laboriosam rerum? Distinctio eius minus quia reprehenderit molestiae labore consequuntur id earum cum.
+                    </div>
+                    <div class="posts-body__image">
+
+                    </div>
+                </div>
+                <div class="posts-body__footer">
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-heart"></i>10
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-comment-alt"></i>1
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame fas fa-share"></i> 0
+                    </div>
+                    <div class="posts-body__stat">
+                        <i class="posts-body__frame far fa-eye"></i>20
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script src="./index.js"></script>
