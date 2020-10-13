@@ -30,7 +30,7 @@ export default function Post({ post, currentTime }){
     const [likes, setLikes] = useState(post.likes)
     const [liked, setLiked] = useState(likes.includes(nickName))
     const [renderCount, setRenderCount] = useState(0)
-    const item = useRef(null)
+    const body = useRef(null)
 
 
     const dateFormating = (timeDiffSec)=>{
@@ -139,6 +139,21 @@ export default function Post({ post, currentTime }){
             setTimeout(()=>setWarn(null), 1700)
         }
     }, [checkTokenExpire, liked, likes, nickName, post.author])
+
+    // TODO: Удалить эту функцию когда будет добавлен нормальный функционал
+    const rawHolder = ()=>{
+        setWarn('Эта кнопка пока не работает')
+        setTimeout(()=>setWarn(null), 1700)
+    }
+
+    useEffect(()=>{
+        if(warn){
+            body.current.classList.add('warning')
+        }else{
+            body.current.classList.remove('warning')
+        }
+    }, [warn])
+
     useEffect(()=>{
         if(renderCount>0){
             dispatch({ type: LIKE_CHANGING, postId: post._id, newLikes: likes})
@@ -148,23 +163,38 @@ export default function Post({ post, currentTime }){
     }, [dispatch, post._id, likes])
 
     return(<>
-        <div ref={item} className="posts-content__item">
-            {warn ? <div className='posts-content__warn'>{warn}</div>: null}
-            <div className="posts-content__header">
-                <Link to={linkToAuthorProfile}className="posts-content__avatar ibg">
-                    <img src ={post.avatarUrl} alt='аватарка'/>
-                </Link>
-                <div className="posts-content__info">
-                    <Link to={linkToAuthorProfile}><div className="posts-content__nick">{post.author}</div></Link>
-                    <div className="posts-content__date">{dateFormating(currentSec - postSec)}</div>
+        <div ref={body} className="posts-body__post">
+            <div className="posts-body__header">
+                <div className="posts-body__info">
+                    <Link to={linkToAuthorProfile} className="posts-body__avatar ibg">
+                        <img src ={post.avatarUrl} alt='аватарка'/>
+                    </Link>
+                    <div className="posts-body__info-column">
+                        <Link to={linkToAuthorProfile} className="posts-body__author">{post.author}</Link>
+                        <span className="posts-body__date">{dateFormating(currentSec - postSec)}</span>
+                    </div>
+                </div>
+                {warn ? <div className='posts-body__warning'>{warn}</div>: null}
+                <i className="posts-body__frame fas fa-reply" onClick={rawHolder}/>
+            </div>
+            <div className="posts-body__content">
+                <div className="posts-body__text">{post.text}</div>
+                <div className="posts-body__image">
                 </div>
             </div>
-            <div className="posts-content__body">
-                {post.text}
-            </div>
-            <div className="posts-content__footer">
-                <div className="posts-content__likes" onClick={likeHolder}> {liked ? <i className="fas fa-heart"/> : <i className="far fa-heart"/>} {likes.length}</div>
-                <div className="posts-content__views"><i className="fas fa-eye"/> {post.views.length}</div>
+            <div className="posts-body__footer">
+                <div className="posts-body__stat">
+                    {liked ? <i onClick={likeHolder} className="posts-body__frame fas fa-heart"/> : <i onClick={likeHolder} className="posts-body__frame far fa-heart"/>} {likes.length}
+                </div>
+                <div className="posts-body__stat">
+                    <i className="posts-body__frame far fa-comment-alt" onClick={rawHolder}/>0
+                </div>
+                <div className="posts-body__stat">
+                    <i className="posts-body__frame fas fa-share" onClick={rawHolder}/> 0
+                </div>
+                <div className="posts-body__stat">
+                    <i className="posts-body__frame views far fa-eye"/>{post.views.length}
+                </div>
             </div>
         </div>
     </>)

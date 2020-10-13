@@ -17,6 +17,7 @@ export default function PostsPage(){
     const posts = useSelector(state => state.postsReducer)
     const checkTokenExpire= useCheckToken()
     const bottomBreackPoint = useRef(null)
+    const textarea = useRef(null)
     let previousYOffset = window.pageYOffset 
 
     window.onscroll = ()=>{
@@ -68,6 +69,16 @@ export default function PostsPage(){
     },[checkTokenExpire, dispatch, auth.nickName])
 
     useEffect(()=>{
+        if(auth.responseMessage !== null && auth.responseMessage !== undefined){
+            textarea.current.setAttribute('placeholder', auth.responseMessage)
+            textarea.current.classList.add('warning')
+        }else{
+            textarea.current.setAttribute('placeholder', 'Создать пост')
+            textarea.current.classList.remove('warning')
+        }
+    }, [auth.responseMessage])
+
+    useEffect(()=>{
         ibg()
     },[])
 
@@ -75,35 +86,24 @@ export default function PostsPage(){
         <title>Посты</title>
         <div className="wrapper">
             <Header/>
-            <div className="posts-content">
-                <form
-                    className='posts-content__form'
-                    onSubmit={publish}
-                >
-                    <div className='auth-warn'>{auth.responseMessage}</div>
-                    <label
-                        className='posts-content__label'
-                        htmlFor='textarea'
-                    >Создать новый пост:</label>
+            <div className="posts-body">
+                <form onSubmit={publish} className="posts-body__form">
                     <textarea
-                        className='posts-content__textarea'
-                        id='textarea'
-                        name='textarea'
-                        maxLength='400'
-                        tabIndex='2'
-                        rows='4'
+                        className="posts-body__textarea"
+                        ref={textarea} rows='1' maxLength={400}
+                        placeholder="Создать пост..."
                         onChange={inputHandler}
                         onKeyDown={enterHandler}
                         value={posts.postField}
-                    ></textarea>
-                    <button
-                        type='submit'
-                        className='posts-content__btn'
-                    >Опубликовать</button>
+                    />
+                    <button className="posts-body__frame btn" type="submit"><i className="fas fa-plus" /></button>
                 </form>
-                {posts.loading ? <div className='posts-content__loading'>Загрузка...</div> : null}
+                {posts.loading ? 
+                <div className='loading-frame posts-body__loading-frame'>
+                    <i className="loading-frame__item fas fa-sync-alt"/>
+                </div>: null}
                 <PostList uploadedPosts={posts.uploadedPosts}/>
-                <div ref={bottomBreackPoint} className='posts-content__breakpoint'>Посты закончились</div>
+                <div ref={bottomBreackPoint} className='posts-body__breakpoint'></div>
             </div>
         </div>
     </>)

@@ -25,7 +25,7 @@ const uploadPosts = async(req, res)=>{
     try {
         const nickName = req.body.nickName
         // Кверим бд - "найти все объекты, сортируюя в обратном пордке по айдишнику, пропускаем то количество объектов которое уже выгрузили, лимит выборки 15 объектов"
-        const data = await Post.find({}).sort('-_id').skip(req.body.loadedPostsQuantity).limit(10)
+        const data = await Post.find({}).sort('-_id').skip(req.body.loadedPostsQuantity).limit(4)
         // console.log(nickName)
         data.forEach(async item => {
             const newViews = item.get('views')

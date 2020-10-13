@@ -41,9 +41,8 @@ export default function Header(){
                     <img src={PUBLIC_URL+'/minilogo.svg'} alt="минилого" />
                 </Link>
                 <form className="header__form">
-                    <label className="header__label" htmlFor="search">Поиск постов</label>
-                    <input className="header__search" type="search" tabIndex='0' placeholder="Текст поста..." />
-                    <i class="fas fa-search"/>
+                    <input className="header__search" id='search' type="search" placeholder="Поиск постов..." autoComplete="off"/>
+                    <i className="header__search-btn fas fa-search"></i>
                 </form>
                 <div
                     className="header__menu"
@@ -54,7 +53,7 @@ export default function Header(){
                     <i className="fas fa-bars"/>
                     <div className='header__additional-menu additional-menu covert' ref={addMenu}>
                         <Link to={linkToProfile} className="additional-menu__link">
-                            <span>Аккаунт</span>
+                            <div>Аккаунт</div>
                             <div className='additional-menu__avatar ibg'>
                                 <img src={avatarUrl} alt='аватарка'/>
                             </div>

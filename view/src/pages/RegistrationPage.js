@@ -106,7 +106,7 @@ export default function RegistrationPage(){
 
     return (<>
         <title>Регистрация</title>
-        <div className="wrauther">
+        <div className="wrapper">
             <div className="auth">
                 <AuthHeader/>
                 <div className="auth__container container">
