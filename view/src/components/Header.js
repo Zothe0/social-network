@@ -23,12 +23,19 @@ export default function Header(){
     const showMenu = ()=>{
         addMenu.current.classList.toggle('covert')
     }
-    window.onclick = (e)=>{
-        // console.log(e.target.parentNode)
-        if(e.target && addMenu.current && e.target !== menu.current && e.target.parentNode !== menu.current){
-            addMenu.current.classList.add('covert')
-        }
-    }
+    // window.onclick = (e)=>{
+    //     if(e.target && addMenu.current && e.target !== menu.current && e.target.parentNode !== menu.current){
+    //         addMenu.current.classList.add('covert')
+    //     }
+    // }
+    
+    useEffect(()=>{
+        window.addEventListener('click', (e)=>{
+            if(e.target && addMenu.current && e.target !== menu.current && e.target.parentNode !== menu.current){
+                addMenu.current.classList.add('covert')
+            }
+        })
+    }, [])
 
     useEffect(()=>{
         ibg()

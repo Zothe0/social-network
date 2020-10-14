@@ -20,14 +20,6 @@ export default function PostsPage(){
     const textarea = useRef(null)
     let previousYOffset = window.pageYOffset 
 
-    window.onscroll = ()=>{
-        if(bottomBreackPoint.current && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1000)) && (window.pageYOffset > previousYOffset)){
-            if(!checkTokenExpire()){
-                uploadPosts()
-                previousYOffset = window.pageYOffset
-            }
-        }
-    }
 
     const inputHandler = (e)=>{
         dispatch(changePostField(e.target.value))
@@ -58,6 +50,10 @@ export default function PostsPage(){
         if(!checkTokenExpire())dispatch({ type: types.UPLOAD_POSTS })
     }, [checkTokenExpire, dispatch])
 
+    const focusArea = (e)=>{
+        e.target.classList.add('focus')
+    }
+
     // Проверка действительности токена при каждом ререндере страницы
     // А также загрузка первой партии постов
     useEffect(()=>{
@@ -80,6 +76,21 @@ export default function PostsPage(){
 
     useEffect(()=>{
         ibg()
+
+        window.addEventListener('click', (e)=>{
+            if(e.target !== textarea.current && textarea.current){
+                textarea.current.classList.remove('focus')
+            }
+        })
+
+        window.addEventListener('scroll', (e)=>{
+            if(bottomBreackPoint.current && (window.pageYOffset >= (bottomBreackPoint.current.offsetTop-1000)) && (window.pageYOffset > previousYOffset)){
+                if(!checkTokenExpire()){
+                    uploadPosts()
+                    previousYOffset = window.pageYOffset
+                }
+            }
+        })
     },[])
 
     return(<>
@@ -94,6 +105,7 @@ export default function PostsPage(){
                         placeholder="Создать пост..."
                         onChange={inputHandler}
                         onKeyDown={enterHandler}
+                        onFocus={focusArea}
                         value={posts.postField}
                     />
                     <button className="posts-body__frame btn" type="submit"><i className="fas fa-plus" /></button>

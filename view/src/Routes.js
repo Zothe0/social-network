@@ -5,6 +5,7 @@ import PostsPage from './pages/PostsPage'
 import RegistrationPage from './pages/RegistrationPage'
 import ProfilePage from './pages/ProfilePage'
 import { useSelector } from 'react-redux'
+import SettingsPage from './pages/SettingsPage'
 
 
 export default function Routes(){
@@ -17,6 +18,9 @@ export default function Routes(){
                 </Route>
                 <Route path='/profile/:id'>
                     <ProfilePage/>
+                </Route>
+                <Route path='/settings'>
+                    <SettingsPage/>
                 </Route>
                 <Route path='/'>
                     <Redirect to='/posts'/>
