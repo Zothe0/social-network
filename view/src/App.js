@@ -5,11 +5,12 @@ import './css/all.min.css'
 import './css/App.css'
 import Routes from './Routes'
 
-
 export default function App() {
-    return (<>
-        <Router>
-            <Routes/>
-        </Router>
-    </>)
+    return (
+        <>
+            <Router>
+                <Routes />
+            </Router>
+        </>
+    )
 }

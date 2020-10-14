@@ -1,21 +1,22 @@
 import { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { verify } from 'jsonwebtoken'
-import { logout, setMessage } from '../redux/authenticationLogic/authActionCreators'
-import {JWT_SECRET} from '../constants'
+import {
+    logout,
+    setMessage,
+} from '../redux/authenticationLogic/authActionCreators'
+import { JWT_SECRET } from '../constants'
 
-
-export default function useCheckToken(){
-
+export default function useCheckToken() {
     const dispatch = useDispatch()
     const token = useSelector(state => state.authReducer.token)
 
-    const logoutApp = useCallback(()=>{
+    const logoutApp = useCallback(() => {
         dispatch(logout())
         dispatch(setMessage('Время сессии закончилось'))
     }, [dispatch])
 
-    const checkTokenExpire = useCallback(()=>{
+    const checkTokenExpire = useCallback(() => {
         try {
             verify(token, JWT_SECRET)
             return false

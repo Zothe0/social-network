@@ -12,14 +12,17 @@ import Saga from './redux/sagas/sagaWatcher'
 
 const saga = createSagaMiddleware()
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, saga)))
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunk, saga))
+)
 
 saga.run(Saga)
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <App/>
+            <App />
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

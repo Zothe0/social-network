@@ -1,10 +1,9 @@
 const initialState = {
-    loading: true
+    loading: true,
 }
 
-
-export default function appRecuer(state = initialState, action){
-    switch(action.type){
+export default function appRecuer(state = initialState, action) {
+    switch (action.type) {
         default:
             return state
     }

@@ -1,7 +1,5 @@
 import React from 'react'
 
-export default function SettingsPage(){
-    return(<>
-        Настройки
-    </>)
+export default function SettingsPage() {
+    return <>Настройки</>
 }

@@ -7,39 +7,38 @@ import ProfilePage from './pages/ProfilePage'
 import { useSelector } from 'react-redux'
 import SettingsPage from './pages/SettingsPage'
 
-
-export default function Routes(){
-    const isAthorized = useSelector(state=>state.authReducer.authorized)
-    if(isAthorized){
-        return(
+export default function Routes() {
+    const isAthorized = useSelector(state => state.authReducer.authorized)
+    if (isAthorized) {
+        return (
             <Switch>
                 <Route path='/posts'>
-                    <PostsPage/>
+                    <PostsPage />
                 </Route>
                 <Route path='/profile/:id'>
-                    <ProfilePage/>
+                    <ProfilePage />
                 </Route>
                 <Route path='/settings'>
-                    <SettingsPage/>
+                    <SettingsPage />
                 </Route>
                 <Route path='/'>
-                    <Redirect to='/posts'/>
+                    <Redirect to='/posts' />
                 </Route>
             </Switch>
         )
-    }else{
-        return(
+    } else {
+        return (
             <Switch>
                 <Route path='/auth'>
-                    <AuthorizationPage/>
+                    <AuthorizationPage />
                 </Route>
                 <Route path='/registration'>
-                    <RegistrationPage/>
+                    <RegistrationPage />
                 </Route>
                 <Route path='/'>
-                    <Redirect to='/auth'/>
+                    <Redirect to='/auth' />
                 </Route>
             </Switch>
-       )
+        )
     }
 }
