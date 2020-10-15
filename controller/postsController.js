@@ -29,7 +29,7 @@ const uploadPosts = async (req, res) => {
         const data = await Post.find({})
             .sort('-_id')
             .skip(req.body.loadedPostsQuantity)
-            .limit(4)
+            .limit(6)
         // console.log(nickName)
         data.forEach(async item => {
             const newViews = item.get('views')

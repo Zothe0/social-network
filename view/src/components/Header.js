@@ -55,6 +55,7 @@ export default function Header() {
                             type='search'
                             placeholder='Поиск постов...'
                             autoComplete='off'
+                            disabled='disabled'
                         />
                         <i className='header__search-btn fas fa-search'></i>
                     </form>
@@ -74,12 +75,12 @@ export default function Header() {
                                     <img src={avatarUrl} alt='аватарка' />
                                 </div>
                             </Link>
-                            <Link
+                            {/* <Link
                                 to='/settings'
                                 className='additional-menu__link'
                             >
                                 Настройки
-                            </Link>
+                            </Link> */}
                             <a
                                 className='additional-menu__link'
                                 href='https://github.com/Zothe0/social-network'

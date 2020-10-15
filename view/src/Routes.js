@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux'
 import SettingsPage from './pages/SettingsPage'
 
 export default function Routes() {
-    const isAthorized = useSelector(state => state.authReducer.authorized)
-    if (isAthorized) {
+    const isAuthorized = useSelector(state => state.authReducer.authorized)
+    if (isAuthorized) {
         return (
             <Switch>
                 <Route path='/posts'>
@@ -22,7 +22,7 @@ export default function Routes() {
                     <SettingsPage />
                 </Route>
                 <Route path='/'>
-                    <Redirect to='/posts' />
+                    {<Redirect to='/posts' />}
                 </Route>
             </Switch>
         )

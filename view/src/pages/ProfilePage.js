@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from 'react'
+import React, { useEffect, useCallback, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Header from '../components/Header'
@@ -12,15 +12,31 @@ import {
 
 export default function ProfilePage() {
     const profile = useSelector(state => state.profileReducer)
+    const posts = useSelector(state => state.postsReducer)
     const auth = useSelector(state => state.authReducer)
     const dispatch = useDispatch()
     const { id } = useParams()
     const checkTokenExpire = useCheckToken()
-    const file = useRef(null)
+    const file = useRef()
+    const fileText = useRef()
+    const dropArea = useRef()
+    let [labelClass, setLabelClass] = useState('profile__file-wrapper')
 
     const getAvatarUrl = useCallback(() => {
         dispatch({ type: UPLOAD_CURRENT_PROFILE_AVATAR_URL, nickName: id })
     }, [dispatch, id])
+
+    const fileHandler = e => {
+        fileText.current.innerText = e.target.files[0].name
+    }
+
+    const dropFileHandler = e => {
+        e.stopPropagation()
+        e.preventDefault()
+        hideDropArea(e)
+        file.current.files = e.dataTransfer.files
+        fileText.current.innerText = file.current.files[0].name
+    }
 
     const formHandler = async e => {
         e.preventDefault()
@@ -28,6 +44,15 @@ export default function ProfilePage() {
         form.append('nickName', `${auth.nickName}`)
         form.append('previousAvatarUrl', profile.currentProfileAvatarUrl)
         if (!checkTokenExpire()) dispatch({ type: SEND_AVATAR_IMAGE, form })
+        fileText.current.innerText = 'Выберите фотографию'
+    }
+
+    const showDropArea = () => {
+        if (dropArea.current) dropArea.current.classList.add('active')
+    }
+
+    const hideDropArea = e => {
+        if (dropArea.current) dropArea.current.classList.remove('active')
     }
 
     useEffect(() => {
@@ -43,24 +68,62 @@ export default function ProfilePage() {
         profile.currentProfileAvatarUrl,
     ])
 
+    useEffect(() => {
+        if (
+            auth.responseMessage !== null &&
+            auth.responseMessage !== undefined
+        ) {
+            fileText.current.innerText = `${auth.responseMessage}`
+            setLabelClass('profile__file-wrapper warning')
+        } else {
+            fileText.current.innerText = 'Выберите фотографию'
+            setLabelClass('profile__file-wrapper')
+        }
+    }, [auth.responseMessage])
+
+    useEffect(() => {
+        window.addEventListener('dragover', e => {
+            e.stopPropagation()
+            e.preventDefault()
+        })
+        window.addEventListener('dragenter', showDropArea)
+        window.addEventListener('drop', dropFileHandler)
+    }, [])
+
     return (
         <>
             <title>Профиль</title>
             <Header />
             <div className='wrapper'>
                 <div className='profile'>
+                    <div ref={dropArea} className='profile__drop-area'>
+                        <div
+                            onDragLeave={hideDropArea}
+                            className='profile__drag-checker'
+                        ></div>
+                        <div className='profile__drop-box'>
+                            <i className='profile__drop-ico fas fa-download' />
+                            <div className='profile__drop-header'>
+                                Загрузить фотографию
+                            </div>
+                        </div>
+                    </div>
                     <div className='profile__container'>
+                        {posts.loading ? (
+                            <div className='loading-frame'>
+                                <i className='loading-frame__item fas fa-sync-alt' />
+                            </div>
+                        ) : null}
                         <div className='profile__avatar ibg'>
                             <img
                                 src={profile.currentProfileAvatarUrl}
                                 alt='аватарка'
                             />
                         </div>
-                        <div className='auth-warn'>{auth.responseMessage}</div>
                         {auth.nickName === id ? (
                             <>
                                 <div className='profile__header'>
-                                    Загрузить фотографию профиля
+                                    Установить новую фотографию профиля:
                                 </div>
                                 <form
                                     onSubmit={formHandler}
@@ -71,15 +134,37 @@ export default function ProfilePage() {
                                     method='post'
                                     placeholder='none'
                                 >
-                                    <input
-                                        type='file'
-                                        accept='image/jpeg,image/png'
-                                        name='avatar'
-                                        id='avatar'
-                                        ref={file}
-                                        className='profile__file'
-                                    ></input>
-                                    <button type='submit'>Отправитьь</button>
+                                    <div className={labelClass}>
+                                        <input
+                                            onChange={fileHandler}
+                                            type='file'
+                                            accept='image/jpeg,image/png,image/webp'
+                                            name='avatar'
+                                            id='avatar'
+                                            ref={file}
+                                            className='profile__file'
+                                        ></input>
+                                        <label
+                                            htmlFor='avatar'
+                                            onDrop={dropFileHandler}
+                                            // onDragEnter={dragFileHandler}
+                                            className='profile__file-btn'
+                                        >
+                                            <i className='profile__file-ico fas fa-download' />
+                                            <span
+                                                ref={fileText}
+                                                className='profile__file-text'
+                                            >
+                                                Выберите фотографию
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <button
+                                        className='profile__submit-btn'
+                                        type='submit'
+                                    >
+                                        Отправить
+                                    </button>
                                 </form>
                             </>
                         ) : null}

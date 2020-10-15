@@ -17,7 +17,7 @@ export default function PostsPage() {
     const auth = useSelector(state => state.authReducer)
     const posts = useSelector(state => state.postsReducer)
     const checkTokenExpire = useCheckToken()
-    const bottomBreackPoint = useRef(null)
+    const bottomBreakPoint = useRef(null)
     const textarea = useRef(null)
     let previousYOffset = window.pageYOffset
 
@@ -93,9 +93,9 @@ export default function PostsPage() {
 
         window.addEventListener('scroll', e => {
             if (
-                bottomBreackPoint.current &&
+                bottomBreakPoint.current &&
                 window.pageYOffset >=
-                    bottomBreackPoint.current.offsetTop - 1000 &&
+                    bottomBreakPoint.current.offsetTop - 1000 &&
                 window.pageYOffset > previousYOffset
             ) {
                 if (!checkTokenExpire()) {
@@ -135,7 +135,7 @@ export default function PostsPage() {
                     ) : null}
                     <PostList uploadedPosts={posts.uploadedPosts} />
                     <div
-                        ref={bottomBreackPoint}
+                        ref={bottomBreakPoint}
                         className='posts-body__breakpoint'
                     />
                 </div>
