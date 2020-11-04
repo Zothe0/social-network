@@ -9,7 +9,6 @@ router.post(
     '/registration',
     [
         body('nickName').trim().isLength({ min: 4 }),
-        body('email').trim().isEmail().normalizeEmail(),
         body('password').trim().isLength({ min: 6 }),
     ],
     auth.registration

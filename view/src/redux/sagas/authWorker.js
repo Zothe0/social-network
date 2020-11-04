@@ -13,7 +13,7 @@ import { LOGIN } from '../authenticationLogic/authTypes'
 // worker Saga: будет запускаться на экшены типа `USER_FETCH_REQUESTED`
 export function* registration(action) {
     try {
-        // call первым аргументом принимает функцию, а остальные будут складываться в парамтры вызываемой функции по соответсвию
+        // call первым аргументом принимает функцию, а остальные будут складываться в параметры вызываемой функции по соответствию
         const response = yield call(
             request,
             '/api/auth/registration',
@@ -24,7 +24,7 @@ export function* registration(action) {
         if (response.ok) {
             const auth = yield select(state => state.authReducer)
             const body = {
-                mix: auth.formInputs.nickName,
+                nickName: auth.formInputs.nickName,
                 password: auth.formInputs.password,
             }
             yield put({ type: LOGIN, body })
@@ -57,7 +57,7 @@ export function* login(action) {
             yield put(authentication(response.token, response.nickName))
             yield put(clearAllInputs())
         } else {
-            if (response.incorrectFiled === 'password')
+            if (response.incorrectField === 'password')
                 yield put(clearPasswordInput())
             else yield put(clearInput('nickName'))
         }

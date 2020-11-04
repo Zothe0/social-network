@@ -2,12 +2,10 @@ import * as types from './authTypes'
 const initialState = {
     formInputs: {
         nickName: '',
-        email: '',
         password: '',
     },
     warnings: {
         nickName: false,
-        email: false,
         password: false,
     },
     submitButton: 'disabled',

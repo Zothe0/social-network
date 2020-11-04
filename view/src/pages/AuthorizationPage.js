@@ -19,7 +19,7 @@ export default function AuthorizationPage() {
     const dispatch = useDispatch()
     // Получаем state из authReducer
     const auth = useSelector(state => state.authReducer)
-    const mix = useRef(null)
+    const nickName = useRef(null)
     const password = useRef(null)
     const submit = useRef(null)
 
@@ -32,13 +32,13 @@ export default function AuthorizationPage() {
     const submitForm = async e => {
         e.preventDefault()
         const body = {
-            mix: auth.formInputs.nickName,
+            nickName: auth.formInputs.nickName,
             password: auth.formInputs.password,
         }
         dispatch({ type: LOGIN, body })
     }
 
-    // Записывает значение инпута в соответсвующее поле в нашем store
+    // Записывает значение инпута в соответствующее поле в нашем store
     const inputHandler = async e => {
         dispatch(changeInput(e.target.name, e.target.value))
     }
@@ -71,11 +71,11 @@ export default function AuthorizationPage() {
     useEffect(() => {
         switch (auth.responseMessage) {
             case 'Такого пользователя не существует':
-                mix.current.setAttribute(
+                nickName.current.setAttribute(
                     'placeholder',
                     `${auth.responseMessage}`
                 )
-                mix.current.classList.add('warning')
+                nickName.current.classList.add('warning')
                 break
             case 'Неверный пароль':
                 password.current.setAttribute(
@@ -85,8 +85,8 @@ export default function AuthorizationPage() {
                 password.current.classList.add('warning')
                 break
             default:
-                mix.current.setAttribute('placeholder', 'Введите ник или почту')
-                mix.current.classList.remove('warning')
+                nickName.current.setAttribute('placeholder', 'Введите ник')
+                nickName.current.classList.remove('warning')
                 password.current.setAttribute('placeholder', 'Введите пароль')
                 password.current.classList.remove('warning')
                 break
@@ -117,7 +117,7 @@ export default function AuthorizationPage() {
                                     ) : null}
                                     <input
                                         className='auth__input'
-                                        ref={mix}
+                                        ref={nickName}
                                         type='text'
                                         name='nickName'
                                         onChange={inputHandler}

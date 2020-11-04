@@ -20,7 +20,6 @@ export default function RegistrationPage() {
     // Получаем state из authReducer
     const auth = useSelector(state => state.authReducer)
     const nickName = useRef(null)
-    const email = useRef(null)
     const password = useRef(null)
     const submit = useRef(null)
 
@@ -31,7 +30,7 @@ export default function RegistrationPage() {
         dispatch({ type: REGISTRATION, body: auth.formInputs })
     }
 
-    // Записывает значение инпута в соответсвующее поле в нашем store
+    // Записывает значение инпута в соответствующее поле в нашем store
     const inputHandler = async e => {
         dispatch(changeInput(e.target.name, e.target.value))
     }
@@ -44,14 +43,9 @@ export default function RegistrationPage() {
     // Функция для проверки полей инпутов
     const checkInputs = useCallback(() => {
         if (auth.formInputs.nickName === '') return false
-        else if (auth.formInputs.email === '') return false
         else if (auth.formInputs.password === '') return false
         else return true
-    }, [
-        auth.formInputs.nickName,
-        auth.formInputs.email,
-        auth.formInputs.password,
-    ])
+    }, [auth.formInputs.nickName, auth.formInputs.password])
 
     // Следим за изменением инпутов, и при их изменении, проверяем пустые ли они, если все поля заполнены, кнопка становится активной
     useEffect(() => {
@@ -76,17 +70,6 @@ export default function RegistrationPage() {
             nickName.current.setAttribute('placeholder', 'Введите ник')
             nickName.current.classList.remove('warning')
         }
-        if (auth.warnings.email) {
-            dispatch(clearInput('email'))
-            email.current.setAttribute(
-                'placeholder',
-                'Введите корректную почту'
-            )
-            email.current.classList.add('warning')
-        } else {
-            email.current.setAttribute('placeholder', 'Введите почту')
-            email.current.classList.remove('warning')
-        }
         if (auth.warnings.password) {
             dispatch(clearInput('password'))
             password.current.setAttribute(
@@ -110,19 +93,10 @@ export default function RegistrationPage() {
                 )
                 nickName.current.classList.add('warning')
                 break
-            case 'Такая почта уже зарегистрирована':
-                dispatch(clearInput('email'))
-                email.current.setAttribute(
-                    'placeholder',
-                    `${auth.responseMessage}`
-                )
-                email.current.classList.add('warning')
-                break
+
             default:
                 nickName.current.setAttribute('placeholder', 'Введите ник')
                 nickName.current.classList.remove('warning')
-                email.current.setAttribute('placeholder', 'Введите почту')
-                email.current.classList.remove('warning')
                 break
         }
     }, [auth.responseMessage, dispatch])
@@ -158,16 +132,6 @@ export default function RegistrationPage() {
                                         autoComplete='off'
                                         value={auth.formInputs.nickName}
                                         placeholder='Введите ник'
-                                    />
-                                    <input
-                                        className='auth__input'
-                                        ref={email}
-                                        type='email'
-                                        name='email'
-                                        onChange={inputHandler}
-                                        autoComplete='off'
-                                        value={auth.formInputs.email}
-                                        placeholder='Введите почту'
                                     />
                                     <input
                                         className='auth__input'

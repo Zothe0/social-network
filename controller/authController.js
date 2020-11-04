@@ -18,16 +18,13 @@ const registration = async (req, res) => {
     }
 
     // Проверяет на уникальность ник и почту
-    const { nickName, email, password } = req.body
+    const { nickName, password } = req.body
     const checkNick = await User.findOne({ nickName })
-    const checkEmail = await User.findOne({ email })
     // Если не уникально
-    if (checkNick || checkEmail) {
+    if ( checkNick ) {
         res.status(400).json({
             ok: false,
-            message: checkNick
-                ? 'Такой ник уже зарегистрирован'
-                : 'Такая почта уже зарегистрирована',
+            message: 'Такой ник уже зарегистрирован'
         })
         // Иначе продолжает записывать
     } else {
@@ -38,7 +35,6 @@ const registration = async (req, res) => {
                 // Сохраняет юзера в бд
                 user = new User({
                     nickName,
-                    email,
                     password: hash,
                     avatarUrl: defaultAvatarPath,
                 })
@@ -56,27 +52,19 @@ const registration = async (req, res) => {
 const login = async (req, res) => {
     try {
         // Достаёт ник/почту и пароль из запроса
-        const { mix, password } = req.body
+        const { nickName, password } = req.body
         // Проверяет существует ли юзер с такой почтой/ником
-        const checkNick = await User.findOne({ nickName: mix })
-        const checkEmail = await User.findOne({ email: mix })
+        const user = await User.findOne({ nickName })
 
         // Если найден юзер с такой почтой/ником
-        if (checkNick || checkEmail) {
-            let user = null
-            // Если нам передали почту то user это почта, иначе это ник
-            if (checkNick) {
-                user = checkNick
-            } else {
-                user = checkEmail
-            }
+        if (user) {
 
-            // Провееряет пароли
+            // Проверяет пароли
             const isMatch = await bcrypt.compare(password, user.password)
             if (!isMatch) {
                 return res.status(400).json({
                     message: 'Неверный пароль',
-                    incorrectFiled: 'password',
+                    incorrectField: 'password',
                 })
             } else {
                 // Создаёт jwt токен который истекает через час
@@ -97,7 +85,7 @@ const login = async (req, res) => {
             res.status(401).json({
                 ok: false,
                 message: 'Такого пользователя не существует',
-                incorrectFiled: 'mix',
+                incorrectField: 'nickName',
             })
         }
     } catch (error) {
